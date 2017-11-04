@@ -1,0 +1,923 @@
+;//***************************************************************************
+;//
+;//  Author(s)...: Павел Бобков  http://ChipEnable.Ru
+;//
+;//  Target(s)...: avr
+;//
+;//  Compiler....: IAR
+;//
+;//  Description.: драйвер кнопок
+;//
+;//  Data........: 12.12.13
+;//
+;//***************************************************************************
+;
+;#include "buttons.h"
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x20
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x1C
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x10
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x18
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x14
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x1C
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x08
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;
+;#define FLAG_BUT_PRESSED    (1<<0)
+;#define FLAG_BUT_HOLD       (1<<1)
+;#define FLAG_BUT_RELEASED   (1<<2)
+;
+;
+;/*макрос проверки состояния пина. зависит от
+;активного уровня в настройках*/
+;#define _TestBit1(var, bit)            ((var) & (1<<(bit)))
+;#define _TestBit0(var, bit)            (!((var) & (1<<(bit))))
+;#define _TestBit(var, bit, lev)        _TestBit##lev(var, bit)
+;#define TestBitLev(var, bit, lev)      _TestBit(var, bit, lev)
+;
+;/*настройка портов на вход, вкл/выкл подтяжки*/
+;#define ButtonInit_m(dir, port, pin, pull)   do{dir &= ~(1<<pin);                 \
+;                                                if (pull) {port |= (1<<pin);}     \
+;                                                else{port &= ~(1<<pin);}}while(0)
+;
+;/*сохранение события во временной переменной, если оно разрешено*/
+;#define SaveEvent_m(settings, mask, curEvent, reg) do{if ((settings) & (mask)){reg = curEvent;}}while(0)
+;
+;/*макрос для опроса. в одном случае реализует часть switch оператора, в другом просто опрос*/
+;#if (BUT_POLL_ROTATION > 0)
+;#define CheckOneBut_m(id, port, pin, lev, settings, reg)     case ((id) - 1):                   \
+;                                                                if (TestBitLev(port, pin, lev)){\
+;                                                                   reg = 1;                     \
+;                                                                }                               \
+;                                                                else{                           \
+;                                                                   reg = 0;                     \
+;                                                                }                               \
+;                                                                BUT_Check(reg, id, settings);   \
+;                                                                break;
+;
+;   #define Switch_m(x)  switch(x){
+;   #define End_m()      }
+;#else
+;
+;#define CheckOneBut_m(id, port, pin, lev, settings, reg)        if (TestBitLev(port, pin, lev)){\
+;                                                                   reg = 1;                     \
+;                                                                }                               \
+;                                                                else{                           \
+;                                                                   reg = 0;                     \
+;                                                                }                               \
+;                                                                BUT_Check(reg, id, settings);
+;
+;   #define Switch_m(x)
+;   #define End_m()
+;#endif
+;
+;/*границы для счетчика антидребезга и двойного клика*/
+;#define BUT_COUNT_MAX        (BUT_COUNT_HELD + 1)
+;#define BUT_COUNT_THR_2_MAX  (BUT_COUNT_THR_2 + 1)
+;
+;/*антидребезговый счетчик*/
+;#if (BUT_COUNT_HELD <= 250)
+;  static uint8_t countDeb[BUT_AMOUNT];
+;  static uint8_t countDebTmp;
+;#else
+;  static uint16_t countDeb[BUT_AMOUNT];
+;  static uint16_t countDebTmp;
+;#endif
+;
+;/*счетчики для реализации двойного клика*/
+;#if (BUT_DOUBLE_CLICK_EN == 1)
+;  #if (BUT_COUNT_THR_2 <= 253)
+;    static uint8_t countHold[BUT_AMOUNT];
+;    static uint8_t countHoldTmp;
+;  #else
+;    static uint16_t countHold[BUT_AMOUNT];
+;    static uint16_t countHoldTmp;
+;  #endif
+;#endif
+;
+;/*буфер, в котором хрянятся флаги кнопок*/
+;static uint8_t stateBut[BUT_AMOUNT];
+;
+;/*************** кольцевой буфер ******************/
+;
+;static uint8_t buf[BUT_SIZE_BUF];
+;static uint8_t head, tail, count;
+;
+;static void PutBut(uint8_t but)
+; 0002 0062 {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0002 0063   if (count < BUT_SIZE_BUF){
+;PCODE: $0000000F VOL: 0
+;	but -> Y+0
+;PCODE: $00000010 VOL: 0
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+; 0002 0064      buf[head] = but;
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+; 0002 0065      count++;
+;PCODE: $00000018 VOL: 0
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+; 0002 0066      head++;
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+; 0002 0067      head &= (BUT_SIZE_BUF - 1);
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+; 0002 0068   }
+; 0002 0069 }
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+;
+;uint8_t BUT_GetBut(void)
+; 0002 006C {
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0002 006D   uint8_t but = 0;
+; 0002 006E 
+; 0002 006F   if (count){
+;PCODE: $00000027 VOL: 0
+;	but -> R17
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+;PCODE: $0000002C VOL: 0
+; 0002 0070      but = buf[tail];
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+; 0002 0071      count--;
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+; 0002 0072      tail++;
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0002 0073      tail &= (BUT_SIZE_BUF - 1);
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+; 0002 0074   }
+; 0002 0075 
+; 0002 0076   return but;
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+; 0002 0077 }
+;PCODE: $0000003E VOL: 0
+;
+;/************************************************/
+;
+;static void BUT_Check(uint8_t state, uint8_t i, uint8_t settings)
+; 0002 007C {
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0002 007D   uint8_t stateTmp;
+; 0002 007E   uint8_t event;
+; 0002 007F 
+; 0002 0080   i--;
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+;	state -> Y+4
+;	i -> Y+3
+;	settings -> Y+2
+;	stateTmp -> R17
+;	event -> R16
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+; 0002 0081 
+; 0002 0082   stateTmp = stateBut[i];
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+; 0002 0083   event = 0;
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 0
+; 0002 0084 
+; 0002 0085 #if (BUT_DOUBLE_CLICK_EN == 1)
+; 0002 0086   countHoldTmp = countHold[i];
+; 0002 0087 #endif
+; 0002 0088 
+; 0002 0089  countDebTmp = countDeb[i];
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+; 0002 008A 
+; 0002 008B  if (state){
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+; 0002 008C     if (countDebTmp < BUT_COUNT_MAX){
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0002 008D        countDebTmp++;
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+; 0002 008E 
+; 0002 008F        if (countDebTmp > BUT_COUNT_THR){
+;PCODE: $0000005B VOL: 0
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0002 0090           if (!(stateTmp & FLAG_BUT_PRESSED)){
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+; 0002 0091              stateTmp |= FLAG_BUT_PRESSED;
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+; 0002 0092 
+; 0002 0093 #if (BUT_PRESSED_EN == 1)
+; 0002 0094              SaveEvent_m(settings, BUT_EV_PRESSED, BUT_PRESSED_CODE, event);
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+; 0002 0095 #endif
+; 0002 0096           }
+; 0002 0097        }
+;PCODE: $0000006E VOL: 0
+; 0002 0098 
+; 0002 0099        if (countDebTmp > BUT_COUNT_HELD){
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+; 0002 009A          if (!(stateTmp & FLAG_BUT_HOLD)){
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+; 0002 009B             stateTmp &= ~(FLAG_BUT_RELEASED);
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+; 0002 009C             stateTmp |= FLAG_BUT_HOLD;
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0
+; 0002 009D 
+; 0002 009E #if (BUT_HELD_EN == 1)
+; 0002 009F             SaveEvent_m(settings, BUT_EV_HELD, BUT_HELD_CODE, event);
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+; 0002 00A0 #endif
+; 0002 00A1          }
+; 0002 00A2        }
+;PCODE: $00000085 VOL: 0
+; 0002 00A3     }
+;PCODE: $00000086 VOL: 0
+; 0002 00A4   }
+;PCODE: $00000087 VOL: 0
+; 0002 00A5   else{
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0002 00A6 
+; 0002 00A7 #if (BUT_DOUBLE_CLICK_EN == 1)
+; 0002 00A8      if ((stateTmp & FLAG_BUT_PRESSED)&&(!(stateTmp & FLAG_BUT_HOLD))){
+; 0002 00A9 
+; 0002 00AA        if (stateTmp & FLAG_BUT_RELEASED){
+; 0002 00AB           stateTmp &= ~FLAG_BUT_RELEASED;
+; 0002 00AC           SaveEvent_m(settings, BUT_EV_DOUBLE_CLICK, BUT_DOUBLE_CLICK_CODE, event);
+; 0002 00AD        }
+; 0002 00AE        else{
+; 0002 00AF           countHoldTmp = 0;
+; 0002 00B0           stateTmp |= FLAG_BUT_RELEASED;
+; 0002 00B1        }
+; 0002 00B2      }
+; 0002 00B3 
+; 0002 00B4      if (stateTmp & FLAG_BUT_RELEASED){
+; 0002 00B5         if (countHoldTmp > BUT_COUNT_THR_2){
+; 0002 00B6            countHoldTmp = 0;
+; 0002 00B7            stateTmp &= ~FLAG_BUT_RELEASED;
+; 0002 00B8   #if (BUT_RELEASED_EN == 1)
+; 0002 00B9            SaveEvent_m(settings, BUT_EV_RELEASED, BUT_RELEASED_CODE, event);
+; 0002 00BA   #endif
+; 0002 00BB         }
+; 0002 00BC      }
+; 0002 00BD #else
+; 0002 00BE      if ((stateTmp & FLAG_BUT_PRESSED)&&(!(stateTmp & FLAG_BUT_HOLD))){
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+; 0002 00BF         SaveEvent_m(settings, BUT_EV_RELEASED, BUT_RELEASED_CODE, event);
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+;PCODE: $0000009A VOL: 0
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+; 0002 00C0      }
+; 0002 00C1 #endif
+; 0002 00C2 
+; 0002 00C3 #if (BUT_RELEASE_LONG_EN == 1)
+; 0002 00C4      if ((stateTmp & FLAG_BUT_PRESSED)&&(stateTmp & FLAG_BUT_HOLD)){
+; 0002 00C5         SaveEvent_m(settings, BUT_EV_RELEASED_LONG, BUT_RELEASED_LONG_CODE, event);
+; 0002 00C6      }
+; 0002 00C7 #endif
+; 0002 00C8 
+; 0002 00C9      countDebTmp = 0;
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+; 0002 00CA      stateTmp &= ~(FLAG_BUT_PRESSED|FLAG_BUT_HOLD);
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+; 0002 00CB   }
+;PCODE: $000000A4 VOL: 0
+; 0002 00CC 
+; 0002 00CD 
+; 0002 00CE 
+; 0002 00CF #if (BUT_DOUBLE_CLICK_EN == 1)
+; 0002 00D0   if (stateTmp & FLAG_BUT_RELEASED){
+; 0002 00D1      if (countHoldTmp < BUT_COUNT_THR_2_MAX){
+; 0002 00D2         countHoldTmp++;
+; 0002 00D3      }
+; 0002 00D4   }
+; 0002 00D5 
+; 0002 00D6   countHold[i] = countHoldTmp;
+; 0002 00D7 #endif
+; 0002 00D8 
+; 0002 00D9   if (event){
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+; 0002 00DA      PutBut(i+1);
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+; 0002 00DB      PutBut(event);
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+; 0002 00DC   }
+; 0002 00DD 
+; 0002 00DE   countDeb[i] = countDebTmp;
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+; 0002 00DF   stateBut[i] = stateTmp;
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+; 0002 00E0 }
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+;
+;/******************************************************/
+;
+;void BUT_Init(void)
+; 0002 00E5 {
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+; 0002 00E6   uint8_t i;
+; 0002 00E7 
+; 0002 00E8   for(i = 0; i < BUT_AMOUNT; i++){
+;PCODE: $000000BF VOL: 0
+;	i -> R17
+;PCODE: $000000C0 VOL: 0
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 0
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+;PCODE: $000000C7 VOL: 0
+;PCODE: $000000C8 VOL: 0
+; 0002 00E9      countDeb[i] = 0;
+;PCODE: $000000C9 VOL: 0
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+;PCODE: $000000CC VOL: 0
+;PCODE: $000000CD VOL: 0
+; 0002 00EA      stateBut[i] = 0;
+;PCODE: $000000CE VOL: 0
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+; 0002 00EB 
+; 0002 00EC #if (BUT_DOUBLE_CLICK_EN == 1)
+; 0002 00ED      countHold[i] = 0;
+; 0002 00EE #endif
+; 0002 00EF 
+; 0002 00F0   }
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+;PCODE: $000000D7 VOL: 0
+; 0002 00F1 
+; 0002 00F2   for(i = 0; i < BUT_SIZE_BUF; i++){
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0
+;PCODE: $000000DA VOL: 0
+;PCODE: $000000DB VOL: 0
+;PCODE: $000000DC VOL: 0
+;PCODE: $000000DD VOL: 0
+;PCODE: $000000DE VOL: 0
+;PCODE: $000000DF VOL: 0
+;PCODE: $000000E0 VOL: 0
+; 0002 00F3      buf[i] = 0;
+;PCODE: $000000E1 VOL: 0
+;PCODE: $000000E2 VOL: 0
+;PCODE: $000000E3 VOL: 0
+;PCODE: $000000E4 VOL: 0
+;PCODE: $000000E5 VOL: 0
+; 0002 00F4   }
+;PCODE: $000000E6 VOL: 0
+;PCODE: $000000E7 VOL: 0
+;PCODE: $000000E8 VOL: 0
+;PCODE: $000000E9 VOL: 0
+;PCODE: $000000EA VOL: 0
+; 0002 00F5 
+; 0002 00F6   head = 0;
+;PCODE: $000000EB VOL: 0
+;PCODE: $000000EC VOL: 0
+; 0002 00F7   tail = 0;
+;PCODE: $000000ED VOL: 0
+;PCODE: $000000EE VOL: 0
+; 0002 00F8   count = 0;
+;PCODE: $000000EF VOL: 0
+;PCODE: $000000F0 VOL: 0
+; 0002 00F9 
+; 0002 00FA #ifdef BUT_1_ID
+; 0002 00FB   ButtonInit_m(BUT_1_DDRX, BUT_1_PORTX, BUT_1_PIN, BUT_1_PULL);
+;PCODE: $000000F1 VOL: 0
+;PCODE: $000000F2 VOL: 0
+;PCODE: $000000F3 VOL: 0
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+;PCODE: $000000F6 VOL: 0
+;PCODE: $000000F7 VOL: 0
+;PCODE: $000000F8 VOL: 0
+;PCODE: $000000F9 VOL: 0
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 0
+;PCODE: $000000FC VOL: 0
+;PCODE: $000000FD VOL: 0
+;PCODE: $000000FE VOL: 0
+;PCODE: $000000FF VOL: 0
+; 0002 00FC #endif
+; 0002 00FD 
+; 0002 00FE #ifdef BUT_2_ID
+; 0002 00FF   ButtonInit_m(BUT_2_DDRX, BUT_2_PORTX, BUT_2_PIN, BUT_2_PULL);
+;PCODE: $00000100 VOL: 0
+;PCODE: $00000101 VOL: 0
+;PCODE: $00000102 VOL: 0
+;PCODE: $00000103 VOL: 0
+;PCODE: $00000104 VOL: 0
+;PCODE: $00000105 VOL: 0
+;PCODE: $00000106 VOL: 0
+;PCODE: $00000107 VOL: 0
+;PCODE: $00000108 VOL: 0
+;PCODE: $00000109 VOL: 0
+;PCODE: $0000010A VOL: 0
+;PCODE: $0000010B VOL: 0
+;PCODE: $0000010C VOL: 0
+;PCODE: $0000010D VOL: 0
+;PCODE: $0000010E VOL: 0
+; 0002 0100 #endif
+; 0002 0101 
+; 0002 0102 #ifdef BUT_3_ID
+; 0002 0103   ButtonInit_m(BUT_3_DDRX, BUT_3_PORTX, BUT_3_PIN, BUT_3_PULL);
+;PCODE: $0000010F VOL: 0
+;PCODE: $00000110 VOL: 0
+;PCODE: $00000111 VOL: 0
+;PCODE: $00000112 VOL: 0
+;PCODE: $00000113 VOL: 0
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
+;PCODE: $00000116 VOL: 0
+;PCODE: $00000117 VOL: 0
+;PCODE: $00000118 VOL: 0
+;PCODE: $00000119 VOL: 0
+;PCODE: $0000011A VOL: 0
+;PCODE: $0000011B VOL: 0
+;PCODE: $0000011C VOL: 0
+;PCODE: $0000011D VOL: 0
+; 0002 0104 #endif
+; 0002 0105 
+; 0002 0106 #ifdef BUT_4_ID
+; 0002 0107   ButtonInit_m(BUT_4_DDRX, BUT_4_PORTX, BUT_4_PIN, BUT_4_PULL);
+;PCODE: $0000011E VOL: 0
+;PCODE: $0000011F VOL: 0
+;PCODE: $00000120 VOL: 0
+;PCODE: $00000121 VOL: 0
+;PCODE: $00000122 VOL: 0
+;PCODE: $00000123 VOL: 0
+;PCODE: $00000124 VOL: 0
+;PCODE: $00000125 VOL: 0
+;PCODE: $00000126 VOL: 0
+;PCODE: $00000127 VOL: 0
+;PCODE: $00000128 VOL: 0
+;PCODE: $00000129 VOL: 0
+;PCODE: $0000012A VOL: 0
+;PCODE: $0000012B VOL: 0
+;PCODE: $0000012C VOL: 0
+; 0002 0108 #endif
+; 0002 0109 
+; 0002 010A #ifdef BUT_5_ID
+; 0002 010B   ButtonInit_m(BUT_5_DDRX, BUT_5_PORTX, BUT_5_PIN, BUT_5_PULL);
+; 0002 010C #endif
+; 0002 010D 
+; 0002 010E #ifdef BUT_6_ID
+; 0002 010F   ButtonInit_m(BUT_6_DDRX, BUT_6_PORTX, BUT_6_PIN, BUT_6_PULL);
+; 0002 0110 #endif
+; 0002 0111 
+; 0002 0112 #ifdef BUT_7_ID
+; 0002 0113   ButtonInit_m(BUT_7_DDRX, BUT_7_PORTX, BUT_7_PIN, BUT_7_PULL);
+; 0002 0114 #endif
+; 0002 0115 
+; 0002 0116 #ifdef BUT_8_ID
+; 0002 0117   ButtonInit_m(BUT_8_DDRX, BUT_8_PORTX, BUT_8_PIN, BUT_8_PULL);
+; 0002 0118 #endif
+; 0002 0119 
+; 0002 011A #ifdef BUT_9_ID
+; 0002 011B   ButtonInit_m(BUT_9_DDRX, BUT_9_PORTX, BUT_9_PIN, BUT_9_PULL);
+; 0002 011C #endif
+; 0002 011D 
+; 0002 011E #ifdef BUT_10_ID
+; 0002 011F   ButtonInit_m(BUT_10_DDRX, BUT_10_PORTX, BUT_10_PIN, BUT_10_PULL);
+; 0002 0120 #endif
+; 0002 0121 
+; 0002 0122 #ifdef BUT_11_ID
+; 0002 0123   ButtonInit_m(BUT_11_DDRX, BUT_11_PORTX, BUT_11_PIN, BUT_11_PULL);
+; 0002 0124 #endif
+; 0002 0125 
+; 0002 0126 #ifdef BUT_12_ID
+; 0002 0127   ButtonInit_m(BUT_12_DDRX, BUT_12_PORTX, BUT_12_PIN, BUT_12_PULL);
+; 0002 0128 #endif
+; 0002 0129 
+; 0002 012A #ifdef BUT_13_ID
+; 0002 012B   ButtonInit_m(BUT_13_DDRX, BUT_13_PORTX, BUT_13_PIN, BUT_13_PULL);
+; 0002 012C #endif
+; 0002 012D 
+; 0002 012E #ifdef BUT_14_ID
+; 0002 012F   ButtonInit_m(BUT_14_DDRX, BUT_14_PORTX, BUT_14_PIN, BUT_14_PULL);
+; 0002 0130 #endif
+; 0002 0131 
+; 0002 0132 #ifdef BUT_15_ID
+; 0002 0133   ButtonInit_m(BUT_15_DDRX, BUT_15_PORTX, BUT_15_PIN, BUT_15_PULL);
+; 0002 0134 #endif
+; 0002 0135 
+; 0002 0136 #ifdef BUT_16_ID
+; 0002 0137   ButtonInit_m(BUT_16_DDRX, BUT_16_PORTX, BUT_16_PIN, BUT_16_PULL);
+; 0002 0138 #endif
+; 0002 0139 
+; 0002 013A #ifdef BUT_17_ID
+; 0002 013B   ButtonInit_m(BUT_17_DDRX, BUT_17_PORTX, BUT_17_PIN, BUT_17_PULL);
+; 0002 013C #endif
+; 0002 013D 
+; 0002 013E #ifdef BUT_18_ID
+; 0002 013F   ButtonInit_m(BUT_18_DDRX, BUT_18_PORTX, BUT_18_PIN, BUT_18_PULL);
+; 0002 0140 #endif
+; 0002 0141 
+; 0002 0142 #ifdef BUT_19_ID
+; 0002 0143   ButtonInit_m(BUT_19_DDRX, BUT_19_PORTX, BUT_19_PIN, BUT_19_PULL);
+; 0002 0144 #endif
+; 0002 0145 
+; 0002 0146 #ifdef BUT_20_ID
+; 0002 0147   ButtonInit_m(BUT_20_DDRX, BUT_20_PORTX, BUT_20_PIN, BUT_20_PULL);
+; 0002 0148 #endif
+; 0002 0149 
+; 0002 014A #ifdef BUT_21_ID
+; 0002 014B   ButtonInit_m(BUT_21_DDRX, BUT_21_PORTX, BUT_21_PIN, BUT_21_PULL);
+; 0002 014C #endif
+; 0002 014D 
+; 0002 014E #ifdef BUT_22_ID
+; 0002 014F   ButtonInit_m(BUT_22_DDRX, BUT_22_PORTX, BUT_22_PIN, BUT_22_PULL);
+; 0002 0150 #endif
+; 0002 0151 
+; 0002 0152 #ifdef BUT_23_ID
+; 0002 0153   ButtonInit_m(BUT_23_DDRX, BUT_23_PORTX, BUT_23_PIN, BUT_23_PULL);
+; 0002 0154 #endif
+; 0002 0155 
+; 0002 0156 #ifdef BUT_24_ID
+; 0002 0157   ButtonInit_m(BUT_24_DDRX, BUT_24_PORTX, BUT_24_PIN, BUT_24_PULL);
+; 0002 0158 #endif
+; 0002 0159 
+; 0002 015A #ifdef BUT_25_ID
+; 0002 015B   ButtonInit_m(BUT_25_DDRX, BUT_25_PORTX, BUT_25_PIN, BUT_25_PULL);
+; 0002 015C #endif
+; 0002 015D 
+; 0002 015E #ifdef BUT_26_ID
+; 0002 015F   ButtonInit_m(BUT_26_DDRX, BUT_26_PORTX, BUT_26_PIN, BUT_26_PULL);
+; 0002 0160 #endif
+; 0002 0161 
+; 0002 0162 #ifdef BUT_27_ID
+; 0002 0163   ButtonInit_m(BUT_27_DDRX, BUT_27_PORTX, BUT_27_PIN, BUT_27_PULL);
+; 0002 0164 #endif
+; 0002 0165 
+; 0002 0166 #ifdef BUT_28_ID
+; 0002 0167   ButtonInit_m(BUT_28_DDRX, BUT_28_PORTX, BUT_28_PIN, BUT_28_PULL);
+; 0002 0168 #endif
+; 0002 0169 
+; 0002 016A #ifdef BUT_29_ID
+; 0002 016B   ButtonInit_m(BUT_29_DDRX, BUT_29_PORTX, BUT_29_PIN, BUT_29_PULL);
+; 0002 016C #endif
+; 0002 016D 
+; 0002 016E #ifdef BUT_30_ID
+; 0002 016F   ButtonInit_m(BUT_30_DDRX, BUT_30_PORTX, BUT_30_PIN, BUT_30_PULL);
+; 0002 0170 #endif
+; 0002 0171 
+; 0002 0172 #ifdef BUT_31_ID
+; 0002 0173   ButtonInit_m(BUT_31_DDRX, BUT_31_PORTX, BUT_31_PIN, BUT_31_PULL);
+; 0002 0174 #endif
+; 0002 0175 
+; 0002 0176 #ifdef BUT_32_ID
+; 0002 0177   ButtonInit_m(BUT_32_DDRX, BUT_32_PORTX, BUT_32_PIN, BUT_32_PULL);
+; 0002 0178 #endif
+; 0002 0179 }
+;PCODE: $0000012D VOL: 0
+;PCODE: $0000012E VOL: 0
+;PCODE: $0000012F VOL: 0
+;
+;/**********************************************/
+;
+;void BUT_Poll(void)
+; 0002 017E {
+;PCODE: $00000130 VOL: 0
+;PCODE: $00000131 VOL: 0
+; 0002 017F #if (BUT_POLL_ROTATION > 0)
+; 0002 0180   static uint8_t i = 0;
+; 0002 0181 #endif
+; 0002 0182 
+; 0002 0183   uint8_t state = 0;
+; 0002 0184 
+; 0002 0185   Switch_m(i);
+; 0002 0186 
+; 0002 0187 #ifdef BUT_1_ID
+; 0002 0188   CheckOneBut_m(BUT_1_ID, BUT_1_PINX, BUT_1_PIN, BUT_1_LEV, BUT_1_EVENT, state);
+;PCODE: $00000132 VOL: 0
+;	state -> R17
+;PCODE: $00000133 VOL: 0
+;PCODE: $00000134 VOL: 0
+;PCODE: $00000135 VOL: 0
+;PCODE: $00000136 VOL: 0
+;PCODE: $00000137 VOL: 0
+;PCODE: $00000138 VOL: 0
+;PCODE: $00000139 VOL: 0
+;PCODE: $0000013A VOL: 0
+;PCODE: $0000013B VOL: 0
+;PCODE: $0000013C VOL: 0
+;PCODE: $0000013D VOL: 0
+;PCODE: $0000013E VOL: 0
+;PCODE: $0000013F VOL: 0
+;PCODE: $00000140 VOL: 0
+;PCODE: $00000141 VOL: 0
+;PCODE: $00000142 VOL: 0
+;PCODE: $00000143 VOL: 0
+; 0002 0189 #endif
+; 0002 018A 
+; 0002 018B #ifdef BUT_2_ID
+; 0002 018C   CheckOneBut_m(BUT_2_ID, BUT_2_PINX, BUT_2_PIN, BUT_2_LEV, BUT_2_EVENT, state);
+;PCODE: $00000144 VOL: 0
+;PCODE: $00000145 VOL: 0
+;PCODE: $00000146 VOL: 0
+;PCODE: $00000147 VOL: 0
+;PCODE: $00000148 VOL: 0
+;PCODE: $00000149 VOL: 0
+;PCODE: $0000014A VOL: 0
+;PCODE: $0000014B VOL: 0
+;PCODE: $0000014C VOL: 0
+;PCODE: $0000014D VOL: 0
+;PCODE: $0000014E VOL: 0
+;PCODE: $0000014F VOL: 0
+;PCODE: $00000150 VOL: 0
+;PCODE: $00000151 VOL: 0
+;PCODE: $00000152 VOL: 0
+; 0002 018D #endif
+; 0002 018E 
+; 0002 018F #ifdef BUT_3_ID
+; 0002 0190   CheckOneBut_m(BUT_3_ID, BUT_3_PINX, BUT_3_PIN, BUT_3_LEV, BUT_3_EVENT, state);
+;PCODE: $00000153 VOL: 0
+;PCODE: $00000154 VOL: 0
+;PCODE: $00000155 VOL: 0
+;PCODE: $00000156 VOL: 0
+;PCODE: $00000157 VOL: 0
+;PCODE: $00000158 VOL: 0
+;PCODE: $00000159 VOL: 0
+;PCODE: $0000015A VOL: 0
+;PCODE: $0000015B VOL: 0
+;PCODE: $0000015C VOL: 0
+;PCODE: $0000015D VOL: 0
+;PCODE: $0000015E VOL: 0
+;PCODE: $0000015F VOL: 0
+;PCODE: $00000160 VOL: 0
+;PCODE: $00000161 VOL: 0
+; 0002 0191 #endif
+; 0002 0192 
+; 0002 0193 #ifdef BUT_4_ID
+; 0002 0194   CheckOneBut_m(BUT_4_ID, BUT_4_PINX, BUT_4_PIN, BUT_4_LEV, BUT_4_EVENT, state);
+;PCODE: $00000162 VOL: 0
+;PCODE: $00000163 VOL: 0
+;PCODE: $00000164 VOL: 0
+;PCODE: $00000165 VOL: 0
+;PCODE: $00000166 VOL: 0
+;PCODE: $00000167 VOL: 0
+;PCODE: $00000168 VOL: 0
+;PCODE: $00000169 VOL: 0
+;PCODE: $0000016A VOL: 0
+;PCODE: $0000016B VOL: 0
+;PCODE: $0000016C VOL: 0
+;PCODE: $0000016D VOL: 0
+;PCODE: $0000016E VOL: 0
+;PCODE: $0000016F VOL: 0
+;PCODE: $00000170 VOL: 0
+; 0002 0195 #endif
+; 0002 0196 
+; 0002 0197 #ifdef BUT_5_ID
+; 0002 0198   CheckOneBut_m(BUT_5_ID, BUT_5_PINX, BUT_5_PIN, BUT_5_LEV, BUT_5_EVENT, state);
+; 0002 0199 #endif
+; 0002 019A 
+; 0002 019B #ifdef BUT_6_ID
+; 0002 019C   CheckOneBut_m(BUT_6_ID, BUT_6_PINX, BUT_6_PIN, BUT_6_LEV, BUT_6_EVENT, state);
+; 0002 019D #endif
+; 0002 019E 
+; 0002 019F #ifdef BUT_7_ID
+; 0002 01A0   CheckOneBut_m(BUT_7_ID, BUT_7_PINX, BUT_7_PIN, BUT_7_LEV, BUT_7_EVENT, state);
+; 0002 01A1 #endif
+; 0002 01A2 
+; 0002 01A3 #ifdef BUT_8_ID
+; 0002 01A4   CheckOneBut_m(BUT_8_ID, BUT_8_PINX, BUT_8_PIN, BUT_8_LEV, BUT_8_EVENT, state);
+; 0002 01A5 #endif
+; 0002 01A6 
+; 0002 01A7 #ifdef BUT_9_ID
+; 0002 01A8   CheckOneBut_m(BUT_9_ID, BUT_9_PINX, BUT_9_PIN, BUT_9_LEV, BUT_9_EVENT, state);
+; 0002 01A9 #endif
+; 0002 01AA 
+; 0002 01AB #ifdef BUT_10_ID
+; 0002 01AC   CheckOneBut_m(BUT_10_ID, BUT_10_PINX, BUT_10_PIN, BUT_10_LEV, BUT_10_EVENT, state);
+; 0002 01AD #endif
+; 0002 01AE 
+; 0002 01AF #ifdef BUT_11_ID
+; 0002 01B0   CheckOneBut_m(BUT_11_ID, BUT_11_PINX, BUT_11_PIN, BUT_11_LEV, BUT_11_EVENT, state);
+; 0002 01B1 #endif
+; 0002 01B2 
+; 0002 01B3 #ifdef BUT_12_ID
+; 0002 01B4   CheckOneBut_m(BUT_12_ID, BUT_12_PINX, BUT_12_PIN, BUT_12_LEV, BUT_12_EVENT, state);
+; 0002 01B5 #endif
+; 0002 01B6 
+; 0002 01B7 #ifdef BUT_13_ID
+; 0002 01B8   CheckOneBut_m(BUT_13_ID, BUT_13_PINX, BUT_13_PIN, BUT_13_LEV, BUT_13_EVENT, state);
+; 0002 01B9 #endif
+; 0002 01BA 
+; 0002 01BB #ifdef BUT_14_ID
+; 0002 01BC   CheckOneBut_m(BUT_14_ID, BUT_14_PINX, BUT_14_PIN, BUT_14_LEV, BUT_14_EVENT, state);
+; 0002 01BD #endif
+; 0002 01BE 
+; 0002 01BF #ifdef BUT_15_ID
+; 0002 01C0   CheckOneBut_m(BUT_15_ID, BUT_15_PINX, BUT_15_PIN, BUT_15_LEV, BUT_15_EVENT, state);
+; 0002 01C1 #endif
+; 0002 01C2 
+; 0002 01C3 #ifdef BUT_16_ID
+; 0002 01C4   CheckOneBut_m(BUT_16_ID, BUT_16_PINX, BUT_16_PIN, BUT_16_LEV, BUT_16_EVENT, state);
+; 0002 01C5 #endif
+; 0002 01C6 
+; 0002 01C7 #ifdef BUT_17_ID
+; 0002 01C8   CheckOneBut_m(BUT_17_ID, BUT_17_PINX, BUT_17_PIN, BUT_17_LEV, BUT_17_EVENT, state);
+; 0002 01C9 #endif
+; 0002 01CA 
+; 0002 01CB #ifdef BUT_18_ID
+; 0002 01CC   CheckOneBut_m(BUT_18_ID, BUT_18_PINX, BUT_18_PIN, BUT_18_LEV, BUT_18_EVENT, state);
+; 0002 01CD #endif
+; 0002 01CE 
+; 0002 01CF #ifdef BUT_19_ID
+; 0002 01D0   CheckOneBut_m(BUT_19_ID, BUT_19_PINX, BUT_19_PIN, BUT_19_LEV, BUT_19_EVENT, state);
+; 0002 01D1 #endif
+; 0002 01D2 
+; 0002 01D3 #ifdef BUT_20_ID
+; 0002 01D4   CheckOneBut_m(BUT_20_ID, BUT_20_PINX, BUT_20_PIN, BUT_20_LEV, BUT_20_EVENT, state);
+; 0002 01D5 #endif
+; 0002 01D6 
+; 0002 01D7 #ifdef BUT_21_ID
+; 0002 01D8   CheckOneBut_m(BUT_21_ID, BUT_21_PINX, BUT_21_PIN, BUT_21_LEV, BUT_21_EVENT, state);
+; 0002 01D9 #endif
+; 0002 01DA 
+; 0002 01DB #ifdef BUT_22_ID
+; 0002 01DC   CheckOneBut_m(BUT_22_ID, BUT_22_PINX, BUT_22_PIN, BUT_22_LEV, BUT_22_EVENT, state);
+; 0002 01DD #endif
+; 0002 01DE 
+; 0002 01DF #ifdef BUT_23_ID
+; 0002 01E0   CheckOneBut_m(BUT_23_ID, BUT_23_PINX, BUT_23_PIN, BUT_23_LEV, BUT_23_EVENT, state);
+; 0002 01E1 #endif
+; 0002 01E2 
+; 0002 01E3 #ifdef BUT_24_ID
+; 0002 01E4   CheckOneBut_m(BUT_24_ID, BUT_24_PINX, BUT_24_PIN, BUT_24_LEV, BUT_24_EVENT, state);
+; 0002 01E5 #endif
+; 0002 01E6 
+; 0002 01E7 #ifdef BUT_25_ID
+; 0002 01E8   CheckOneBut_m(BUT_25_ID, BUT_25_PINX, BUT_25_PIN, BUT_25_LEV, BUT_25_EVENT, state);
+; 0002 01E9 #endif
+; 0002 01EA 
+; 0002 01EB #ifdef BUT_26_ID
+; 0002 01EC   CheckOneBut_m(BUT_26_ID, BUT_26_PINX, BUT_26_PIN, BUT_26_LEV, BUT_26_EVENT, state);
+; 0002 01ED #endif
+; 0002 01EE 
+; 0002 01EF #ifdef BUT_27_ID
+; 0002 01F0   CheckOneBut_m(BUT_27_ID, BUT_27_PINX, BUT_27_PIN, BUT_27_LEV, BUT_27_EVENT, state);
+; 0002 01F1 #endif
+; 0002 01F2 
+; 0002 01F3 #ifdef BUT_28_ID
+; 0002 01F4   CheckOneBut_m(BUT_28_ID, BUT_28_PINX, BUT_28_PIN, BUT_28_LEV, BUT_28_EVENT, state);
+; 0002 01F5 #endif
+; 0002 01F6 
+; 0002 01F7 #ifdef BUT_29_ID
+; 0002 01F8   CheckOneBut_m(BUT_29_ID, BUT_29_PINX, BUT_29_PIN, BUT_29_LEV, BUT_29_EVENT, state);
+; 0002 01F9 #endif
+; 0002 01FA 
+; 0002 01FB #ifdef BUT_30_ID
+; 0002 01FC   CheckOneBut_m(BUT_30_ID, BUT_30_PINX, BUT_30_PIN, BUT_30_LEV, BUT_30_EVENT, state);
+; 0002 01FD #endif
+; 0002 01FE 
+; 0002 01FF #ifdef BUT_31_ID
+; 0002 0200   CheckOneBut_m(BUT_31_ID, BUT_31_PINX, BUT_31_PIN, BUT_31_LEV, BUT_31_EVENT, state);
+; 0002 0201 #endif
+; 0002 0202 
+; 0002 0203 #ifdef BUT_32_ID
+; 0002 0204   CheckOneBut_m(BUT_32_ID, BUT_32_PINX, BUT_32_PIN, BUT_32_LEV, BUT_32_EVENT, state);
+; 0002 0205 #endif
+; 0002 0206 
+; 0002 0207    End_m();
+; 0002 0208 
+; 0002 0209 #if (BUT_POLL_ROTATION > 0)
+; 0002 020A    i++;
+; 0002 020B    if (i >= BUT_AMOUNT){
+; 0002 020C      i = 0;
+; 0002 020D    }
+; 0002 020E #endif
+; 0002 020F 
+; 0002 0210 }
+;PCODE: $00000171 VOL: 0
+;PCODE: $00000172 VOL: 0
+;PCODE: $00000173 VOL: 0
+;

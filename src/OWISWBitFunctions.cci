@@ -1,0 +1,9 @@
+VERSION:3 SOURCE_TIMESTAMP:3D63713C
+NODE:I LEVEL:0 LINE:22 "D:\info\Shems\spirt\spirt v.1\spirt\program_V0.30\OWIPolled.h"
+NODE:I LEVEL:0 LINE:26 "D:\info\Shems\spirt\spirt v.1\spirt\program_V0.30\compilers.h"
+NODE:I LEVEL:0 LINE:28 "D:\info\Shems\spirt\spirt v.1\spirt\program_V0.30\OWIBitFunctions.h"
+NODE:F LEVEL:0 LINE:38 "OWI_Init(unsigned char pins)"
+NODE:F LEVEL:0 LINE:55 "OWI_WriteBit1(unsigned char pins)"
+NODE:F LEVEL:0 LINE:83 "OWI_WriteBit0(unsigned char pins)"
+NODE:F LEVEL:0 LINE:112 "OWI_ReadBit(unsigned char pins)"
+NODE:F LEVEL:0 LINE:150 "OWI_DetectPresence(unsigned char pins)"

@@ -1,0 +1,219 @@
+;
+;#include <circlebuffer.h>
+;#include <handlers.h>
+;
+;//кольцевой буфер
+;static volatile unsigned char cycleBuf[SIZE_BUF];
+;static unsigned char tailBuf = 0;
+;static unsigned char headBuf = 0;
+;static volatile unsigned char countBuf = 0;
+;
+;
+;//возвращает колличество событий находящихся в буфере
+;unsigned char ES_GetCount(void)
+; 0003 000E {
+
+	.CSEG
+;PCODE: $00000000 VOL: 0
+;PCODE: $00000001 VOL: 0
+; 0003 000F   return countBuf;
+;PCODE: $00000002 VOL: 1
+;PCODE: $00000003 VOL: 0
+; 0003 0010 }
+;PCODE: $00000004 VOL: 0
+;
+;//"очищает" буфер
+;void ES_FlushBuf(void)
+; 0003 0014 {
+;PCODE: $00000005 VOL: 0
+;PCODE: $00000006 VOL: 0
+; 0003 0015   tailBuf = 0;
+;PCODE: $00000007 VOL: 0
+;PCODE: $00000008 VOL: 0
+; 0003 0016   headBuf = 0;
+;PCODE: $00000009 VOL: 0
+;PCODE: $0000000A VOL: 0
+; 0003 0017   countBuf = 0;
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 1
+; 0003 0018 }
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+;
+;//взять событие
+;unsigned char ES_GetEvent(void)
+; 0003 001C {
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+; 0003 001D   unsigned char event;
+; 0003 001E   if (countBuf > 0){                    //если приемный буфер не пустой
+;PCODE: $00000011 VOL: 0
+;	event -> R17
+;PCODE: $00000012 VOL: 1
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+; 0003 001F     event = cycleBuf[headBuf];          //считать из него событие
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 1
+;PCODE: $00000018 VOL: 0
+; 0003 0020     countBuf--;                         //уменьшить счетчик
+;PCODE: $00000019 VOL: 1
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 1
+; 0003 0021     headBuf++;                          //инкрементировать индекс головы буфера
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+; 0003 0022     if (headBuf == SIZE_BUF) headBuf = 0;
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+; 0003 0023     return event;                         //вернуть событие
+;PCODE: $00000024 VOL: 0
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+; 0003 0024   }
+; 0003 0025   return 0;
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0003 0026 }
+;PCODE: $0000002C VOL: 0
+;
+;//положить событие
+;void ES_PlaceEvent(unsigned char event)
+; 0003 002A {
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+; 0003 002B   if (countBuf < SIZE_BUF){                    //если в буфере еще есть место
+;PCODE: $0000002F VOL: 0
+;	event -> Y+0
+;PCODE: $00000030 VOL: 1
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+; 0003 002C       cycleBuf[tailBuf] = event;               //кинуть событие в буфер
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 1
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+; 0003 002D       tailBuf++;                               //увеличить индекс хвоста буфера
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+; 0003 002E       if (tailBuf == SIZE_BUF) tailBuf = 0;
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+; 0003 002F       countBuf++;                              //увеличить счетчик
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 1
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 1
+; 0003 0030   }
+; 0003 0031 }
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+;
+;void ES_PlaceHeadEvent(unsigned char event)
+; 0003 0034 {
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+; 0003 0035   if (countBuf < SIZE_BUF){                    //если в буфере еще есть место
+;PCODE: $0000004A VOL: 0
+;	event -> Y+0
+;PCODE: $0000004B VOL: 1
+;PCODE: $0000004C VOL: 0
+;PCODE: $0000004D VOL: 0
+; 0003 0036       if (headBuf == 0){
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+; 0003 0037         headBuf = SIZE_BUF - 1;
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+; 0003 0038       }else {
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+; 0003 0039         headBuf --;
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0003 003A       }
+;PCODE: $00000058 VOL: 0
+; 0003 003B       cycleBuf[headBuf] = event;               //кинуть событие в начало буфера
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 1
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0003 003C       countBuf++;                              //увеличить счетчик
+;PCODE: $0000005E VOL: 1
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 1
+; 0003 003D   }
+; 0003 003E }
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+;
+;//массив указателей на функции-обработчики
+;void (*FuncAr[])(void) =
+;{
+;  HandlerEventButUp,
+;  HandlerEventButDown,
+;  HandlerEventButEnter,
+;  HandlerEventButEsc,
+;  HandlerEventTimer_1s,
+;  HandlerEventTimer_250ms,
+;  HandlerEventTimer_10ms,
+;  HandlerEventButLUp,
+;  HandlerEventButLDown,
+;  HandlerEventTimer_10s,
+;  HandlerEventTimer_1Hz
+;};
+
+	.DSEG
+;
+;//++++++++++++++++++++++++++++++++++++++++++
+;void ES_Dispatch(unsigned char event)
+; 0003 0052 {
+
+	.CSEG
+;PCODE: $00000065 VOL: 0
+;PCODE: $00000066 VOL: 0
+; 0003 0053   void (*pFunc)(void);
+; 0003 0054   pFunc = FuncAr[event-1];
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+;	event -> Y+2
+;	*pFunc -> R16,R17
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+; 0003 0055   pFunc();
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+; 0003 0056 }
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0

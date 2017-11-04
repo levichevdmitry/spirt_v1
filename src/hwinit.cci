@@ -1,0 +1,7 @@
+VERSION:3 SOURCE_TIMESTAMP:48D59DD4
+NODE:I LEVEL:0 LINE:1 "hwinit.h"
+NODE:I LEVEL:0 LINE:2 "C:\cvavr2\inc\mega128.h"
+NODE:I LEVEL:0 LINE:3 "C:\cvavr2\inc\delay.h"
+NODE:I LEVEL:0 LINE:4 "nokia1100_lcd_lib.h"
+NODE:I LEVEL:0 LINE:5 "general.h"
+NODE:F LEVEL:0 LINE:7 "HW_Init(void)"
