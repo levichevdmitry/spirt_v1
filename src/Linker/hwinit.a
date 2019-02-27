@@ -372,44 +372,13 @@
 ;
 ;#ifdef HW1_P
 ;void PresureInit(){
-; 0007 00D5 void PresureInit(){
-;PCODE: $00000093 VOL: 0
-;PCODE: $00000094 VOL: 0
-; 0007 00D6     p_offset = read_adc(0);
-;PCODE: $00000095 VOL: 0
-;PCODE: $00000096 VOL: 0
-;PCODE: $00000097 VOL: 0
-; 0007 00D7     nlcd_GotoXY(0,1);
-;PCODE: $00000098 VOL: 0
-;PCODE: $00000099 VOL: 0
-;PCODE: $0000009A VOL: 0
-;PCODE: $0000009B VOL: 0
-; 0007 00D8     nlcd_PrintF("   Калибровка   ");
-;PCODE: $0000009C VOL: 0
-;PCODE: $0000009D VOL: 0
-;PCODE: $0000009E VOL: 0
-; 0007 00D9     nlcd_PrintF("    датчика     ");
-;PCODE: $0000009F VOL: 0
-;PCODE: $000000A0 VOL: 0
-;PCODE: $000000A1 VOL: 0
-; 0007 00DA     nlcd_PrintF("  давления...   ");
-;PCODE: $000000A2 VOL: 0
-;PCODE: $000000A3 VOL: 0
-;PCODE: $000000A4 VOL: 0
-; 0007 00DB     delay_ms(2000);
-;PCODE: $000000A5 VOL: 0
-;PCODE: $000000A6 VOL: 0
-; 0007 00DC     nlcd_Clear();
-;PCODE: $000000A7 VOL: 0
-; 0007 00DD     p_offset = read_adc(0);
-;PCODE: $000000A8 VOL: 0
-;PCODE: $000000A9 VOL: 0
-;PCODE: $000000AA VOL: 0
-; 0007 00DE };
-;PCODE: $000000AB VOL: 0
-;PCODE: $000000AC VOL: 0
-
-	.DSEG
-_0xE0003:
-	.BYTE 0x33
+;    p_offset = read_adc(0);
+;    nlcd_GotoXY(0,1);
+;    nlcd_PrintF("   Калибровка   ");
+;    nlcd_PrintF("    датчика     ");
+;    nlcd_PrintF("  давления...   ");
+;    delay_ms(2000);
+;    nlcd_Clear();
+;    p_offset = read_adc(0);
+;};
 ;#endif

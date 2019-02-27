@@ -1,7 +1,7 @@
 #ifndef _GENERAL_H_
 #define _GENERAL_H_
 
-#define HW1_P  // define for Oleg hw version, comment for Alex hw
+//#define HW1_P  // define for Oleg hw version, comment for Alex hw
 //#define SLOW_HEAD_SPEED
 
 #define ADC_VREF_TYPE       0x40

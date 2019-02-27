@@ -1232,6 +1232,14 @@ _nlcd_Font:
 	.DB  0x50,0x20,0x0,0x28,0x44,0x54,0x54,0x38
 	.DB  0x7C,0x10,0x38,0x44,0x38,0x8,0x54,0x34
 	.DB  0x14,0x7C
+_valve_cls_lbs:
+	.DB  0xC7,0x0
+_valve_reg_lbs:
+	.DB  0xD0,0x0
+_valve_opn_lbs:
+	.DB  0xCE,0x0
+_valve_lbs:
+	.DB  LOW(_valve_cls_lbs*2),HIGH(_valve_cls_lbs*2),LOW(_valve_reg_lbs*2),HIGH(_valve_reg_lbs*2),LOW(_valve_opn_lbs*2),HIGH(_valve_opn_lbs*2)
 _distilation:
 	.DB  0xC4,0xE8,0xF1,0xF2,0xE8,0xEB,0xFF,0xF6
 	.DB  0xE8,0xFF,0x0
@@ -1348,8 +1356,8 @@ _0x0:
 	.DB  0xEE,0xED,0xF2,0xF0,0xEE,0xEB,0xEB,0xE5
 	.DB  0xF0,0x20,0x20,0x20,0x0,0x20,0x68,0x77
 	.DB  0x20,0x76,0x2E,0x31,0x2E,0x31,0x64,0x20
-	.DB  0x50,0x20,0x73,0x65,0x6E,0x0,0x20,0x73
-	.DB  0x77,0x20,0x76,0x2E,0x30,0x2E,0x33,0x31
+	.DB  0x20,0x20,0x20,0x20,0x20,0x0,0x20,0x73
+	.DB  0x77,0x20,0x76,0x2E,0x30,0x2E,0x33,0x32
 	.DB  0x2E,0x66,0x20,0x75,0x6E,0x69,0x0,0x20
 	.DB  0xC8,0xED,0xE8,0xF6,0xE8,0xE0,0xEB,0xE8
 	.DB  0xE7,0xE0,0xF6,0xE8,0xFF,0x20,0x20,0x0
@@ -1364,7 +1372,7 @@ _0x6000A:
 	.DB  LOW(_HandlerEventButLDown),HIGH(_HandlerEventButLDown),LOW(_HandlerEventTimer_10s),HIGH(_HandlerEventTimer_10s),LOW(_HandlerEventTimer_1Hz),HIGH(_HandlerEventTimer_1Hz)
 _0x80003:
 	.DB  0x1
-_0x800ED:
+_0x80117:
 	.DB  0x0,0x0,0x0,0x0
 _0x80000:
 	.DB  0xCD,0xE5,0xF2,0x20,0xED,0xE0,0xE7,0xED
@@ -1399,47 +1407,49 @@ _0x80000:
 	.DB  0xE2,0xE0,0xF2,0xFC,0x0,0xEF,0xF0,0xEE
 	.DB  0xF6,0xE5,0xF1,0xF1,0x3F,0x0,0x3C,0x45
 	.DB  0x4E,0x54,0x3E,0xC4,0xE0,0x20,0x3C,0x45
-	.DB  0x53,0x43,0x3E,0xCD,0xE5,0xF2,0x0,0xCF
-	.DB  0xF0,0xEE,0xF6,0xE5,0xF1,0xF1,0x0,0xC4
+	.DB  0x53,0x43,0x3E,0xCD,0xE5,0xF2,0x0,0xC4
 	.DB  0xE8,0xF1,0xF2,0xE8,0xEB,0xEB,0xFF,0xF6
-	.DB  0xE8,0xE8,0x0,0xC2,0xF0,0xE5,0xEC,0xFF
+	.DB  0xE8,0xFF,0x0,0xC2,0xF0,0xE5,0xEC,0xFF
 	.DB  0x3A,0x25,0x32,0x69,0x3A,0x25,0x32,0x69
 	.DB  0x3A,0x25,0x32,0x69,0x0,0x74,0xEA,0xEE
 	.DB  0xEB,0x20,0xE2,0x20,0x25,0x2D,0x33,0x2E
 	.DB  0x32,0x66,0x20,0x25,0x73,0x0,0x74,0xEA
 	.DB  0xF3,0xE1,0xE0,0x20,0x20,0x25,0x2D,0x33
-	.DB  0x2E,0x32,0x66,0x20,0x25,0x73,0x0,0x50
-	.DB  0x25,0x2B,0x33,0x2E,0x31,0x66,0x0,0xD2
-	.DB  0xDD,0xCD,0x20,0x25,0x33,0x69,0x25,0x25
-	.DB  0x0,0x20,0x74,0x20,0xEA,0xEE,0xEB,0xEE
-	.DB  0xED,0xFB,0x20,0xED,0xE8,0xE7,0x21,0x20
-	.DB  0x0,0xD0,0xE5,0xEA,0xF2,0xE8,0xF4,0xE8
-	.DB  0xEA,0xE0,0xF6,0xE8,0xFF,0x0,0x20,0xD0
-	.DB  0xE5,0xEA,0xF2,0xE8,0xF4,0xE8,0xEA,0xE0
-	.DB  0xF6,0xE8,0xFF,0x0,0x74,0xEA,0xEE,0xEB
-	.DB  0x20,0xED,0x20,0x25,0x2D,0x33,0x2E,0x32
-	.DB  0x66,0x20,0x25,0x73,0x0,0x20,0x20,0x20
+	.DB  0x2E,0x32,0x66,0x20,0x25,0x73,0x0,0x25
+	.DB  0x63,0xCA,0xEB,0x2D,0x25,0x73,0x20,0x25
+	.DB  0x63,0x25,0x34,0x2E,0x30,0x66,0x20,0xEC
+	.DB  0xEB,0x2F,0xF7,0x0,0x25,0x63,0xD2,0xDD
+	.DB  0xCD,0x20,0x25,0x33,0x69,0x25,0x25,0x0
+	.DB  0x20,0x74,0x20,0xEA,0xEE,0xEB,0xEE,0xED
+	.DB  0xFB,0x20,0xED,0xE8,0xE7,0x21,0x20,0x0
+	.DB  0xD0,0xE5,0xEA,0xF2,0xE8,0xF4,0xE8,0xEA
+	.DB  0xE0,0xF6,0xE8,0xFF,0x0,0x20,0xD0,0xE5
+	.DB  0xEA,0xF2,0xE8,0xF4,0xE8,0xEA,0xE0,0xF6
+	.DB  0xE8,0xFF,0x0,0x74,0xEA,0xEE,0xEB,0x20
+	.DB  0xED,0x20,0x25,0x2D,0x33,0x2E,0x32,0x66
+	.DB  0x20,0x25,0x73,0x0,0x20,0x20,0x20,0x20
 	.DB  0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20
-	.DB  0x20,0x20,0x20,0x20,0x20,0x0,0xD2,0xDD
-	.DB  0xCD,0x25,0x33,0x69,0x25,0x25,0x0,0xD1
-	.DB  0x5C,0xD1,0x20,0x25,0x73,0x20,0xCA,0x20
-	.DB  0x25,0x69,0x0,0x56,0xF2,0x20,0x25,0x34
-	.DB  0x2E,0x30,0x66,0x20,0xEC,0xEB,0x2F,0xF7
-	.DB  0x0,0x51,0xE3,0x20,0x25,0x34,0x2E,0x32
-	.DB  0x66,0x20,0xEC,0xEB,0x0,0x20,0x20,0x20
-	.DB  0xC4,0xE8,0xF1,0xF2,0xE8,0xEB,0xEB,0xFF
-	.DB  0xF6,0xE8,0xFF,0x20,0x20,0x20,0x0,0x20
-	.DB  0x20,0xD0,0xE5,0xEA,0xF2,0xE8,0xF4,0xE8
-	.DB  0xEA,0xE0,0xF6,0xE8,0xFF,0x20,0x20,0x0
-	.DB  0xEE,0xEA,0xEE,0xED,0xF7,0xE5,0xED,0x21
-	.DB  0x0,0xCA,0xE0,0xEB,0xE8,0xE1,0xF0,0xEE
-	.DB  0xE2,0xEA,0xE0,0x0,0xCE,0xF2,0xE4,0xEE
-	.DB  0xE7,0xE8,0xF0,0xEE,0xE2,0xE0,0xED,0xED
-	.DB  0xEE,0x3A,0x20,0x0,0x51,0x20,0x25,0x34
-	.DB  0x2E,0x32,0x66,0x20,0xEC,0xEB,0x0,0x6B
-	.DB  0x20,0x25,0x31,0x2E,0x34,0x66,0x20,0xEC
-	.DB  0xEB,0x0,0x69,0x20,0x25,0x69,0x20,0xE8
-	.DB  0xEC,0xEF,0x2E,0x0
+	.DB  0x20,0x20,0x20,0x20,0x0,0xD2,0xDD,0xCD
+	.DB  0x25,0x33,0x69,0x25,0x25,0x0,0xD1,0x5C
+	.DB  0xD1,0x20,0x25,0x73,0x20,0xCA,0x20,0x25
+	.DB  0x69,0x0,0x56,0xF2,0x20,0x25,0x34,0x2E
+	.DB  0x30,0x66,0x20,0xEC,0xEB,0x2F,0xF7,0x0
+	.DB  0x51,0xE3,0x20,0x25,0x34,0x2E,0x32,0x66
+	.DB  0x20,0xEC,0xEB,0x0,0x20,0x20,0x20,0xC4
+	.DB  0xE8,0xF1,0xF2,0xE8,0xEB,0xEB,0xFF,0xF6
+	.DB  0xE8,0xFF,0x20,0x20,0x20,0x0,0x20,0x20
+	.DB  0xD0,0xE5,0xEA,0xF2,0xE8,0xF4,0xE8,0xEA
+	.DB  0xE0,0xF6,0xE8,0xFF,0x20,0x20,0x0,0xCF
+	.DB  0xF0,0xEE,0xF6,0xE5,0xF1,0xF1,0x0,0xEE
+	.DB  0xEA,0xEE,0xED,0xF7,0xE5,0xED,0x21,0x0
+	.DB  0xCA,0xE0,0xEB,0xE8,0xE1,0xF0,0xEE,0xE2
+	.DB  0xEA,0xE0,0x0,0xCE,0xF2,0xE4,0xEE,0xE7
+	.DB  0xE8,0xF0,0xEE,0xE2,0xE0,0xED,0xED,0xEE
+	.DB  0x3A,0x20,0x0,0x51,0x20,0x25,0x34,0x2E
+	.DB  0x32,0x66,0x20,0xEC,0xEB,0x0,0x6B,0x20
+	.DB  0x25,0x31,0x2E,0x34,0x66,0x20,0xEC,0xEB
+	.DB  0x0,0x69,0x20,0x25,0x69,0x20,0xE8,0xEC
+	.DB  0xEF,0x2E,0x0
 _0xA0003:
 	.DB  LOW(_distilation*2),HIGH(_distilation*2),LOW(_RunDistilation),HIGH(_RunDistilation),0x0,0x0,0x0,LOW(_rectification*2)
 	.DB  HIGH(_rectification*2),LOW(_RunRectification),HIGH(_RunRectification),0x0,0x0,0x0,LOW(_settings*2),HIGH(_settings*2)
@@ -1513,14 +1523,6 @@ _0xC0000:
 	.DB  0xE0,0xEB,0xE0,0x20,0x20,0x20,0x0,0x20
 	.DB  0xED,0xE0,0xE6,0xEC,0xE8,0xF2,0xE5,0x20
 	.DB  0x3C,0x45,0x4E,0x54,0x3E,0x20,0x20,0x0
-_0xE0000:
-	.DB  0x20,0x20,0x20,0xCA,0xE0,0xEB,0xE8,0xE1
-	.DB  0xF0,0xEE,0xE2,0xEA,0xE0,0x20,0x20,0x20
-	.DB  0x0,0x20,0x20,0x20,0x20,0xE4,0xE0,0xF2
-	.DB  0xF7,0xE8,0xEA,0xE0,0x20,0x20,0x20,0x20
-	.DB  0x20,0x0,0x20,0x20,0xE4,0xE0,0xE2,0xEB
-	.DB  0xE5,0xED,0xE8,0xFF,0x2E,0x2E,0x2E,0x20
-	.DB  0x20,0x20,0x0
 _0x2020000:
 	.DB  0x2D,0x4E,0x41,0x4E,0x0
 _0x2040060:
@@ -1674,169 +1676,165 @@ __GLOBAL_INI_TBL:
 	.DW  _0x8000F+35
 	.DW  _0x80000*2+246
 
-	.DW  0x08
+	.DW  0x0C
 	.DW  _0x8000F+52
 	.DW  _0x80000*2+263
 
-	.DW  0x0C
-	.DW  _0x8000F+60
-	.DW  _0x80000*2+271
-
 	.DW  0x10
-	.DW  _0x8001C
+	.DW  _0x80025
 	.DW  _0x80000*2
 
 	.DW  0x10
-	.DW  _0x8001C+16
+	.DW  _0x80025+16
 	.DW  _0x80000*2+16
 
 	.DW  0x10
-	.DW  _0x8001C+32
+	.DW  _0x80025+32
 	.DW  _0x80000*2+32
 
 	.DW  0x10
-	.DW  _0x8001C+48
+	.DW  _0x80025+48
 	.DW  _0x80000*2
 
 	.DW  0x10
-	.DW  _0x8001C+64
+	.DW  _0x80025+64
 	.DW  _0x80000*2+16
 
 	.DW  0x10
-	.DW  _0x8001C+80
-	.DW  _0x80000*2+353
+	.DW  _0x80025+80
+	.DW  _0x80000*2+360
 
 	.DW  0x10
-	.DW  _0x8001C+96
+	.DW  _0x80025+96
 	.DW  _0x80000*2
 
 	.DW  0x10
-	.DW  _0x8001C+112
+	.DW  _0x80025+112
 	.DW  _0x80000*2+16
 
 	.DW  0x10
-	.DW  _0x8001C+128
+	.DW  _0x80025+128
 	.DW  _0x80000*2+48
 
 	.DW  0x10
-	.DW  _0x8001C+144
+	.DW  _0x80025+144
 	.DW  _0x80000*2+64
 
 	.DW  0x10
-	.DW  _0x8001C+160
+	.DW  _0x80025+160
 	.DW  _0x80000*2+80
 
 	.DW  0x10
-	.DW  _0x8001C+176
+	.DW  _0x80025+176
 	.DW  _0x80000*2+96
 
 	.DW  0x10
-	.DW  _0x8001C+192
+	.DW  _0x80025+192
 	.DW  _0x80000*2+112
 
 	.DW  0x10
-	.DW  _0x8001C+208
+	.DW  _0x80025+208
 	.DW  _0x80000*2+128
 
 	.DW  0x10
-	.DW  _0x8001C+224
+	.DW  _0x80025+224
 	.DW  _0x80000*2+144
 
 	.DW  0x10
-	.DW  _0x8001C+240
+	.DW  _0x80025+240
 	.DW  _0x80000*2+32
 
 	.DW  0x11
-	.DW  _0x8001C+256
+	.DW  _0x80025+256
 	.DW  _0x80000*2+160
 
 	.DW  0x11
-	.DW  _0x8001C+273
+	.DW  _0x80025+273
 	.DW  _0x80000*2+177
 
 	.DW  0x11
-	.DW  _0x8001C+290
+	.DW  _0x80025+290
 	.DW  _0x80000*2+194
 
 	.DW  0x10
-	.DW  _0x8001C+307
+	.DW  _0x80025+307
 	.DW  _0x80000*2+128
 
 	.DW  0x10
-	.DW  _0x8001C+323
+	.DW  _0x80025+323
 	.DW  _0x80000*2+144
 
 	.DW  0x10
-	.DW  _0x8001C+339
-	.DW  _0x80000*2+353
+	.DW  _0x80025+339
+	.DW  _0x80000*2+360
 
 	.DW  0x0D
-	.DW  _0x80028
-	.DW  _0x80000*2+369
+	.DW  _0x80031
+	.DW  _0x80000*2+376
 
 	.DW  0x09
-	.DW  _0x80028+13
+	.DW  _0x80031+13
 	.DW  _0x80000*2+228
 
 	.DW  0x09
-	.DW  _0x80028+22
+	.DW  _0x80031+22
 	.DW  _0x80000*2+237
 
 	.DW  0x11
-	.DW  _0x80028+31
+	.DW  _0x80031+31
 	.DW  _0x80000*2+246
 
 	.DW  0x0E
-	.DW  _0x80028+48
-	.DW  _0x80000*2+382
+	.DW  _0x80031+48
+	.DW  _0x80000*2+389
 
 	.DW  0x11
-	.DW  _0x80028+62
-	.DW  _0x80000*2+413
+	.DW  _0x80031+62
+	.DW  _0x80000*2+420
 
 	.DW  0x12
-	.DW  _0x8003B
-	.DW  _0x80000*2+477
+	.DW  _0x80044
+	.DW  _0x80000*2+484
 
 	.DW  0x11
-	.DW  _0x8003B+18
-	.DW  _0x80000*2+495
+	.DW  _0x80044+18
+	.DW  _0x80000*2+502
 
 	.DW  0x08
-	.DW  _0x8003B+35
-	.DW  _0x80000*2+263
+	.DW  _0x80044+35
+	.DW  _0x80000*2+519
 
 	.DW  0x09
-	.DW  _0x8003B+43
-	.DW  _0x80000*2+512
+	.DW  _0x80044+43
+	.DW  _0x80000*2+527
 
 	.DW  0x0B
-	.DW  _0x8003E
-	.DW  _0x80000*2+521
+	.DW  _0x80047
+	.DW  _0x80000*2+536
 
 	.DW  0x09
-	.DW  _0x8003E+11
+	.DW  _0x80047+11
 	.DW  _0x80000*2+228
 
 	.DW  0x09
-	.DW  _0x8003E+20
+	.DW  _0x80047+20
 	.DW  _0x80000*2+237
 
 	.DW  0x11
-	.DW  _0x8003E+29
+	.DW  _0x80047+29
 	.DW  _0x80000*2+246
 
 	.DW  0x0B
-	.DW  _0x8003E+46
-	.DW  _0x80000*2+521
+	.DW  _0x80047+46
+	.DW  _0x80000*2+536
 
 	.DW  0x10
-	.DW  _0x8003E+57
-	.DW  _0x80000*2+532
+	.DW  _0x80047+57
+	.DW  _0x80000*2+547
 
 	.DW  0x04
 	.DW  0x0A
-	.DW  _0x800ED*2
+	.DW  _0x80117*2
 
 	.DW  0x13
 	.DW  _menu__G005
@@ -1929,18 +1927,6 @@ __GLOBAL_INI_TBL:
 	.DW  0x11
 	.DW  _0xC0026+68
 	.DW  _0xC0000*2+263
-
-	.DW  0x11
-	.DW  _0xE0003
-	.DW  _0xE0000*2
-
-	.DW  0x11
-	.DW  _0xE0003+17
-	.DW  _0xE0000*2+17
-
-	.DW  0x11
-	.DW  _0xE0003+34
-	.DW  _0xE0000*2+34
 
 	.DW  0x01
 	.DW  __seed_G102
@@ -2540,35 +2526,20 @@ _adc_isr:
 ;// with noise canceling
 ;unsigned int read_adc(unsigned char adc_input)
 ; 0000 0106 {
-_read_adc:
 ; 0000 0107 ADMUX=adc_input | (ADC_VREF_TYPE & 0xff);
-	ST   -Y,R26
 ;	adc_input -> Y+0
-	LD   R30,Y
-	ORI  R30,0x40
-	OUT  0x7,R30
 ; 0000 0108 // Delay needed for the stabilization of the ADC input voltage
 ; 0000 0109 delay_us(10);
-	__DELAY_USB 49
 ; 0000 010A #asm
 ; 0000 010B     in   r30,mcucr
-    in   r30,mcucr
 ; 0000 010C     cbr  r30,__sm_mask
-    cbr  r30,__sm_mask
 ; 0000 010D     sbr  r30,__se_bit | __sm_adc_noise_red
-    sbr  r30,__se_bit | __sm_adc_noise_red
 ; 0000 010E     out  mcucr,r30
-    out  mcucr,r30
 ; 0000 010F     sleep
-    sleep
 ; 0000 0110     cbr  r30,__se_bit
-    cbr  r30,__se_bit
 ; 0000 0111     out  mcucr,r30
-    out  mcucr,r30
 ; 0000 0112 #endasm
 ; 0000 0113 return adc_data;
-	MOVW R30,R8
-	JMP  _0x20A0016
 ; 0000 0114 }
 ;
 ;// Declare your global variables here
@@ -2638,16 +2609,16 @@ _main:
 	RCALL _nlcd_PrintF
 ; 0000 013A #ifdef HW1_P
 ; 0000 013B     nlcd_PrintF(" hw v.1.1d P sen");
-	__POINTW2MN _0x27,77
-	RCALL _nlcd_PrintF
 ; 0000 013C #else
 ; 0000 013D     nlcd_PrintF(" hw v.1.1d      ");
+	__POINTW2MN _0x27,77
+	RCALL _nlcd_PrintF
 ; 0000 013E #endif
 ; 0000 013F 
 ; 0000 0140 #ifdef SLOW_HEAD_SPEED
-; 0000 0141 nlcd_PrintF(" sw v.0.31.s uni");
+; 0000 0141 nlcd_PrintF(" sw v.0.32.s uni");
 ; 0000 0142 #else
-; 0000 0143 nlcd_PrintF(" sw v.0.31.f uni");
+; 0000 0143 nlcd_PrintF(" sw v.0.32.f uni");
 	__POINTW2MN _0x27,94
 	RCALL _nlcd_PrintF
 ; 0000 0144 #endif
@@ -2693,6 +2664,7 @@ _0x30:
 	CALL SUBOPT_0x7
 ; 0000 0154 }
 ; 0000 0155 nlcd_GotoXY(1,5);
+	LDI  R30,LOW(1)
 	CALL SUBOPT_0x8
 ; 0000 0156 nlcd_Print(buf);
 	CALL SUBOPT_0x9
@@ -2719,7 +2691,6 @@ _0x30:
 ; 0000 0167 */
 ; 0000 0168 #ifdef HW1_P
 ; 0000 0169     PresureInit();
-	CALL _PresureInit
 ; 0000 016A #endif
 ; 0000 016B 
 ; 0000 016C while (1)
@@ -2854,6 +2825,8 @@ _nlcd_Init:
 	CALL SUBOPT_0xA
 ; 0001 0038     #ifndef HW1_P
 ; 0001 0039         nlcd_SendByte(CMD_LCD_MODE,0xC8); // mirror Y axis (about X axis) // заремить для экрана в контроллере Олега
+	LDI  R26,LOW(200)
+	CALL SUBOPT_0xA
 ; 0001 003A     #endif
 ; 0001 003B     //nlcd_SendByte(CMD_LCD_MODE,0xA1); // Инвертировать экран по горизонтали
 ; 0001 003C 
@@ -4624,42 +4597,51 @@ _0x20A0015:
 ;float Votb;
 ;unsigned int ssCounter = 0;
 ;unsigned char ssTrig = 0;
+;unsigned char distSettingMode = DIST_SET_MODE_PWR;
+;unsigned char distValveMode = DIST_VLV_MODE_CLS;
+;
+;flash unsigned char valve_cls_lbs[] = {"З"};
+;flash unsigned char valve_reg_lbs[] = {"Р"};
+;flash unsigned char valve_opn_lbs[] = {"О"};
+;flash unsigned char * flash valve_lbs[3] = {valve_cls_lbs, valve_reg_lbs, valve_opn_lbs};
+;
+;void CalculateDistBodySpeed();
 ;
 ;//*****************************************************************************
 ;// основные подпрограммы  Дистиляции
 ;//*****************************************************************************
 ;void RunDistilation(){
-; 0004 002E void RunDistilation(){
+; 0004 0037 void RunDistilation(){
 
 	.CSEG
 _RunDistilation:
-; 0004 002F     nlcd_Clear();
+; 0004 0038     nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 0030     if ((t_rom_codes[0].id[0] == 0xFF) || (t_rom_codes[0].id[0] == 0x00)) {
+; 0004 0039     if ((t_rom_codes[0].id[0] == 0xFF) || (t_rom_codes[0].id[0] == 0x00)) {
 	LDS  R26,_t_rom_codes
 	CPI  R26,LOW(0xFF)
 	BREQ _0x80005
 	CPI  R26,LOW(0x0)
 	BRNE _0x80004
 _0x80005:
-; 0004 0031         nlcd_GotoXY(0,0);
+; 0004 003A         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 0032         nlcd_PrintF("Нет назначенных");
+; 0004 003B         nlcd_PrintF("Нет назначенных");
 	__POINTW2MN _0x80007,0
 	CALL _nlcd_PrintF
-; 0004 0033         nlcd_PrintF("   датчиков    ");
+; 0004 003C         nlcd_PrintF("   датчиков    ");
 	__POINTW2MN _0x80007,16
 	CALL _nlcd_PrintF
-; 0004 0034         nlcd_PrintF("    t куба!    ");
+; 0004 003D         nlcd_PrintF("    t куба!    ");
 	__POINTW2MN _0x80007,32
 	RJMP _0x20A0014
-; 0004 0035         delay_ms(5000);
-; 0004 0036         nlcd_Clear();
-; 0004 0037         print_menu();
-; 0004 0038         return;
-; 0004 0039     }
-; 0004 003A      // t колоны верх
-; 0004 003B     if ((t_rom_codes[2].id[0] == 0xFF) || (t_rom_codes[2].id[0] == 0x00)) {
+; 0004 003E         delay_ms(5000);
+; 0004 003F         nlcd_Clear();
+; 0004 0040         print_menu();
+; 0004 0041         return;
+; 0004 0042     }
+; 0004 0043      // t колоны верх
+; 0004 0044     if ((t_rom_codes[2].id[0] == 0xFF) || (t_rom_codes[2].id[0] == 0x00)) {
 _0x80004:
 	__GETB2MN _t_rom_codes,16
 	CPI  R26,LOW(0xFF)
@@ -4668,453 +4650,502 @@ _0x80004:
 	CPI  R26,LOW(0x0)
 	BRNE _0x80008
 _0x80009:
-; 0004 003C         nlcd_GotoXY(0,0);
+; 0004 0045         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 003D         nlcd_PrintF("Нет назначенных");
+; 0004 0046         nlcd_PrintF("Нет назначенных");
 	__POINTW2MN _0x80007,48
 	CALL _nlcd_PrintF
-; 0004 003E         nlcd_PrintF("   датчиков    ");
+; 0004 0047         nlcd_PrintF("   датчиков    ");
 	__POINTW2MN _0x80007,64
 	CALL _nlcd_PrintF
-; 0004 003F         nlcd_PrintF("t колоны верх! ");
+; 0004 0048         nlcd_PrintF("t колоны верх! ");
 	__POINTW2MN _0x80007,80
 	RJMP _0x20A0014
-; 0004 0040         delay_ms(5000);
-; 0004 0041         nlcd_Clear();
-; 0004 0042         print_menu();
-; 0004 0043         return;
-; 0004 0044     }
-; 0004 0045 
-; 0004 0046     OWI_SearchDevices(ds1820_rom_codes, MAX_DS1820, BUS, &ds1820_devices);
+; 0004 0049         delay_ms(5000);
+; 0004 004A         nlcd_Clear();
+; 0004 004B         print_menu();
+; 0004 004C         return;
+; 0004 004D     }
+; 0004 004E 
+; 0004 004F     OWI_SearchDevices(ds1820_rom_codes, MAX_DS1820, BUS, &ds1820_devices);
 _0x80008:
 	CALL SUBOPT_0x5
-; 0004 0047     if (ds1820_devices < 2) { // < 3
+; 0004 0050     if (ds1820_devices < 2) { // < 3
 	LDS  R26,_ds1820_devices
 	CPI  R26,LOW(0x2)
 	BRSH _0x8000B
-; 0004 0048         nlcd_GotoXY(0,0);
+; 0004 0051         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 0049         nlcd_PrintF(" Подключены не ");
+; 0004 0052         nlcd_PrintF(" Подключены не ");
 	__POINTW2MN _0x80007,96
 	CALL _nlcd_PrintF
-; 0004 004A         nlcd_PrintF("  все датчики  ");
+; 0004 0053         nlcd_PrintF("  все датчики  ");
 	__POINTW2MN _0x80007,112
 	CALL _nlcd_PrintF
-; 0004 004B         nlcd_PrintF(" или отключены ");
+; 0004 0054         nlcd_PrintF(" или отключены ");
 	__POINTW2MN _0x80007,128
 	CALL _nlcd_PrintF
-; 0004 004C         nlcd_PrintF(" полностью все!");
+; 0004 0055         nlcd_PrintF(" полностью все!");
 	__POINTW2MN _0x80007,144
 	RJMP _0x20A0014
-; 0004 004D         delay_ms(5000);
-; 0004 004E         nlcd_Clear();
-; 0004 004F         print_menu();
-; 0004 0050         return;
-; 0004 0051     }
-; 0004 0052     /*
-; 0004 0053     if (ds1820_devices == 0) {
-; 0004 0054         nlcd_GotoXY(0,0);
-; 0004 0055         nlcd_PrintF("Нет подключенных");
-; 0004 0056         nlcd_PrintF(" датчиков !!!");
-; 0004 0057         delay_ms(5000);
-; 0004 0058         nlcd_Clear();
-; 0004 0059         print_menu();
-; 0004 005A         return;
-; 0004 005B     }
-; 0004 005C      */
-; 0004 005D     if (InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+; 0004 0056         delay_ms(5000);
+; 0004 0057         nlcd_Clear();
+; 0004 0058         print_menu();
+; 0004 0059         return;
+; 0004 005A     }
+; 0004 005B     /*
+; 0004 005C     if (ds1820_devices == 0) {
+; 0004 005D         nlcd_GotoXY(0,0);
+; 0004 005E         nlcd_PrintF("Нет подключенных");
+; 0004 005F         nlcd_PrintF(" датчиков !!!");
+; 0004 0060         delay_ms(5000);
+; 0004 0061         nlcd_Clear();
+; 0004 0062         print_menu();
+; 0004 0063         return;
+; 0004 0064     }
+; 0004 0065      */
+; 0004 0066     if (InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
 _0x8000B:
 	CALL SUBOPT_0x12
 	BREQ _0x8000C
-; 0004 005E         nlcd_GotoXY(0,0);
+; 0004 0067         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 005F         nlcd_PrintF("   Не верный   ");
+; 0004 0068         nlcd_PrintF("   Не верный   ");
 	__POINTW2MN _0x80007,160
 	CALL _nlcd_PrintF
-; 0004 0060         nlcd_PrintF("    датчик     ");
+; 0004 0069         nlcd_PrintF("    датчик     ");
 	__POINTW2MN _0x80007,176
 	CALL _nlcd_PrintF
-; 0004 0061         nlcd_PrintF("    t куба!    ");
+; 0004 006A         nlcd_PrintF("    t куба!    ");
 	__POINTW2MN _0x80007,192
 	RJMP _0x20A0014
-; 0004 0062         delay_ms(5000);
-; 0004 0063         nlcd_Clear();
-; 0004 0064         print_menu();
-; 0004 0065         return;
-; 0004 0066     }
-; 0004 0067 
-; 0004 0068     if (InitSensor(t_rom_codes[1].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+; 0004 006B         delay_ms(5000);
+; 0004 006C         nlcd_Clear();
+; 0004 006D         print_menu();
+; 0004 006E         return;
+; 0004 006F     }
+; 0004 0070 
+; 0004 0071     if (InitSensor(t_rom_codes[1].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
 _0x8000C:
 	CALL SUBOPT_0x13
 	BREQ _0x8000D
-; 0004 0069         nlcd_GotoXY(0,0);
+; 0004 0072         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 006A         nlcd_PrintF("    Не верный   ");
+; 0004 0073         nlcd_PrintF("    Не верный   ");
 	__POINTW2MN _0x80007,208
 	CALL _nlcd_PrintF
-; 0004 006B         nlcd_PrintF("     датчик     ");
+; 0004 0074         nlcd_PrintF("     датчик     ");
 	__POINTW2MN _0x80007,225
 	CALL _nlcd_PrintF
-; 0004 006C         nlcd_PrintF(" t колоны верх! ");
+; 0004 0075         nlcd_PrintF(" t колоны верх! ");
 	__POINTW2MN _0x80007,242
 	RJMP _0x20A0014
-; 0004 006D         delay_ms(5000);
-; 0004 006E         nlcd_Clear();
-; 0004 006F         print_menu();
-; 0004 0070         return;
-; 0004 0071     }
-; 0004 0072 
-; 0004 0073    // if (!InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
-; 0004 0074         sec = 0;
+; 0004 0076         delay_ms(5000);
+; 0004 0077         nlcd_Clear();
+; 0004 0078         print_menu();
+; 0004 0079         return;
+; 0004 007A     }
+; 0004 007B 
+; 0004 007C    // if (!InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+; 0004 007D         sec = 0;
 _0x8000D:
 	CALL SUBOPT_0x14
-; 0004 0075         minutes = 0;
-; 0004 0076         hours = 0;
-; 0004 0077         heater_power = dis_p_ten;
+; 0004 007E         minutes = 0;
+; 0004 007F         hours = 0;
+; 0004 0080         Votb = 1200.0; //  мл/ч
+	__GETD1N 0x44960000
+	CALL SUBOPT_0x15
+; 0004 0081         CalculateDistBodySpeed();
+	RCALL _CalculateDistBodySpeed
+; 0004 0082         heater_power = dis_p_ten;
 	LDS  R30,_dis_p_ten
 	STS  _heater_power,R30
-; 0004 0078         VALVE_CLS;
+; 0004 0083         VALVE_CLS;
 	CBI  0x1B,3
-; 0004 0079         mode = RUN_DIST;
+; 0004 0084         mode = RUN_DIST;
 	LDI  R30,LOW(4)
 	RJMP _0x20A0013
-; 0004 007A    /* } else {
-; 0004 007B         nlcd_GotoXY(0,0);
-; 0004 007C         nlcd_PrintF(" Не верный ");
-; 0004 007D         nlcd_PrintF(" датчик !!!");
-; 0004 007E         delay_ms(5000);
-; 0004 007F         nlcd_Clear();
-; 0004 0080         print_menu();
-; 0004 0081     }   */
-; 0004 0082 
-; 0004 0083 }
+; 0004 0085    /* } else {
+; 0004 0086         nlcd_GotoXY(0,0);
+; 0004 0087         nlcd_PrintF(" Не верный ");
+; 0004 0088         nlcd_PrintF(" датчик !!!");
+; 0004 0089         delay_ms(5000);
+; 0004 008A         nlcd_Clear();
+; 0004 008B         print_menu();
+; 0004 008C     }   */
+; 0004 008D 
+; 0004 008E }
 
 	.DSEG
 _0x80007:
 	.BYTE 0x103
 ;
 ;void ViewDistilation(){
-; 0004 0085 void ViewDistilation(){
+; 0004 0090 void ViewDistilation(){
 
 	.CSEG
 _ViewDistilation:
-; 0004 0086 unsigned char tkuba_c[2] = {" "};
-; 0004 0087 unsigned char tkol_up_c[2] = {" "};
-; 0004 0088 
-; 0004 0089    if (abortProcess) {
-	SBIW R28,4
+; 0004 0091 unsigned char tkuba_c[2] = {" "};
+; 0004 0092 unsigned char tkol_up_c[2] = {" "};
+; 0004 0093 unsigned char tmp[3];
+; 0004 0094    if (abortProcess) {
+	SBIW R28,7
 	LDI  R30,LOW(32)
-	ST   Y,R30
-	LDI  R30,LOW(0)
-	STD  Y+1,R30
-	LDI  R30,LOW(32)
-	STD  Y+2,R30
-	LDI  R30,LOW(0)
 	STD  Y+3,R30
-;	tkuba_c -> Y+2
-;	tkol_up_c -> Y+0
+	LDI  R30,LOW(0)
+	STD  Y+4,R30
+	LDI  R30,LOW(32)
+	STD  Y+5,R30
+	LDI  R30,LOW(0)
+	STD  Y+6,R30
+;	tkuba_c -> Y+5
+;	tkol_up_c -> Y+3
+;	tmp -> Y+0
 	LDS  R30,_abortProcess
 	CPI  R30,0
 	BREQ _0x8000E
-; 0004 008A       //nlcd_Clear();
-; 0004 008B       nlcd_GotoXY(0,1);
-	CALL SUBOPT_0x15
-; 0004 008C       nlcd_PrintF("   Дистиляция   ");
+; 0004 0095       //nlcd_Clear();
+; 0004 0096       nlcd_GotoXY(0,1);
+	CALL SUBOPT_0x16
+; 0004 0097       nlcd_PrintF("   Дистиляция   ");
 	__POINTW2MN _0x8000F,0
 	CALL _nlcd_PrintF
-; 0004 008D       nlcd_GotoXY(0,2);
+; 0004 0098       nlcd_GotoXY(0,2);
 	CALL SUBOPT_0x3
-; 0004 008E       nlcd_PrintF("Прервать");
+; 0004 0099       nlcd_PrintF("Прервать");
 	__POINTW2MN _0x8000F,17
-	CALL SUBOPT_0x16
-; 0004 008F       nlcd_GotoXY(0,3);
+	CALL SUBOPT_0x17
+; 0004 009A       nlcd_GotoXY(0,3);
 	LDI  R26,LOW(3)
 	CALL _nlcd_GotoXY
-; 0004 0090       nlcd_PrintF("процесс?");
+; 0004 009B       nlcd_PrintF("процесс?");
 	__POINTW2MN _0x8000F,26
-	CALL SUBOPT_0x16
-; 0004 0091       nlcd_GotoXY(0,4);
+	CALL SUBOPT_0x17
+; 0004 009C       nlcd_GotoXY(0,4);
 	LDI  R26,LOW(4)
 	CALL _nlcd_GotoXY
-; 0004 0092       nlcd_PrintF("<ENT>Да <ESC>Нет");
+; 0004 009D       nlcd_PrintF("<ENT>Да <ESC>Нет");
 	__POINTW2MN _0x8000F,35
 	CALL _nlcd_PrintF
-; 0004 0093    } else {
+; 0004 009E    } else {
 	RJMP _0x80010
 _0x8000E:
-; 0004 0094        if (t_kuba - t_kuba_old >= DELTA){ // Температура растет
-	CALL SUBOPT_0x17
+; 0004 009F        if (t_kuba - t_kuba_old >= DELTA){ // Температура растет
 	CALL SUBOPT_0x18
-	BRLO _0x80011
-; 0004 0095         tkuba_c[0] = 30;   // up
-	LDI  R30,LOW(30)
-	RJMP _0x800DA
-; 0004 0096       } else if (t_kuba - t_kuba_old <= -DELTA){  // Температура падает
-_0x80011:
-	CALL SUBOPT_0x17
 	CALL SUBOPT_0x19
+	BRLO _0x80011
+; 0004 00A0         tkuba_c[0] = 30;   // up
+	LDI  R30,LOW(30)
+	RJMP _0x80103
+; 0004 00A1       } else if (t_kuba - t_kuba_old <= -DELTA){  // Температура падает
+_0x80011:
+	CALL SUBOPT_0x18
+	CALL SUBOPT_0x1A
 	BREQ PC+4
 	BRCS PC+3
 	JMP  _0x80013
-; 0004 0097         tkuba_c[0] = 31;   // down
+; 0004 00A2         tkuba_c[0] = 31;   // down
 	LDI  R30,LOW(31)
-	RJMP _0x800DA
-; 0004 0098       } else {
+	RJMP _0x80103
+; 0004 00A3       } else {
 _0x80013:
-; 0004 0099         tkuba_c[0] = ' ';
+; 0004 00A4         tkuba_c[0] = ' ';
 	LDI  R30,LOW(32)
-_0x800DA:
-	STD  Y+2,R30
-; 0004 009A       }
-; 0004 009B 
-; 0004 009C       if (t_kolona_up - t_kolona_up_old >= DELTA){ // Температура растет
-	CALL SUBOPT_0x1A
-	CALL SUBOPT_0x18
-	BRLO _0x80015
-; 0004 009D         tkol_up_c[0] = 30; // up
-	LDI  R30,LOW(30)
-	RJMP _0x800DB
-; 0004 009E       } else if (t_kolona_up - t_kolona_up_old <= -DELTA){  // Температура падает
-_0x80015:
-	CALL SUBOPT_0x1A
+_0x80103:
+	STD  Y+5,R30
+; 0004 00A5       }
+; 0004 00A6 
+; 0004 00A7       if (t_kolona_up - t_kolona_up_old >= DELTA){ // Температура растет
+	CALL SUBOPT_0x1B
 	CALL SUBOPT_0x19
+	BRLO _0x80015
+; 0004 00A8         tkol_up_c[0] = 30; // up
+	LDI  R30,LOW(30)
+	RJMP _0x80104
+; 0004 00A9       } else if (t_kolona_up - t_kolona_up_old <= -DELTA){  // Температура падает
+_0x80015:
+	CALL SUBOPT_0x1B
+	CALL SUBOPT_0x1A
 	BREQ PC+4
 	BRCS PC+3
 	JMP  _0x80017
-; 0004 009F         tkol_up_c[0] = 31;; // down
+; 0004 00AA         tkol_up_c[0] = 31;; // down
 	LDI  R30,LOW(31)
-	RJMP _0x800DB
-; 0004 00A0       } else {
+	RJMP _0x80104
+; 0004 00AB       } else {
 _0x80017:
-; 0004 00A1         tkol_up_c[0] = ' ';
+; 0004 00AC         tkol_up_c[0] = ' ';
 	LDI  R30,LOW(32)
-_0x800DB:
-	ST   Y,R30
-; 0004 00A2       }
-; 0004 00A3 
-; 0004 00A4       #ifdef P_SENS_ON
-; 0004 00A5         p_kolona = ((signed int)(read_adc(0)) - p_offset) * 4.88 / 7.511 / 13.5954348;
-	CALL SUBOPT_0x1B
-; 0004 00A6       #endif
-; 0004 00A7 
-; 0004 00A8       nlcd_GotoXY(5,0);
-	LDI  R30,LOW(5)
+_0x80104:
+	STD  Y+3,R30
+; 0004 00AD       }
+; 0004 00AE 
+; 0004 00AF       #ifdef P_SENS_ON
+; 0004 00B0         p_kolona = ((signed int)(read_adc(0)) - p_offset) * 4.88 / 7.511 / 13.5954348;
+; 0004 00B1       #endif
+; 0004 00B2 
+; 0004 00B3       nlcd_GotoXY(3,0);
+	LDI  R30,LOW(3)
 	CALL SUBOPT_0x1C
-; 0004 00A9       nlcd_PrintF("Процесс");
+; 0004 00B4       nlcd_PrintF("Дистилляция");
 	__POINTW2MN _0x8000F,52
 	CALL SUBOPT_0x1D
-; 0004 00AA       nlcd_GotoXY(3,1);
-	LDI  R26,LOW(1)
-	CALL _nlcd_GotoXY
-; 0004 00AB       nlcd_PrintF("Дистилляции");
-	__POINTW2MN _0x8000F,60
+; 0004 00B5       nlcd_GotoXY(1,2);
 	CALL SUBOPT_0x1E
-; 0004 00AC       nlcd_GotoXY(1,3);
+; 0004 00B6       sprintf(buf, "Время:%2i:%2i:%2i", hours, minutes, sec);
 	CALL SUBOPT_0x1F
-; 0004 00AD       sprintf(buf, "Время:%2i:%2i:%2i", hours, minutes, sec);
+; 0004 00B7       nlcd_Print(buf);
+; 0004 00B8       nlcd_GotoXY(1,3);
 	CALL SUBOPT_0x20
-; 0004 00AE       nlcd_Print(buf);
-; 0004 00AF       nlcd_GotoXY(1,4);
+; 0004 00B9       sprintf(buf,"tкол в %-3.2f %s", t_kolona_up, tkol_up_c);
 	CALL SUBOPT_0x21
-; 0004 00B0       sprintf(buf,"tкол в %-3.2f %s", t_kolona_up, tkol_up_c);
+	MOVW R30,R28
+	ADIW R30,11
 	CALL SUBOPT_0x22
+; 0004 00BA       nlcd_Print(buf);
+; 0004 00BB       nlcd_GotoXY(1,4);
 	CALL SUBOPT_0x23
-; 0004 00B1       nlcd_Print(buf);
-	CALL SUBOPT_0x9
-; 0004 00B2       nlcd_GotoXY(1,5);
-	CALL SUBOPT_0x8
-; 0004 00B3       sprintf(buf,"tкуба  %-3.2f %s", t_kuba, tkuba_c);
+; 0004 00BC       sprintf(buf,"tкуба  %-3.2f %s", t_kuba, tkuba_c);
+	MOVW R30,R28
+	ADIW R30,13
+	CALL SUBOPT_0x22
+; 0004 00BD       nlcd_Print(buf);
+; 0004 00BE       #ifdef P_SENS_ON
+; 0004 00BF           nlcd_GotoXY(1,5);
+; 0004 00C0           sprintf(buf, "P%+3.1f", p_kolona);
+; 0004 00C1           nlcd_Print(buf);
+; 0004 00C2       #endif
+; 0004 00C3       //------ Состояние клапана
+; 0004 00C4       nlcd_GotoXY(0,6);
+	LDI  R30,LOW(0)
 	CALL SUBOPT_0x24
+; 0004 00C5       strcpyf(tmp, valve_lbs[distValveMode]);
+	LDS  R30,_distValveMode
+	LDI  R26,LOW(_valve_lbs*2)
+	LDI  R27,HIGH(_valve_lbs*2)
 	CALL SUBOPT_0x25
+; 0004 00C6       sprintf(buf, "%cКл-%s %c%4.0f мл/ч",(distSettingMode == DIST_SET_MODE_VALV)?'>':' ',tmp,(distSettingMode == DIST_SET_MODE_FLOW)?'>':' ', Votb);
+	__POINTW1FN _0x80000,327
+	ST   -Y,R31
+	ST   -Y,R30
+	LDS  R26,_distSettingMode
+	CPI  R26,LOW(0x1)
+	BRNE _0x80019
+	LDI  R30,LOW(62)
+	RJMP _0x8001A
+_0x80019:
+	LDI  R30,LOW(32)
+_0x8001A:
 	CALL SUBOPT_0x26
 	CALL SUBOPT_0x27
-; 0004 00B4       nlcd_Print(buf);
-; 0004 00B5       #ifdef P_SENS_ON
-; 0004 00B6           nlcd_GotoXY(1,6);
-	LDI  R30,LOW(1)
+	LDS  R26,_distSettingMode
+	CPI  R26,LOW(0x2)
+	BRNE _0x8001C
+	LDI  R30,LOW(62)
+	RJMP _0x8001D
+_0x8001C:
+	LDI  R30,LOW(32)
+_0x8001D:
+	CALL SUBOPT_0x26
 	CALL SUBOPT_0x28
-; 0004 00B7           sprintf(buf, "P%+3.1f", p_kolona);
-	CALL SUBOPT_0x24
-	CALL SUBOPT_0x29
-; 0004 00B8           nlcd_Print(buf);
+	CALL __PUTPARD1
+	LDI  R24,16
+	CALL _sprintf
+	ADIW R28,20
+; 0004 00C7       nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 00B9       #endif
-; 0004 00BA       nlcd_GotoXY(1,7);
-	LDI  R30,LOW(1)
+; 0004 00C8       // ТЭН
+; 0004 00C9       nlcd_GotoXY(0,7);
+	LDI  R30,LOW(0)
 	ST   -Y,R30
 	LDI  R26,LOW(7)
+	CALL SUBOPT_0x29
+; 0004 00CA       sprintf(buf,"%cТЭН %3i%%", (distSettingMode == DIST_SET_MODE_PWR)?'>':' ', heater_power);
+	__POINTW1FN _0x80000,348
+	ST   -Y,R31
+	ST   -Y,R30
+	LDS  R26,_distSettingMode
+	CPI  R26,LOW(0x0)
+	BRNE _0x8001F
+	LDI  R30,LOW(62)
+	RJMP _0x80020
+_0x8001F:
+	LDI  R30,LOW(32)
+_0x80020:
+	CALL SUBOPT_0x26
+	LDS  R30,_heater_power
+	CALL SUBOPT_0x26
 	CALL SUBOPT_0x2A
-; 0004 00BB       sprintf(buf,"ТЭН %3i%%", heater_power);
-	__POINTW1FN _0x80000,343
-	CALL SUBOPT_0x2B
-; 0004 00BC       nlcd_Print(buf);
+; 0004 00CB       nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 00BD     }
+; 0004 00CC 
+; 0004 00CD     }
 _0x80010:
-; 0004 00BE }
-	RJMP _0x20A0012
+; 0004 00CE }
+	ADIW R28,7
+	RET
 
 	.DSEG
 _0x8000F:
-	.BYTE 0x48
+	.BYTE 0x40
 ;//*****************************************************************************
 ;// основные подпрограммы  Ректификации
 ;//*****************************************************************************
 ;void RunRectification(){
-; 0004 00C2 void RunRectification(){
+; 0004 00D2 void RunRectification(){
 
 	.CSEG
 _RunRectification:
-; 0004 00C3     nlcd_Clear();
+; 0004 00D3     nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 00C4     // t куба
-; 0004 00C5     if ((t_rom_codes[0].id[0] == 0xFF) || (t_rom_codes[0].id[0] == 0x00)) {
+; 0004 00D4     // t куба
+; 0004 00D5     if ((t_rom_codes[0].id[0] == 0xFF) || (t_rom_codes[0].id[0] == 0x00)) {
 	LDS  R26,_t_rom_codes
 	CPI  R26,LOW(0xFF)
-	BREQ _0x8001A
+	BREQ _0x80023
 	CPI  R26,LOW(0x0)
-	BRNE _0x80019
-_0x8001A:
-; 0004 00C6         nlcd_GotoXY(0,0);
+	BRNE _0x80022
+_0x80023:
+; 0004 00D6         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00C7         nlcd_PrintF("Нет назначенных");
-	__POINTW2MN _0x8001C,0
+; 0004 00D7         nlcd_PrintF("Нет назначенных");
+	__POINTW2MN _0x80025,0
 	CALL _nlcd_PrintF
-; 0004 00C8         nlcd_PrintF("   датчиков    ");
-	__POINTW2MN _0x8001C,16
+; 0004 00D8         nlcd_PrintF("   датчиков    ");
+	__POINTW2MN _0x80025,16
 	CALL _nlcd_PrintF
-; 0004 00C9         nlcd_PrintF("    t куба!    ");
-	__POINTW2MN _0x8001C,32
+; 0004 00D9         nlcd_PrintF("    t куба!    ");
+	__POINTW2MN _0x80025,32
 	RJMP _0x20A0014
-; 0004 00CA         delay_ms(5000);
-; 0004 00CB         nlcd_Clear();
-; 0004 00CC         print_menu();
-; 0004 00CD         return;
-; 0004 00CE     }
-; 0004 00CF     // t колоны низ
-; 0004 00D0     if ((t_rom_codes[1].id[0] == 0xFF) || (t_rom_codes[1].id[0] == 0x00)) {
-_0x80019:
+; 0004 00DA         delay_ms(5000);
+; 0004 00DB         nlcd_Clear();
+; 0004 00DC         print_menu();
+; 0004 00DD         return;
+; 0004 00DE     }
+; 0004 00DF     // t колоны низ
+; 0004 00E0     if ((t_rom_codes[1].id[0] == 0xFF) || (t_rom_codes[1].id[0] == 0x00)) {
+_0x80022:
 	__GETB2MN _t_rom_codes,8
 	CPI  R26,LOW(0xFF)
-	BREQ _0x8001E
+	BREQ _0x80027
 	__GETB2MN _t_rom_codes,8
 	CPI  R26,LOW(0x0)
-	BRNE _0x8001D
-_0x8001E:
-; 0004 00D1         nlcd_GotoXY(0,0);
+	BRNE _0x80026
+_0x80027:
+; 0004 00E1         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00D2         nlcd_PrintF("Нет назначенных");
-	__POINTW2MN _0x8001C,48
+; 0004 00E2         nlcd_PrintF("Нет назначенных");
+	__POINTW2MN _0x80025,48
 	CALL _nlcd_PrintF
-; 0004 00D3         nlcd_PrintF("   датчиков    ");
-	__POINTW2MN _0x8001C,64
+; 0004 00E3         nlcd_PrintF("   датчиков    ");
+	__POINTW2MN _0x80025,64
 	CALL _nlcd_PrintF
-; 0004 00D4         nlcd_PrintF(" t колоны низ! ");
-	__POINTW2MN _0x8001C,80
+; 0004 00E4         nlcd_PrintF(" t колоны низ! ");
+	__POINTW2MN _0x80025,80
 	RJMP _0x20A0014
-; 0004 00D5         delay_ms(5000);
-; 0004 00D6         nlcd_Clear();
-; 0004 00D7         print_menu();
-; 0004 00D8         return;
-; 0004 00D9     }
-; 0004 00DA     // t колоны верх
-; 0004 00DB     if ((t_rom_codes[2].id[0] == 0xFF) || (t_rom_codes[2].id[0] == 0x00)) {
-_0x8001D:
+; 0004 00E5         delay_ms(5000);
+; 0004 00E6         nlcd_Clear();
+; 0004 00E7         print_menu();
+; 0004 00E8         return;
+; 0004 00E9     }
+; 0004 00EA     // t колоны верх
+; 0004 00EB     if ((t_rom_codes[2].id[0] == 0xFF) || (t_rom_codes[2].id[0] == 0x00)) {
+_0x80026:
 	__GETB2MN _t_rom_codes,16
 	CPI  R26,LOW(0xFF)
-	BREQ _0x80021
+	BREQ _0x8002A
 	__GETB2MN _t_rom_codes,16
 	CPI  R26,LOW(0x0)
-	BRNE _0x80020
-_0x80021:
-; 0004 00DC         nlcd_GotoXY(0,0);
+	BRNE _0x80029
+_0x8002A:
+; 0004 00EC         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00DD         nlcd_PrintF("Нет назначенных");
-	__POINTW2MN _0x8001C,96
+; 0004 00ED         nlcd_PrintF("Нет назначенных");
+	__POINTW2MN _0x80025,96
 	CALL _nlcd_PrintF
-; 0004 00DE         nlcd_PrintF("   датчиков    ");
-	__POINTW2MN _0x8001C,112
+; 0004 00EE         nlcd_PrintF("   датчиков    ");
+	__POINTW2MN _0x80025,112
 	CALL _nlcd_PrintF
-; 0004 00DF         nlcd_PrintF("t колоны верх! ");
-	__POINTW2MN _0x8001C,128
+; 0004 00EF         nlcd_PrintF("t колоны верх! ");
+	__POINTW2MN _0x80025,128
 	RJMP _0x20A0014
-; 0004 00E0         delay_ms(5000);
-; 0004 00E1         nlcd_Clear();
-; 0004 00E2         print_menu();
-; 0004 00E3         return;
-; 0004 00E4     }
-; 0004 00E5     OWI_SearchDevices(ds1820_rom_codes, MAX_DS1820, BUS, &ds1820_devices);
-_0x80020:
+; 0004 00F0         delay_ms(5000);
+; 0004 00F1         nlcd_Clear();
+; 0004 00F2         print_menu();
+; 0004 00F3         return;
+; 0004 00F4     }
+; 0004 00F5     OWI_SearchDevices(ds1820_rom_codes, MAX_DS1820, BUS, &ds1820_devices);
+_0x80029:
 	CALL SUBOPT_0x5
-; 0004 00E6     if (ds1820_devices < 3) { // < 3
+; 0004 00F6     if (ds1820_devices < 3) { // < 3
 	LDS  R26,_ds1820_devices
 	CPI  R26,LOW(0x3)
-	BRSH _0x80023
-; 0004 00E7         nlcd_GotoXY(0,0);
+	BRSH _0x8002C
+; 0004 00F7         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00E8         nlcd_PrintF(" Подключены не ");
-	__POINTW2MN _0x8001C,144
+; 0004 00F8         nlcd_PrintF(" Подключены не ");
+	__POINTW2MN _0x80025,144
 	CALL _nlcd_PrintF
-; 0004 00E9         nlcd_PrintF("  все датчики  ");
-	__POINTW2MN _0x8001C,160
+; 0004 00F9         nlcd_PrintF("  все датчики  ");
+	__POINTW2MN _0x80025,160
 	CALL _nlcd_PrintF
-; 0004 00EA         nlcd_PrintF(" или отключены ");
-	__POINTW2MN _0x8001C,176
+; 0004 00FA         nlcd_PrintF(" или отключены ");
+	__POINTW2MN _0x80025,176
 	CALL _nlcd_PrintF
-; 0004 00EB         nlcd_PrintF(" полностью все!");
-	__POINTW2MN _0x8001C,192
+; 0004 00FB         nlcd_PrintF(" полностью все!");
+	__POINTW2MN _0x80025,192
 	RJMP _0x20A0014
-; 0004 00EC         delay_ms(5000);
-; 0004 00ED         nlcd_Clear();
-; 0004 00EE         print_menu();
-; 0004 00EF         return;
-; 0004 00F0     }
-; 0004 00F1 
-; 0004 00F2     if (InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
-_0x80023:
+; 0004 00FC         delay_ms(5000);
+; 0004 00FD         nlcd_Clear();
+; 0004 00FE         print_menu();
+; 0004 00FF         return;
+; 0004 0100     }
+; 0004 0101 
+; 0004 0102     if (InitSensor(t_rom_codes[0].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+_0x8002C:
 	CALL SUBOPT_0x12
-	BREQ _0x80024
-; 0004 00F3         nlcd_GotoXY(0,0);
+	BREQ _0x8002D
+; 0004 0103         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00F4         nlcd_PrintF("   Не верный   ");
-	__POINTW2MN _0x8001C,208
+; 0004 0104         nlcd_PrintF("   Не верный   ");
+	__POINTW2MN _0x80025,208
 	CALL _nlcd_PrintF
-; 0004 00F5         nlcd_PrintF("    датчик     ");
-	__POINTW2MN _0x8001C,224
+; 0004 0105         nlcd_PrintF("    датчик     ");
+	__POINTW2MN _0x80025,224
 	CALL _nlcd_PrintF
-; 0004 00F6         nlcd_PrintF("    t куба!    ");
-	__POINTW2MN _0x8001C,240
+; 0004 0106         nlcd_PrintF("    t куба!    ");
+	__POINTW2MN _0x80025,240
 	RJMP _0x20A0014
-; 0004 00F7         delay_ms(5000);
-; 0004 00F8         nlcd_Clear();
-; 0004 00F9         print_menu();
-; 0004 00FA         return;
-; 0004 00FB     }
-; 0004 00FC 
-; 0004 00FD     if (InitSensor(t_rom_codes[1].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
-_0x80024:
+; 0004 0107         delay_ms(5000);
+; 0004 0108         nlcd_Clear();
+; 0004 0109         print_menu();
+; 0004 010A         return;
+; 0004 010B     }
+; 0004 010C 
+; 0004 010D     if (InitSensor(t_rom_codes[1].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+_0x8002D:
 	CALL SUBOPT_0x13
-	BREQ _0x80025
-; 0004 00FE         nlcd_GotoXY(0,0);
+	BREQ _0x8002E
+; 0004 010E         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 00FF         nlcd_PrintF("    Не верный   ");
-	__POINTW2MN _0x8001C,256
+; 0004 010F         nlcd_PrintF("    Не верный   ");
+	__POINTW2MN _0x80025,256
 	CALL _nlcd_PrintF
-; 0004 0100         nlcd_PrintF("     датчик     ");
-	__POINTW2MN _0x8001C,273
+; 0004 0110         nlcd_PrintF("     датчик     ");
+	__POINTW2MN _0x80025,273
 	CALL _nlcd_PrintF
-; 0004 0101         nlcd_PrintF(" t колоны верх! ");
-	__POINTW2MN _0x8001C,290
+; 0004 0111         nlcd_PrintF(" t колоны верх! ");
+	__POINTW2MN _0x80025,290
 	RJMP _0x20A0014
-; 0004 0102         delay_ms(5000);
-; 0004 0103         nlcd_Clear();
-; 0004 0104         print_menu();
-; 0004 0105         return;
-; 0004 0106     }
-; 0004 0107 
-; 0004 0108     if (InitSensor(t_rom_codes[2].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
-_0x80025:
-	CALL SUBOPT_0x2C
+; 0004 0112         delay_ms(5000);
+; 0004 0113         nlcd_Clear();
+; 0004 0114         print_menu();
+; 0004 0115         return;
+; 0004 0116     }
+; 0004 0117 
+; 0004 0118     if (InitSensor(t_rom_codes[2].id, BUS, 25, 35, DS18B20_11BIT_RES)) {
+_0x8002E:
+	CALL SUBOPT_0x2B
 	LDI  R30,LOW(8)
 	ST   -Y,R30
 	LDI  R30,LOW(25)
@@ -5124,70 +5155,70 @@ _0x80025:
 	LDI  R26,LOW(95)
 	CALL _InitSensor
 	CPI  R30,0
-	BREQ _0x80026
-; 0004 0109         nlcd_GotoXY(0,0);
+	BREQ _0x8002F
+; 0004 0119         nlcd_GotoXY(0,0);
 	CALL SUBOPT_0x2
-; 0004 010A         nlcd_PrintF("   Не верный   ");
-	__POINTW2MN _0x8001C,307
+; 0004 011A         nlcd_PrintF("   Не верный   ");
+	__POINTW2MN _0x80025,307
 	CALL _nlcd_PrintF
-; 0004 010B         nlcd_PrintF("    датчик     ");
-	__POINTW2MN _0x8001C,323
+; 0004 011B         nlcd_PrintF("    датчик     ");
+	__POINTW2MN _0x80025,323
 	CALL _nlcd_PrintF
-; 0004 010C         nlcd_PrintF(" t колоны низ! ");
-	__POINTW2MN _0x8001C,339
+; 0004 011C         nlcd_PrintF(" t колоны низ! ");
+	__POINTW2MN _0x80025,339
 _0x20A0014:
 	CALL _nlcd_PrintF
-; 0004 010D         delay_ms(5000);
+; 0004 011D         delay_ms(5000);
 	LDI  R26,LOW(5000)
 	LDI  R27,HIGH(5000)
 	CALL _delay_ms
-; 0004 010E         nlcd_Clear();
-	CALL SUBOPT_0x2D
-; 0004 010F         print_menu();
-; 0004 0110         return;
+; 0004 011E         nlcd_Clear();
+	CALL SUBOPT_0x2C
+; 0004 011F         print_menu();
+; 0004 0120         return;
 	RET
-; 0004 0111     }
-; 0004 0112 
-; 0004 0113     sec = 0;
-_0x80026:
+; 0004 0121     }
+; 0004 0122 
+; 0004 0123     sec = 0;
+_0x8002F:
 	CALL SUBOPT_0x14
-; 0004 0114     minutes = 0;
-; 0004 0115     hours = 0;
-; 0004 0116     heater_power = 100;
+; 0004 0124     minutes = 0;
+; 0004 0125     hours = 0;
+; 0004 0126     heater_power = 100;
 	LDI  R30,LOW(100)
 	STS  _heater_power,R30
-; 0004 0117     VALVE_CLS;
+; 0004 0127     VALVE_CLS;
 	CBI  0x1B,3
-; 0004 0118     impulseCounter = 0;
+; 0004 0128     impulseCounter = 0;
+	CALL SUBOPT_0x2D
+; 0004 0129     ssCounter = 0;
 	CALL SUBOPT_0x2E
-; 0004 0119     ssCounter = 0;
-	CALL SUBOPT_0x2F
-; 0004 011A     ssTrig = 0;
-; 0004 011B     startStop = 0;
+; 0004 012A     ssTrig = 0;
+; 0004 012B     startStop = 0;
 	LDI  R30,LOW(0)
 	STS  _startStop,R30
-; 0004 011C     mode = RUN_RECT;
+; 0004 012C     mode = RUN_RECT;
 	LDI  R30,LOW(5)
 _0x20A0013:
 	STS  _mode,R30
-; 0004 011D }
+; 0004 012D }
 	RET
 
 	.DSEG
-_0x8001C:
+_0x80025:
 	.BYTE 0x163
 ;
 ;void ViewRectification(){
-; 0004 011F void ViewRectification(){
+; 0004 012F void ViewRectification(){
 
 	.CSEG
 _ViewRectification:
-; 0004 0120 unsigned char tkuba_c[2] = {" "};
-; 0004 0121 unsigned char tkol_up_c[2] = {" "};
-; 0004 0122 unsigned char tkol_down_c[2] = {" "};
-; 0004 0123 unsigned char tmp[17];
-; 0004 0124 
-; 0004 0125    if (abortProcess) {
+; 0004 0130 unsigned char tkuba_c[2] = {" "};
+; 0004 0131 unsigned char tkol_up_c[2] = {" "};
+; 0004 0132 unsigned char tkol_down_c[2] = {" "};
+; 0004 0133 unsigned char tmp[17];
+; 0004 0134 
+; 0004 0135    if (abortProcess) {
 	SBIW R28,23
 	LDI  R30,LOW(32)
 	STD  Y+17,R30
@@ -5207,341 +5238,349 @@ _ViewRectification:
 ;	tmp -> Y+0
 	LDS  R30,_abortProcess
 	CPI  R30,0
-	BREQ _0x80027
-; 0004 0126       //nlcd_Clear();
-; 0004 0127       nlcd_GotoXY(2,1);
+	BREQ _0x80030
+; 0004 0136       //nlcd_Clear();
+; 0004 0137       nlcd_GotoXY(2,1);
 	LDI  R30,LOW(2)
 	ST   -Y,R30
 	LDI  R26,LOW(1)
 	CALL _nlcd_GotoXY
-; 0004 0128       nlcd_PrintF("Ректификация");
-	__POINTW2MN _0x80028,0
-	CALL SUBOPT_0x30
-; 0004 0129       nlcd_GotoXY(4,2);
+; 0004 0138       nlcd_PrintF("Ректификация");
+	__POINTW2MN _0x80031,0
+	CALL SUBOPT_0x2F
+; 0004 0139       nlcd_GotoXY(4,2);
 	LDI  R26,LOW(2)
 	CALL _nlcd_GotoXY
-; 0004 012A       nlcd_PrintF("Прервать");
-	__POINTW2MN _0x80028,13
-	CALL SUBOPT_0x30
-; 0004 012B       nlcd_GotoXY(4,3);
+; 0004 013A       nlcd_PrintF("Прервать");
+	__POINTW2MN _0x80031,13
+	CALL SUBOPT_0x2F
+; 0004 013B       nlcd_GotoXY(4,3);
 	LDI  R26,LOW(3)
 	CALL _nlcd_GotoXY
-; 0004 012C       nlcd_PrintF("процесс?");
-	__POINTW2MN _0x80028,22
-	CALL SUBOPT_0x16
-; 0004 012D       nlcd_GotoXY(0,4);
+; 0004 013C       nlcd_PrintF("процесс?");
+	__POINTW2MN _0x80031,22
+	CALL SUBOPT_0x17
+; 0004 013D       nlcd_GotoXY(0,4);
 	LDI  R26,LOW(4)
 	CALL _nlcd_GotoXY
-; 0004 012E       nlcd_PrintF("<ENT>Да <ESC>Нет");
-	__POINTW2MN _0x80028,31
+; 0004 013E       nlcd_PrintF("<ENT>Да <ESC>Нет");
+	__POINTW2MN _0x80031,31
 	CALL _nlcd_PrintF
-; 0004 012F    } else {
-	RJMP _0x80029
-_0x80027:
-; 0004 0130 
-; 0004 0131       if (t_kuba - t_kuba_old >= DELTA){ // Температура растет
-	CALL SUBOPT_0x17
-	CALL SUBOPT_0x18
-	BRLO _0x8002A
-; 0004 0132         tkuba_c[0] = 30;   // up
-	LDI  R30,LOW(30)
-	RJMP _0x800DC
-; 0004 0133       } else if (t_kuba - t_kuba_old <= -DELTA){  // Температура падает
-_0x8002A:
-	CALL SUBOPT_0x17
-	CALL SUBOPT_0x19
-	BREQ PC+4
-	BRCS PC+3
-	JMP  _0x8002C
-; 0004 0134         tkuba_c[0] = 31;   // down
-	LDI  R30,LOW(31)
-	RJMP _0x800DC
-; 0004 0135       } else {
-_0x8002C:
-; 0004 0136         tkuba_c[0] = ' ';
-	LDI  R30,LOW(32)
-_0x800DC:
-	STD  Y+21,R30
-; 0004 0137       }
-; 0004 0138 
-; 0004 0139       if (t_kolona_down - t_kolona_down_old >= DELTA){ // Температура растет
-	CALL SUBOPT_0x31
-	CALL SUBOPT_0x18
-	BRLO _0x8002E
-; 0004 013A         tkol_down_c[0] = 30; // up
-	LDI  R30,LOW(30)
-	RJMP _0x800DD
-; 0004 013B       } else if (t_kolona_down - t_kolona_down_old <= -DELTA){  // Температура падает
-_0x8002E:
-	CALL SUBOPT_0x31
-	CALL SUBOPT_0x19
-	BREQ PC+4
-	BRCS PC+3
-	JMP  _0x80030
-; 0004 013C         tkol_down_c[0] = 31; // down
-	LDI  R30,LOW(31)
-	RJMP _0x800DD
-; 0004 013D       } else {
+; 0004 013F    } else {
+	RJMP _0x80032
 _0x80030:
-; 0004 013E         tkol_down_c[0] = ' ';
-	LDI  R30,LOW(32)
-_0x800DD:
-	STD  Y+17,R30
-; 0004 013F       }
 ; 0004 0140 
-; 0004 0141       if (t_kolona_up - t_kolona_up_old >= DELTA){ // Температура растет
-	CALL SUBOPT_0x1A
+; 0004 0141       if (t_kuba - t_kuba_old >= DELTA){ // Температура растет
 	CALL SUBOPT_0x18
-	BRLO _0x80032
-; 0004 0142         tkol_up_c[0] = 30; // up
-	LDI  R30,LOW(30)
-	RJMP _0x800DE
-; 0004 0143       } else if (t_kolona_up - t_kolona_up_old <= -DELTA){  // Температура падает
-_0x80032:
-	CALL SUBOPT_0x1A
 	CALL SUBOPT_0x19
+	BRLO _0x80033
+; 0004 0142         tkuba_c[0] = 30;   // up
+	LDI  R30,LOW(30)
+	RJMP _0x80105
+; 0004 0143       } else if (t_kuba - t_kuba_old <= -DELTA){  // Температура падает
+_0x80033:
+	CALL SUBOPT_0x18
+	CALL SUBOPT_0x1A
 	BREQ PC+4
 	BRCS PC+3
-	JMP  _0x80034
-; 0004 0144         tkol_up_c[0] = 31;; // down
+	JMP  _0x80035
+; 0004 0144         tkuba_c[0] = 31;   // down
 	LDI  R30,LOW(31)
-	RJMP _0x800DE
+	RJMP _0x80105
 ; 0004 0145       } else {
-_0x80034:
-; 0004 0146         tkol_up_c[0] = ' ';
+_0x80035:
+; 0004 0146         tkuba_c[0] = ' ';
 	LDI  R30,LOW(32)
-_0x800DE:
-	STD  Y+19,R30
+_0x80105:
+	STD  Y+21,R30
 ; 0004 0147       }
 ; 0004 0148 
-; 0004 0149       #ifdef P_SENS_ON
-; 0004 014A         p_kolona = ((signed int)(read_adc(0)) - p_offset) * 4.88 / 7.511 / 13.5954348;
+; 0004 0149       if (t_kolona_down - t_kolona_down_old >= DELTA){ // Температура растет
+	CALL SUBOPT_0x30
+	CALL SUBOPT_0x19
+	BRLO _0x80037
+; 0004 014A         tkol_down_c[0] = 30; // up
+	LDI  R30,LOW(30)
+	RJMP _0x80106
+; 0004 014B       } else if (t_kolona_down - t_kolona_down_old <= -DELTA){  // Температура падает
+_0x80037:
+	CALL SUBOPT_0x30
+	CALL SUBOPT_0x1A
+	BREQ PC+4
+	BRCS PC+3
+	JMP  _0x80039
+; 0004 014C         tkol_down_c[0] = 31; // down
+	LDI  R30,LOW(31)
+	RJMP _0x80106
+; 0004 014D       } else {
+_0x80039:
+; 0004 014E         tkol_down_c[0] = ' ';
+	LDI  R30,LOW(32)
+_0x80106:
+	STD  Y+17,R30
+; 0004 014F       }
+; 0004 0150 
+; 0004 0151       if (t_kolona_up - t_kolona_up_old >= DELTA){ // Температура растет
 	CALL SUBOPT_0x1B
-; 0004 014B       #endif
-; 0004 014C 
-; 0004 014D       //nlcd_GotoXY(1,0);
-; 0004 014E      // nlcd_PrintF("  Процесс");
-; 0004 014F       nlcd_GotoXY(1,0);
+	CALL SUBOPT_0x19
+	BRLO _0x8003B
+; 0004 0152         tkol_up_c[0] = 30; // up
+	LDI  R30,LOW(30)
+	RJMP _0x80107
+; 0004 0153       } else if (t_kolona_up - t_kolona_up_old <= -DELTA){  // Температура падает
+_0x8003B:
+	CALL SUBOPT_0x1B
+	CALL SUBOPT_0x1A
+	BREQ PC+4
+	BRCS PC+3
+	JMP  _0x8003D
+; 0004 0154         tkol_up_c[0] = 31;; // down
+	LDI  R30,LOW(31)
+	RJMP _0x80107
+; 0004 0155       } else {
+_0x8003D:
+; 0004 0156         tkol_up_c[0] = ' ';
+	LDI  R30,LOW(32)
+_0x80107:
+	STD  Y+19,R30
+; 0004 0157       }
+; 0004 0158 
+; 0004 0159       #ifdef P_SENS_ON
+; 0004 015A         p_kolona = ((signed int)(read_adc(0)) - p_offset) * 4.88 / 7.511 / 13.5954348;
+; 0004 015B       #endif
+; 0004 015C 
+; 0004 015D       //nlcd_GotoXY(1,0);
+; 0004 015E      // nlcd_PrintF("  Процесс");
+; 0004 015F       nlcd_GotoXY(1,0);
 	LDI  R30,LOW(1)
 	CALL SUBOPT_0x1C
-; 0004 0150       nlcd_PrintF(" Ректификация");
-	__POINTW2MN _0x80028,48
-	CALL SUBOPT_0x1E
-; 0004 0151       nlcd_GotoXY(1,1);
+; 0004 0160       nlcd_PrintF(" Ректификация");
+	__POINTW2MN _0x80031,48
+	CALL SUBOPT_0x1D
+; 0004 0161       nlcd_GotoXY(1,1);
 	LDI  R26,LOW(1)
-	CALL SUBOPT_0x2A
-; 0004 0152       sprintf(buf, "Время:%2i:%2i:%2i", hours, minutes, sec);
-	CALL SUBOPT_0x20
-; 0004 0153       nlcd_Print(buf);
-; 0004 0154       nlcd_GotoXY(1,2);
+	CALL SUBOPT_0x29
+; 0004 0162       sprintf(buf, "Время:%2i:%2i:%2i", hours, minutes, sec);
+	CALL SUBOPT_0x1F
+; 0004 0163       nlcd_Print(buf);
+; 0004 0164       nlcd_GotoXY(1,2);
 	LDI  R30,LOW(1)
 	ST   -Y,R30
-	LDI  R26,LOW(2)
-	CALL SUBOPT_0x2A
-; 0004 0155       sprintf(buf,"tкол в %-3.2f %s", t_kolona_up, tkol_up_c);
-	CALL SUBOPT_0x22
+	CALL SUBOPT_0x1E
+; 0004 0165       sprintf(buf,"tкол в %-3.2f %s", t_kolona_up, tkol_up_c);
+	CALL SUBOPT_0x21
 	MOVW R30,R28
 	ADIW R30,27
-	CALL SUBOPT_0x32
-; 0004 0156       nlcd_Print(buf);
-; 0004 0157       nlcd_GotoXY(1,3);
-	LDI  R30,LOW(1)
-	ST   -Y,R30
-	CALL SUBOPT_0x1F
-; 0004 0158       sprintf(buf,"tкол н %-3.2f %s", t_kolona_down, tkol_down_c);
-	__POINTW1FN _0x80000,396
+	CALL SUBOPT_0x22
+; 0004 0166       nlcd_Print(buf);
+; 0004 0167       nlcd_GotoXY(1,3);
+	CALL SUBOPT_0x20
+; 0004 0168       sprintf(buf,"tкол н %-3.2f %s", t_kolona_down, tkol_down_c);
+	__POINTW1FN _0x80000,403
 	ST   -Y,R31
 	ST   -Y,R30
-	CALL SUBOPT_0x33
+	CALL SUBOPT_0x31
 	CALL __PUTPARD1
 	MOVW R30,R28
 	ADIW R30,25
-	CALL SUBOPT_0x32
-; 0004 0159       nlcd_Print(buf);
-; 0004 015A       nlcd_GotoXY(1,4);
-	CALL SUBOPT_0x21
-; 0004 015B       sprintf(buf,"tкуба  %-3.2f %s", t_kuba, tkuba_c); //t_kuba_avg
-	CALL SUBOPT_0x25
+	CALL SUBOPT_0x22
+; 0004 0169       nlcd_Print(buf);
+; 0004 016A       nlcd_GotoXY(1,4);
+	CALL SUBOPT_0x23
+; 0004 016B       sprintf(buf,"tкуба  %-3.2f %s", t_kuba, tkuba_c); //t_kuba_avg
 	MOVW R30,R28
 	ADIW R30,29
-	CALL SUBOPT_0x32
-; 0004 015C       nlcd_Print(buf);
-; 0004 015D       nlcd_GotoXY(0,5);
+	CALL SUBOPT_0x22
+; 0004 016C       nlcd_Print(buf);
+; 0004 016D       nlcd_GotoXY(0,5);
 	LDI  R30,LOW(0)
-	ST   -Y,R30
-	LDI  R26,LOW(5)
-	CALL _nlcd_GotoXY
-; 0004 015E       nlcd_PrintF("                "); // clear line :) it's not good
-	__POINTW2MN _0x80028,62
-	CALL _nlcd_PrintF
-; 0004 015F       #ifdef P_SENS_ON
-; 0004 0160           nlcd_GotoXY(1,5);
 	CALL SUBOPT_0x8
-; 0004 0161           sprintf(buf, "P%+3.1f", p_kolona);
-	CALL SUBOPT_0x24
-	CALL SUBOPT_0x29
-; 0004 0162           nlcd_Print(buf);
-	CALL SUBOPT_0x9
-; 0004 0163       #endif
-; 0004 0164       nlcd_GotoXY(8,5);
+; 0004 016E       nlcd_PrintF("                "); // clear line :) it's not good
+	__POINTW2MN _0x80031,62
+	CALL _nlcd_PrintF
+; 0004 016F       #ifdef P_SENS_ON
+; 0004 0170           nlcd_GotoXY(1,5);
+; 0004 0171           sprintf(buf, "P%+3.1f", p_kolona);
+; 0004 0172           nlcd_Print(buf);
+; 0004 0173       #endif
+; 0004 0174       nlcd_GotoXY(8,5);
 	LDI  R30,LOW(8)
+	CALL SUBOPT_0x8
+; 0004 0175       sprintf(buf, "ТЭН%3i%%", heater_power);
+	CALL SUBOPT_0x32
+	__POINTW1FN _0x80000,437
+	ST   -Y,R31
 	ST   -Y,R30
-	LDI  R26,LOW(5)
-	CALL SUBOPT_0x2A
-; 0004 0165       sprintf(buf, "ТЭН%3i%%", heater_power);
-	__POINTW1FN _0x80000,430
-	CALL SUBOPT_0x2B
-; 0004 0166       nlcd_Print(buf);
+	LDS  R30,_heater_power
+	CALL SUBOPT_0x26
+	CALL SUBOPT_0x7
+; 0004 0176       nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 0167 
-; 0004 0168       nlcd_GotoXY(1,6);
+; 0004 0177 
+; 0004 0178       nlcd_GotoXY(1,6);
 	LDI  R30,LOW(1)
-	CALL SUBOPT_0x28
-; 0004 0169       strcpyf(tmp, yesno[startStop]);
-	CALL SUBOPT_0x34
+	CALL SUBOPT_0x24
+; 0004 0179       strcpyf(tmp, yesno[startStop]);
 	LDS  R30,_startStop
 	LDI  R26,LOW(_yesno*2)
 	LDI  R27,HIGH(_yesno*2)
-	LDI  R31,0
-	CALL SUBOPT_0x35
-; 0004 016A       //sprintf(buf, "СтартСтоп %s", tmp);
-; 0004 016B       sprintf(buf, "С\\С %s К %i", tmp, ssCounter);
-	__POINTW1FN _0x80000,439
-	CALL SUBOPT_0x36
+	CALL SUBOPT_0x25
+; 0004 017A       //sprintf(buf, "СтартСтоп %s", tmp);
+; 0004 017B       sprintf(buf, "С\\С %s К %i", tmp, ssCounter);
+	__POINTW1FN _0x80000,446
+	CALL SUBOPT_0x33
 	LDS  R30,_ssCounter
 	LDS  R31,_ssCounter+1
-	CALL SUBOPT_0x32
-; 0004 016C       nlcd_Print(buf);
-; 0004 016D       nlcd_GotoXY(1,7);
+	CALL SUBOPT_0x22
+; 0004 017C       nlcd_Print(buf);
+; 0004 017D       nlcd_GotoXY(1,7);
 	LDI  R30,LOW(1)
 	ST   -Y,R30
 	LDI  R26,LOW(7)
 	CALL _nlcd_GotoXY
-; 0004 016E       if (startStop) {
+; 0004 017E       if (startStop) {
 	LDS  R30,_startStop
 	CPI  R30,0
-	BREQ _0x80036
-; 0004 016F           sprintf(buf, "Vт %4.0f мл/ч", Votb);
-	CALL SUBOPT_0x24
-	__POINTW1FN _0x80000,451
+	BREQ _0x8003F
+; 0004 017F           sprintf(buf, "Vт %4.0f мл/ч", Votb);
+	CALL SUBOPT_0x32
+	__POINTW1FN _0x80000,458
 	ST   -Y,R31
 	ST   -Y,R30
-	CALL SUBOPT_0x37
-	RJMP _0x800DF
-; 0004 0170       } else {
-_0x80036:
-; 0004 0171           sprintf(buf, "Qг %4.2f мл", headDisp);
-	CALL SUBOPT_0x24
-	__POINTW1FN _0x80000,465
-	CALL SUBOPT_0x38
-_0x800DF:
+	CALL SUBOPT_0x28
+	RJMP _0x80108
+; 0004 0180       } else {
+_0x8003F:
+; 0004 0181           sprintf(buf, "Qг %4.2f мл", headDisp);
+	CALL SUBOPT_0x32
+	__POINTW1FN _0x80000,472
+	CALL SUBOPT_0x34
+_0x80108:
 	CALL __PUTPARD1
 	CALL SUBOPT_0x7
-; 0004 0172       }
-; 0004 0173       nlcd_Print(buf);
+; 0004 0182       }
+; 0004 0183       nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 0174 
-; 0004 0175       // Debug
-; 0004 0176       /*
-; 0004 0177       nlcd_GotoXY(1,6);
-; 0004 0178       sprintf(buf, "SS %i PWM %i", startStop, pwmOn);
-; 0004 0179       nlcd_Print(buf);
-; 0004 017A       nlcd_GotoXY(1,7);
-; 0004 017B       sprintf(buf, "P%i T%i", valvePulse, pwmPeriod);
-; 0004 017C       nlcd_Print(buf);
-; 0004 017D        */
-; 0004 017E     }
-_0x80029:
-; 0004 017F }
+; 0004 0184 
+; 0004 0185       // Debug
+; 0004 0186       /*
+; 0004 0187       nlcd_GotoXY(1,6);
+; 0004 0188       sprintf(buf, "SS %i PWM %i", startStop, pwmOn);
+; 0004 0189       nlcd_Print(buf);
+; 0004 018A       nlcd_GotoXY(1,7);
+; 0004 018B       sprintf(buf, "P%i T%i", valvePulse, pwmPeriod);
+; 0004 018C       nlcd_Print(buf);
+; 0004 018D        */
+; 0004 018E     }
+_0x80032:
+; 0004 018F }
 	ADIW R28,23
 	RET
 
 	.DSEG
-_0x80028:
+_0x80031:
 	.BYTE 0x4F
 ;//*****************************************************************************
 ;// Расчет параметров ШИМ
 ;//*****************************************************************************
 ;void CalculateHead() {
-; 0004 0183 void CalculateHead() {
+; 0004 0193 void CalculateHead() {
 
 	.CSEG
 _CalculateHead:
-; 0004 0184    float Votb_fact;
-; 0004 0185    valvePulse = DEFAUL_VALVE_PULSE; // смотри параметр в general.h
+; 0004 0194    float Votb_fact;
+; 0004 0195    valvePulse = DEFAUL_VALVE_PULSE; // смотри параметр в general.h
 	SBIW R28,4
 ;	Votb_fact -> Y+0
 	LDI  R30,LOW(4)
 	STS  _valvePulse,R30
-; 0004 0186    impulseCounter = 0;
-	CALL SUBOPT_0x2E
-; 0004 0187    Votb_fact = -0.000163  *HEADSPEED * HEADSPEED + 1.156 * HEADSPEED + 1.198;
+; 0004 0196    impulseCounter = 0;
+	CALL SUBOPT_0x2D
+; 0004 0197    Votb_fact = -0.000163  *HEADSPEED * HEADSPEED + 1.156 * HEADSPEED + 1.198;
 	__GETD1N 0x42B94505
-	RJMP _0x20A0011
-; 0004 0188    pwmPeriod = ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0 ; // расчет периода ШИМ
-; 0004 0189 }
+	RJMP _0x20A0012
+; 0004 0198    pwmPeriod = ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0 ; // расчет периода ШИМ
+; 0004 0199 }
 ;
 ;void CalculateBodySpeed() {
-; 0004 018B void CalculateBodySpeed() {
+; 0004 019B void CalculateBodySpeed() {
 _CalculateBodySpeed:
-; 0004 018C     float Votb_fact;
-; 0004 018D     valvePulse = rect_pulse_delay;  // Длительность импульса берем из параметров
+; 0004 019C     float Votb_fact;
+; 0004 019D     valvePulse = rect_pulse_delay;  // Длительность импульса берем из параметров
 	SBIW R28,4
 ;	Votb_fact -> Y+0
 	LDS  R30,_rect_pulse_delay
 	STS  _valvePulse,R30
-; 0004 018E     if (t_kuba_avg >= 84.3F) {
+; 0004 019E     if (t_kuba_avg >= 84.3F) {
 	LDS  R26,_t_kuba_avg
 	LDS  R27,_t_kuba_avg+1
 	LDS  R24,_t_kuba_avg+2
 	LDS  R25,_t_kuba_avg+3
 	__GETD1N 0x42A8999A
 	CALL __CMPF12
-	BRLO _0x80038
-; 0004 018F         Votb = ((980.0 - 10.0 * t_kuba_avg) / 137.0) * (float)rect_body_speed ;   //Считаем скорость отбора в зависимости от темпеартуры в кубе
+	BRLO _0x80041
+; 0004 019F         Votb = ((980.0 - 10.0 * t_kuba_avg) / 137.0) * (float)rect_body_speed ;   //Считаем скорость отбора в зависимости от темпеартуры в кубе
 	LDS  R30,_t_kuba_avg
 	LDS  R31,_t_kuba_avg+1
 	LDS  R22,_t_kuba_avg+2
 	LDS  R23,_t_kuba_avg+3
-	__GETD2N 0x41200000
+	CALL SUBOPT_0x35
 	CALL __MULF12
 	__GETD2N 0x44750000
-	CALL SUBOPT_0x39
+	CALL SUBOPT_0x36
 	MOVW R26,R30
 	MOVW R24,R22
 	__GETD1N 0x43090000
 	CALL __DIVF21
 	MOVW R26,R30
 	MOVW R24,R22
-	CALL SUBOPT_0x3A
+	CALL SUBOPT_0x37
 	CALL __MULF12
-	RJMP _0x800E0
-; 0004 0190     } else {
-_0x80038:
-; 0004 0191         Votb = (float)rect_body_speed;  //Считаем скорость отбора
-	CALL SUBOPT_0x3A
-_0x800E0:
+	RJMP _0x80109
+; 0004 01A0     } else {
+_0x80041:
+; 0004 01A1         Votb = (float)rect_body_speed;  //Считаем скорость отбора
+	CALL SUBOPT_0x37
+_0x80109:
 	STS  _Votb,R30
 	STS  _Votb+1,R31
 	STS  _Votb+2,R22
 	STS  _Votb+3,R23
-; 0004 0192     }
-; 0004 0193     //pwmPeriod =  ((float)valvePulse * onePulseDose) / ((Votb * 1.35F) / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора, 1.35F для корректировки
-; 0004 0194     //pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
-; 0004 0195     Votb_fact = -0.000163 * Votb * Votb + 1.156 * Votb + 1.198;
-	CALL SUBOPT_0x37
+; 0004 01A2     }
+; 0004 01A3     //pwmPeriod =  ((float)valvePulse * onePulseDose) / ((Votb * 1.35F) / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора, 1.35F для корректировки
+; 0004 01A4     //pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
+; 0004 01A5     Votb_fact = -0.000163 * Votb * Votb + 1.156 * Votb + 1.198;
+	RJMP _0x20A0011
+; 0004 01A6     pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
+; 0004 01A7     /*
+; 0004 01A8     if (pwmPeriod < valvePulse) // если период ШИМ меньше длительности импульса, то просто открываем клапан
+; 0004 01A9     {
+; 0004 01AA        pwmPeriod = valvePulse;
+; 0004 01AB     }
+; 0004 01AC     */
+; 0004 01AD }
+;
+;void CalculateDistBodySpeed() {
+; 0004 01AF void CalculateDistBodySpeed() {
+_CalculateDistBodySpeed:
+; 0004 01B0   float Votb_fact;
+; 0004 01B1   Votb_fact = -0.000163 * Votb * Votb + 1.156 * Votb + 1.198;
+	SBIW R28,4
+;	Votb_fact -> Y+0
+_0x20A0011:
+	LDS  R30,_Votb
+	LDS  R31,_Votb+1
+	LDS  R22,_Votb+2
+	LDS  R23,_Votb+3
 	__GETD2N 0xB92AEAFB
 	CALL __MULF12
-	LDS  R26,_Votb
-	LDS  R27,_Votb+1
-	LDS  R24,_Votb+2
-	LDS  R25,_Votb+3
+	CALL SUBOPT_0x38
 	CALL __MULF12
 	PUSH R23
 	PUSH R22
 	PUSH R31
 	PUSH R30
-	CALL SUBOPT_0x37
+	CALL SUBOPT_0x28
 	__GETD2N 0x3F93F7CF
 	CALL __MULF12
 	POP  R26
@@ -5551,13 +5590,13 @@ _0x800E0:
 	CALL __ADDF12
 	__GETD2N 0x3F995810
 	CALL __ADDF12
-_0x20A0011:
+_0x20A0012:
 	CALL __PUTD1S0
-; 0004 0196     pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
+; 0004 01B2   pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
 	LDS  R30,_valvePulse
 	LDI  R31,0
-	CALL SUBOPT_0x3B
-	CALL SUBOPT_0x3C
+	CALL SUBOPT_0x39
+	CALL SUBOPT_0x3A
 	PUSH R23
 	PUSH R22
 	PUSH R31
@@ -5577,14 +5616,7 @@ _0x20A0011:
 	CALL __CFD1U
 	ST   X+,R30
 	ST   X,R31
-; 0004 0197     /*
-; 0004 0198     if (pwmPeriod < valvePulse) // если период ШИМ меньше длительности импульса, то просто открываем клапан
-; 0004 0199     {
-; 0004 019A        pwmPeriod = valvePulse;
-; 0004 019B     }
-; 0004 019C     */
-; 0004 019D }
-_0x20A0012:
+; 0004 01B3 }
 	ADIW R28,4
 	RET
 ;
@@ -5593,121 +5625,119 @@ _0x20A0012:
 ;//*****************************************************************************
 ;
 ;void StopProcess() {
-; 0004 01A3 void StopProcess() {
+; 0004 01B9 void StopProcess() {
 _StopProcess:
-; 0004 01A4      nlcd_Clear();
+; 0004 01BA      nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 01A5      if (mode == RUN_DIST) {
+; 0004 01BB      if (mode == RUN_DIST) {
 	LDS  R26,_mode
 	CPI  R26,LOW(0x4)
-	BRNE _0x8003A
-; 0004 01A6         nlcd_GotoXY(0,1);
-	CALL SUBOPT_0x15
-; 0004 01A7         nlcd_PrintF("   Дистилляция   ");
-	__POINTW2MN _0x8003B,0
+	BRNE _0x80043
+; 0004 01BC         nlcd_GotoXY(0,1);
+	CALL SUBOPT_0x16
+; 0004 01BD         nlcd_PrintF("   Дистилляция   ");
+	__POINTW2MN _0x80044,0
 	CALL _nlcd_PrintF
-; 0004 01A8      }
-; 0004 01A9      if (mode == RUN_RECT) {
-_0x8003A:
+; 0004 01BE      }
+; 0004 01BF      if (mode == RUN_RECT) {
+_0x80043:
 	LDS  R26,_mode
 	CPI  R26,LOW(0x5)
-	BRNE _0x8003C
-; 0004 01AA         nlcd_GotoXY(0,1);
-	CALL SUBOPT_0x15
-; 0004 01AB         nlcd_PrintF("  Ректификация  ");
-	__POINTW2MN _0x8003B,18
+	BRNE _0x80045
+; 0004 01C0         nlcd_GotoXY(0,1);
+	CALL SUBOPT_0x16
+; 0004 01C1         nlcd_PrintF("  Ректификация  ");
+	__POINTW2MN _0x80044,18
 	CALL _nlcd_PrintF
-; 0004 01AC      }
-; 0004 01AD      nlcd_GotoXY(1,3);
-_0x8003C:
+; 0004 01C2      }
+; 0004 01C3      nlcd_GotoXY(1,3);
+_0x80045:
 	LDI  R30,LOW(1)
-	ST   -Y,R30
-	LDI  R26,LOW(3)
-	CALL _nlcd_GotoXY
-; 0004 01AE      nlcd_PrintWideF("Процесс");
-	__POINTW2MN _0x8003B,35
+	CALL SUBOPT_0x3B
+; 0004 01C4      nlcd_PrintWideF("Процесс");
+	__POINTW2MN _0x80044,35
 	CALL _nlcd_PrintWideF
-; 0004 01AF      nlcd_GotoXY(1,4);
+; 0004 01C5      nlcd_GotoXY(1,4);
 	LDI  R30,LOW(1)
-	CALL SUBOPT_0x3D
-; 0004 01B0      nlcd_PrintWideF("окончен!");
-	__POINTW2MN _0x8003B,43
+	CALL SUBOPT_0x3C
+; 0004 01C6      nlcd_PrintWideF("окончен!");
+	__POINTW2MN _0x80044,43
 	CALL _nlcd_PrintWideF
-; 0004 01B1      BEEP_ON;
+; 0004 01C7      BEEP_ON;
 	LDI  R30,LOW(127)
 	OUT  0x31,R30
-; 0004 01B2      mode = END_PROC;
+; 0004 01C8      mode = END_PROC;
 	LDI  R30,LOW(0)
 	STS  _mode,R30
-; 0004 01B3      VALVE_CLS;         // закрываем клапан
+; 0004 01C9      VALVE_CLS;         // закрываем клапан
 	CBI  0x1B,3
-; 0004 01B4      heater_power = 0; // выключаем ТЭН
+; 0004 01CA      heater_power = 0; // выключаем ТЭН
 	STS  _heater_power,R30
-; 0004 01B5      startStop = 0;
+; 0004 01CB      startStop = 0;
 	STS  _startStop,R30
-; 0004 01B6      pressureOver = 0;
+; 0004 01CC      pressureOver = 0;
 	CLR  R10
-; 0004 01B7      abortProcess = 0;
+; 0004 01CD      abortProcess = 0;
 	STS  _abortProcess,R30
-; 0004 01B8      pwmOn = 0;
+; 0004 01CE      pwmOn = 0;
 	RJMP _0x20A0010
-; 0004 01B9 }
+; 0004 01CF }
 
 	.DSEG
-_0x8003B:
+_0x80044:
 	.BYTE 0x34
 ;//*****************************************************************************
 ;//                              Калибровка
 ;//*****************************************************************************
 ;
 ;void CalibrateRun() {
-; 0004 01BE void CalibrateRun() {
+; 0004 01D4 void CalibrateRun() {
 
 	.CSEG
 _CalibrateRun:
-; 0004 01BF //  предварительные настройки
-; 0004 01C0     pwmPeriod = 100; // 1 sec
+; 0004 01D5 //  предварительные настройки
+; 0004 01D6     pwmPeriod = 100; // 1 sec
 	LDI  R30,LOW(100)
 	LDI  R31,HIGH(100)
 	STS  _pwmPeriod,R30
 	STS  _pwmPeriod+1,R31
-; 0004 01C1     valvePulse = DEFAUL_VALVE_PULSE; // смотри параметр в general.h
+; 0004 01D7     valvePulse = DEFAUL_VALVE_PULSE; // смотри параметр в general.h
 	LDI  R30,LOW(4)
 	STS  _valvePulse,R30
-; 0004 01C2     impulseCounter = 0;
-	CALL SUBOPT_0x2E
-; 0004 01C3     sec = 0;
+; 0004 01D8     impulseCounter = 0;
+	CALL SUBOPT_0x2D
+; 0004 01D9     sec = 0;
 	CALL SUBOPT_0x14
-; 0004 01C4     minutes = 0;
-; 0004 01C5     hours = 0;
-; 0004 01C6     abortProcess = 0;
+; 0004 01DA     minutes = 0;
+; 0004 01DB     hours = 0;
+; 0004 01DC     abortProcess = 0;
 	LDI  R30,LOW(0)
 	STS  _abortProcess,R30
-; 0004 01C7     mode = CALIBRATE_RUN;
+; 0004 01DD     mode = CALIBRATE_RUN;
 	LDI  R30,LOW(8)
 	STS  _mode,R30
-; 0004 01C8     impulseCounterCalibrate = (unsigned int)(CALIBRATE_Q / ((float)valvePulse * onePulseDose));
-	CALL SUBOPT_0x3E
-	CALL SUBOPT_0x3C
+; 0004 01DE     impulseCounterCalibrate = (unsigned int)(CALIBRATE_Q / ((float)valvePulse * onePulseDose));
+	CALL SUBOPT_0x3D
+	CALL SUBOPT_0x3A
 	__GETD2N 0x42480000
-	CALL SUBOPT_0x3F
+	CALL SUBOPT_0x3E
 	STS  _impulseCounterCalibrate,R30
 	STS  _impulseCounterCalibrate+1,R31
-; 0004 01C9     pwmOn = 1;
+; 0004 01DF     pwmOn = 1;
 	LDI  R30,LOW(1)
 _0x20A0010:
 	STS  _pwmOn,R30
-; 0004 01CA }
+; 0004 01E0 }
 	RET
 ;
 ;void CalibrateStop(){
-; 0004 01CC void CalibrateStop(){
+; 0004 01E2 void CalibrateStop(){
 _CalibrateStop:
-; 0004 01CD // расчет нового коэффициента и его сохранение
-; 0004 01CE     onePulseDose =  (float)factCalibrateQ / (float)((long)valvePulse * (long)impulseCounter);
+; 0004 01E3 // расчет нового коэффициента и его сохранение
+; 0004 01E4     onePulseDose =  (float)factCalibrateQ / (float)((long)valvePulse * (long)impulseCounter);
 	LDS  R30,_factCalibrateQ
 	LDS  R31,_factCalibrateQ+1
-	CALL SUBOPT_0x40
+	CALL SUBOPT_0x3F
 	PUSH R23
 	PUSH R22
 	PUSH R31
@@ -5716,135 +5746,132 @@ _CalibrateStop:
 	CLR  R27
 	CLR  R24
 	CLR  R25
-	CALL SUBOPT_0x41
+	CALL SUBOPT_0x40
 	CALL __MULD12
 	CALL __CDF1
 	POP  R26
 	POP  R27
 	POP  R24
 	POP  R25
-	CALL SUBOPT_0x42
-; 0004 01CF     SaveParam();
+	CALL SUBOPT_0x41
+; 0004 01E5     SaveParam();
 	CALL _SaveParam
-; 0004 01D0     abortProcess = 0;
+; 0004 01E6     abortProcess = 0;
 	LDI  R30,LOW(0)
 	STS  _abortProcess,R30
-; 0004 01D1 }
+; 0004 01E7 }
 	RET
 ;
 ;void CalibrateView() {
-; 0004 01D3 void CalibrateView() {
+; 0004 01E9 void CalibrateView() {
 _CalibrateView:
-; 0004 01D4     if (abortProcess) {
+; 0004 01EA     if (abortProcess) {
 	LDS  R30,_abortProcess
 	CPI  R30,0
-	BREQ _0x8003D
-; 0004 01D5         nlcd_GotoXY(3,1);
+	BREQ _0x80046
+; 0004 01EB         nlcd_GotoXY(3,1);
 	LDI  R30,LOW(3)
 	ST   -Y,R30
 	LDI  R26,LOW(1)
 	CALL _nlcd_GotoXY
-; 0004 01D6         nlcd_PrintF("Калибровка");
-	__POINTW2MN _0x8003E,0
-	CALL SUBOPT_0x30
-; 0004 01D7         nlcd_GotoXY(4,2);
+; 0004 01EC         nlcd_PrintF("Калибровка");
+	__POINTW2MN _0x80047,0
+	CALL SUBOPT_0x2F
+; 0004 01ED         nlcd_GotoXY(4,2);
 	LDI  R26,LOW(2)
 	CALL _nlcd_GotoXY
-; 0004 01D8         nlcd_PrintF("Прервать");
-	__POINTW2MN _0x8003E,11
-	CALL SUBOPT_0x30
-; 0004 01D9         nlcd_GotoXY(4,3);
+; 0004 01EE         nlcd_PrintF("Прервать");
+	__POINTW2MN _0x80047,11
+	CALL SUBOPT_0x2F
+; 0004 01EF         nlcd_GotoXY(4,3);
 	LDI  R26,LOW(3)
 	CALL _nlcd_GotoXY
-; 0004 01DA         nlcd_PrintF("процесс?");
-	__POINTW2MN _0x8003E,20
-	CALL SUBOPT_0x16
-; 0004 01DB         nlcd_GotoXY(0,4);
+; 0004 01F0         nlcd_PrintF("процесс?");
+	__POINTW2MN _0x80047,20
+	CALL SUBOPT_0x17
+; 0004 01F1         nlcd_GotoXY(0,4);
 	LDI  R26,LOW(4)
 	CALL _nlcd_GotoXY
-; 0004 01DC         nlcd_PrintF("<ENT>Да <ESC>Нет");
-	__POINTW2MN _0x8003E,29
+; 0004 01F2         nlcd_PrintF("<ENT>Да <ESC>Нет");
+	__POINTW2MN _0x80047,29
 	CALL _nlcd_PrintF
-; 0004 01DD     } else {
-	RJMP _0x8003F
-_0x8003D:
-; 0004 01DE         if (impulseCounter >= impulseCounterCalibrate) {     // если закончили калибровку просим ввести реальное значение
+; 0004 01F3     } else {
+	RJMP _0x80048
+_0x80046:
+; 0004 01F4         if (impulseCounter >= impulseCounterCalibrate) {     // если закончили калибровку просим ввести реальное значение
 	LDS  R30,_impulseCounterCalibrate
 	LDS  R31,_impulseCounterCalibrate+1
 	LDS  R26,_impulseCounter
 	LDS  R27,_impulseCounter+1
 	CP   R26,R30
 	CPC  R27,R31
-	BRLO _0x80040
-; 0004 01DF             pwmOn = 0;
-	LDI  R30,LOW(0)
-	STS  _pwmOn,R30
-; 0004 01E0             VALVE_CLS;
-	CBI  0x1B,3
-; 0004 01E1             factCalibrateQ =  CALIBRATE_Q;
+	BRLO _0x80049
+; 0004 01F5             pwmOn = 0;
+	CALL SUBOPT_0x42
+; 0004 01F6             VALVE_CLS;
+; 0004 01F7             factCalibrateQ =  CALIBRATE_Q;
 	LDI  R30,LOW(50)
 	LDI  R31,HIGH(50)
 	STS  _factCalibrateQ,R30
 	STS  _factCalibrateQ+1,R31
-; 0004 01E2             param_id = 13;
+; 0004 01F8             param_id = 13;
 	LDI  R30,LOW(13)
 	CALL SUBOPT_0x43
-; 0004 01E3             params[param_id].value = factCalibrateQ;
+; 0004 01F9             params[param_id].value = factCalibrateQ;
 	LDS  R26,_factCalibrateQ
 	LDS  R27,_factCalibrateQ+1
 	STD  Z+0,R26
 	STD  Z+1,R27
-; 0004 01E4             last_menu = current_menu;
+; 0004 01FA             last_menu = current_menu;
 	CALL SUBOPT_0x44
-; 0004 01E5             last_pos = current_pos;
-; 0004 01E6             current_menu = MENU_RECT;
-; 0004 01E7             current_pos = 11; // Фактический объем
+; 0004 01FB             last_pos = current_pos;
+; 0004 01FC             current_menu = MENU_RECT;
+; 0004 01FD             current_pos = 11; // Фактический объем
 	LDI  R30,LOW(11)
 	STS  _current_pos,R30
-; 0004 01E8             nlcd_Clear();
+; 0004 01FE             nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 01E9             mode = CALIBRATE_MOD;
+; 0004 01FF             mode = CALIBRATE_MOD;
 	LDI  R30,LOW(9)
 	STS  _mode,R30
-; 0004 01EA         } else {
-	RJMP _0x80041
-_0x80040:
-; 0004 01EB             nlcd_GotoXY(3,0);
+; 0004 0200         } else {
+	RJMP _0x8004A
+_0x80049:
+; 0004 0201             nlcd_GotoXY(3,0);
 	LDI  R30,LOW(3)
 	CALL SUBOPT_0x1C
-; 0004 01EC             nlcd_PrintF("Калибровка");
-	__POINTW2MN _0x8003E,46
-	CALL SUBOPT_0x1E
-; 0004 01ED             nlcd_GotoXY(1,1);
-	LDI  R26,LOW(1)
-	CALL SUBOPT_0x2A
-; 0004 01EE             sprintf(buf,"Время:%2i:%2i:%2i", hours, minutes, sec);
-	CALL SUBOPT_0x20
-; 0004 01EF             nlcd_Print(buf);
-; 0004 01F0             nlcd_GotoXY(1,3);
-	LDI  R30,LOW(1)
-	ST   -Y,R30
-	LDI  R26,LOW(3)
-	CALL _nlcd_GotoXY
-; 0004 01F1             nlcd_PrintF("Отдозированно: ");
-	__POINTW2MN _0x8003E,57
+; 0004 0202             nlcd_PrintF("Калибровка");
+	__POINTW2MN _0x80047,46
 	CALL SUBOPT_0x1D
-; 0004 01F2             nlcd_GotoXY(3,4);
-	LDI  R26,LOW(4)
-	CALL SUBOPT_0x2A
-; 0004 01F3             sprintf(buf, "Q %4.2f мл", headDisp);
-	__POINTW1FN _0x80000,548
-	CALL SUBOPT_0x38
-	CALL SUBOPT_0x45
-; 0004 01F4             nlcd_Print(buf);
-	CALL SUBOPT_0x9
-; 0004 01F5             nlcd_GotoXY(3,5);
+; 0004 0203             nlcd_GotoXY(1,1);
+	LDI  R26,LOW(1)
+	CALL SUBOPT_0x29
+; 0004 0204             sprintf(buf,"Время:%2i:%2i:%2i", hours, minutes, sec);
+	CALL SUBOPT_0x1F
+; 0004 0205             nlcd_Print(buf);
+; 0004 0206             nlcd_GotoXY(1,3);
+	LDI  R30,LOW(1)
+	CALL SUBOPT_0x3B
+; 0004 0207             nlcd_PrintF("Отдозированно: ");
+	__POINTW2MN _0x80047,57
+	CALL _nlcd_PrintF
+; 0004 0208             nlcd_GotoXY(3,4);
 	LDI  R30,LOW(3)
 	ST   -Y,R30
-	LDI  R26,LOW(5)
-	CALL SUBOPT_0x2A
-; 0004 01F6             sprintf(buf, "k %1.4f мл", onePulseDose);
-	__POINTW1FN _0x80000,559
+	LDI  R26,LOW(4)
+	CALL SUBOPT_0x29
+; 0004 0209             sprintf(buf, "Q %4.2f мл", headDisp);
+	__POINTW1FN _0x80000,563
+	CALL SUBOPT_0x34
+	CALL SUBOPT_0x45
+; 0004 020A             nlcd_Print(buf);
+	CALL SUBOPT_0x9
+; 0004 020B             nlcd_GotoXY(3,5);
+	LDI  R30,LOW(3)
+	CALL SUBOPT_0x8
+; 0004 020C             sprintf(buf, "k %1.4f мл", onePulseDose);
+	CALL SUBOPT_0x32
+	__POINTW1FN _0x80000,574
 	ST   -Y,R31
 	ST   -Y,R30
 	LDS  R30,_onePulseDose
@@ -5852,29 +5879,30 @@ _0x80040:
 	LDS  R22,_onePulseDose+2
 	LDS  R23,_onePulseDose+3
 	CALL SUBOPT_0x45
-; 0004 01F7             nlcd_Print(buf);
+; 0004 020D             nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 01F8             nlcd_GotoXY(3,6);
+; 0004 020E             nlcd_GotoXY(3,6);
 	LDI  R30,LOW(3)
-	CALL SUBOPT_0x28
-; 0004 01F9             sprintf(buf, "i %i имп.", impulseCounter);
-	CALL SUBOPT_0x24
-	__POINTW1FN _0x80000,570
+	ST   -Y,R30
+	LDI  R26,LOW(6)
+	CALL SUBOPT_0x29
+; 0004 020F             sprintf(buf, "i %i имп.", impulseCounter);
+	__POINTW1FN _0x80000,585
 	ST   -Y,R31
 	ST   -Y,R30
-	CALL SUBOPT_0x41
+	CALL SUBOPT_0x40
 	CALL SUBOPT_0x45
-; 0004 01FA             nlcd_Print(buf);
+; 0004 0210             nlcd_Print(buf);
 	CALL SUBOPT_0x9
-; 0004 01FB         }
-_0x80041:
-; 0004 01FC     }
-_0x8003F:
-; 0004 01FD }
+; 0004 0211         }
+_0x8004A:
+; 0004 0212     }
+_0x80048:
+; 0004 0213 }
 	RET
 
 	.DSEG
-_0x8003E:
+_0x80047:
 	.BYTE 0x49
 ;
 ;
@@ -5882,78 +5910,78 @@ _0x8003E:
 ;// обработчики событий
 ;//*****************************************************************************
 ;void HandlerEventTimer_10s(void) {
-; 0004 0203 void HandlerEventTimer_10s(void) {
+; 0004 0219 void HandlerEventTimer_10s(void) {
 
 	.CSEG
 _HandlerEventTimer_10s:
-; 0004 0204 
-; 0004 0205     switch(mode) {
+; 0004 021A 
+; 0004 021B     switch(mode) {
 	CALL SUBOPT_0x46
-; 0004 0206         case RUN_RECT:
+; 0004 021C         case RUN_RECT:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x80044
-; 0004 0207                     if (startStop) {
+	BRNE _0x8004D
+; 0004 021D                     if (startStop) {
 	LDS  R30,_startStop
 	CPI  R30,0
-	BREQ _0x80046
-; 0004 0208                         t_kuba_avg = t_kuba_sum / (float)t_kuba_count;
+	BREQ _0x8004F
+; 0004 021E                         t_kuba_avg = t_kuba_sum / (float)t_kuba_count;
 	MOV  R30,R11
 	CALL SUBOPT_0x47
 	CALL SUBOPT_0x48
 	CALL __DIVF21
 	CALL SUBOPT_0x49
-; 0004 0209                         t_kuba_sum = 0.0;
-; 0004 020A                         t_kuba_count = 0;
-; 0004 020B                         CalculateBodySpeed();
-; 0004 020C                     }
-; 0004 020D                     break;
-_0x80046:
-; 0004 020E     }
-_0x80044:
-; 0004 020F }
+; 0004 021F                         t_kuba_sum = 0.0;
+; 0004 0220                         t_kuba_count = 0;
+; 0004 0221                         CalculateBodySpeed();
+; 0004 0222                     }
+; 0004 0223                     break;
+_0x8004F:
+; 0004 0224     }
+_0x8004D:
+; 0004 0225 }
 	RET
 ;
 ;
 ;void HandlerEventTimer_1Hz(void)
-; 0004 0213 {
+; 0004 0229 {
 _HandlerEventTimer_1Hz:
-; 0004 0214    switch(mode) {
+; 0004 022A    switch(mode) {
 	CALL SUBOPT_0x46
-; 0004 0215         case RUN_DIST:
+; 0004 022B         case RUN_DIST:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x8004A
-; 0004 0216                         t_kuba_old = t_kuba;
+	BRNE _0x80053
+; 0004 022C                         t_kuba_old = t_kuba;
 	CALL SUBOPT_0x4A
-; 0004 0217                         t_kolona_up_old = t_kolona_up;
+; 0004 022D                         t_kolona_up_old = t_kolona_up;
 	CALL SUBOPT_0x4B
-; 0004 0218                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-; 0004 0219                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
-	CALL SUBOPT_0x2C
+; 0004 022E                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
+; 0004 022F                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
+	CALL SUBOPT_0x2B
 	CALL SUBOPT_0x4C
-; 0004 021A                         break;
-	RJMP _0x80049
-; 0004 021B         case RUN_RECT:
-_0x8004A:
+; 0004 0230                         break;
+	RJMP _0x80052
+; 0004 0231         case RUN_RECT:
+_0x80053:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x80049
-; 0004 021C                         t_kuba_old = t_kuba;
+	BRNE _0x80052
+; 0004 0232                         t_kuba_old = t_kuba;
 	CALL SUBOPT_0x4A
-; 0004 021D                         t_kolona_down_old = t_kolona_down;
-	CALL SUBOPT_0x33
+; 0004 0233                         t_kolona_down_old = t_kolona_down;
+	CALL SUBOPT_0x31
 	STS  _t_kolona_down_old,R30
 	STS  _t_kolona_down_old+1,R31
 	STS  _t_kolona_down_old+2,R22
 	STS  _t_kolona_down_old+3,R23
-; 0004 021E                         t_kolona_up_old = t_kolona_up;
+; 0004 0234                         t_kolona_up_old = t_kolona_up;
 	CALL SUBOPT_0x4B
-; 0004 021F                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-; 0004 0220                         t_kolona_down = GetTemperatureMatchRom(t_rom_codes[1].id, BUS);
+; 0004 0235                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
+; 0004 0236                         t_kolona_down = GetTemperatureMatchRom(t_rom_codes[1].id, BUS);
 	__POINTW1MN _t_rom_codes,8
 	ST   -Y,R31
 	ST   -Y,R30
@@ -5963,11 +5991,11 @@ _0x8004A:
 	STS  _t_kolona_down+1,R31
 	STS  _t_kolona_down+2,R22
 	STS  _t_kolona_down+3,R23
-; 0004 0221                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
-	CALL SUBOPT_0x2C
+; 0004 0237                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
+	CALL SUBOPT_0x2B
 	CALL SUBOPT_0x4C
-; 0004 0222 
-; 0004 0223                         t_kuba_sum += t_kuba;
+; 0004 0238 
+; 0004 0239                         t_kuba_sum += t_kuba;
 	CALL SUBOPT_0x4D
 	CALL SUBOPT_0x48
 	CALL __ADDF12
@@ -5975,117 +6003,125 @@ _0x8004A:
 	STS  _t_kuba_sum+1,R31
 	STS  _t_kuba_sum+2,R22
 	STS  _t_kuba_sum+3,R23
-; 0004 0224                         t_kuba_count ++;
+; 0004 023A                         t_kuba_count ++;
 	INC  R11
-; 0004 0225                         break;
-; 0004 0226    }
-_0x80049:
-; 0004 0227    StartAllConvert_T(BUS);
+; 0004 023B                         break;
+; 0004 023C    }
+_0x80052:
+; 0004 023D    StartAllConvert_T(BUS);
 	LDI  R26,LOW(8)
 	CALL _StartAllConvert_T
-; 0004 0228 }
+; 0004 023E }
 	RET
 ;
 ;
 ;void HandlerEventTimer_1s(void)
-; 0004 022C {
+; 0004 0242 {
 _HandlerEventTimer_1s:
-; 0004 022D     /*
-; 0004 022E     if ((heater_watchdog < 90) && heater_power != 0) {
-; 0004 022F         HEATER_OFF; // Выключаем ТЭН на случай обрыва детектора нуля
-; 0004 0230     }
-; 0004 0231     heater_watchdog = 0;
-; 0004 0232     */
-; 0004 0233 
-; 0004 0234     switch(mode) {
+; 0004 0243     /*
+; 0004 0244     if ((heater_watchdog < 90) && heater_power != 0) {
+; 0004 0245         HEATER_OFF; // Выключаем ТЭН на случай обрыва детектора нуля
+; 0004 0246     }
+; 0004 0247     heater_watchdog = 0;
+; 0004 0248     */
+; 0004 0249 
+; 0004 024A     switch(mode) {
 	CALL SUBOPT_0x46
-; 0004 0235         case RUN_DIST:
+; 0004 024B         case RUN_DIST:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x8004F
-; 0004 0236                         /*t_kuba_old = t_kuba;
-; 0004 0237                         t_kolona_up_old = t_kolona_up;
-; 0004 0238                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-; 0004 0239                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
-; 0004 023A                         */
-; 0004 023B                         //StartAllConvert_T(BUS);
-; 0004 023C                         if ((t_kuba >= dis_t_kuba) || timer_off >= 20*60) {  // 20 минут
+	BRNE _0x80058
+; 0004 024C 
+; 0004 024D                         if ((t_kuba >= dis_t_kuba) || timer_off >= 20*60) {  // 20 минут
 	LDS  R30,_dis_t_kuba
 	LDS  R31,_dis_t_kuba+1
 	LDS  R22,_dis_t_kuba+2
 	LDS  R23,_dis_t_kuba+3
 	CALL SUBOPT_0x4E
 	CALL __CMPF12
-	BRSH _0x80051
+	BRSH _0x8005A
 	LDS  R26,_timer_off
 	LDS  R27,_timer_off+1
 	CPI  R26,LOW(0x4B0)
 	LDI  R30,HIGH(0x4B0)
 	CPC  R27,R30
-	BRLO _0x80050
-_0x80051:
-; 0004 023D                         // end process
-; 0004 023E                             StopProcess();
+	BRLO _0x80059
+_0x8005A:
+; 0004 024E                         // end process
+; 0004 024F                             StopProcess();
 	RCALL _StopProcess
-; 0004 023F                         }
-; 0004 0240                         break;
-_0x80050:
-	RJMP _0x8004E
-; 0004 0241         case RUN_RECT:
-_0x8004F:
+; 0004 0250                         }
+; 0004 0251                         // управление клапаном
+; 0004 0252                         switch(distValveMode){
+_0x80059:
+	LDS  R30,_distValveMode
+	CALL SUBOPT_0x4F
+; 0004 0253                             case DIST_VLV_MODE_CLS: {
+	BRNE _0x8005F
+; 0004 0254                                pwmOn = 0;
+	CALL SUBOPT_0x42
+; 0004 0255                                VALVE_CLS;
+; 0004 0256                             break;
+	RJMP _0x8005E
+; 0004 0257                             }
+; 0004 0258 
+; 0004 0259                             case DIST_VLV_MODE_REG: {
+_0x8005F:
+	CPI  R30,LOW(0x1)
+	LDI  R26,HIGH(0x1)
+	CPC  R31,R26
+	BRNE _0x80060
+; 0004 025A                                pwmOn = 1;
+	LDI  R30,LOW(1)
+	STS  _pwmOn,R30
+; 0004 025B                             break;
+	RJMP _0x8005E
+; 0004 025C                             }
+; 0004 025D 
+; 0004 025E                             case DIST_VLV_MODE_OPN: {
+_0x80060:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x8005E
+; 0004 025F                                 pwmOn = 0;
+	LDI  R30,LOW(0)
+	STS  _pwmOn,R30
+; 0004 0260                                 VALVE_OPN;
+	SBI  0x1B,3
+; 0004 0261                             break;
+; 0004 0262                             }
+; 0004 0263                         }
+_0x8005E:
+; 0004 0264 
+; 0004 0265                         break;
+	RJMP _0x80057
+; 0004 0266         case RUN_RECT:
+_0x80058:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
 	BREQ PC+3
-	JMP _0x80053
-; 0004 0242                         /*t_kuba_old = t_kuba;
-; 0004 0243                         t_kolona_down_old = t_kolona_down;
-; 0004 0244                         t_kolona_up_old = t_kolona_up;
-; 0004 0245                         t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-; 0004 0246                         t_kolona_down = GetTemperatureMatchRom(t_rom_codes[1].id, BUS);
-; 0004 0247                         t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
-; 0004 0248 
-; 0004 0249                         t_kuba_sum += t_kuba;
-; 0004 024A                         t_kuba_count ++;
-; 0004 024B                          */
-; 0004 024C                         if (t_kuba > 60.0) {
+	JMP _0x80062
+; 0004 0267 
+; 0004 0268                         if (t_kuba > 60.0) {
 	CALL SUBOPT_0x4E
 	__GETD1N 0x42700000
 	CALL __CMPF12
 	BREQ PC+2
 	BRCC PC+3
-	JMP  _0x80054
-; 0004 024D                             heater_power = rect_p_ten_min;
+	JMP  _0x80063
+; 0004 0269                             heater_power = rect_p_ten_min;
 	LDS  R30,_rect_p_ten_min
 	STS  _heater_power,R30
-; 0004 024E                             #ifdef P_SENS_ON
-; 0004 024F                                 if ((p_kolona > rect_p_kol_max) || pressureOver) {
-	LDS  R30,_rect_p_kol_max
-	LDS  R31,_rect_p_kol_max+1
-	LDS  R26,_p_kolona
-	LDS  R27,_p_kolona+1
-	LDS  R24,_p_kolona+2
-	LDS  R25,_p_kolona+3
-	CALL SUBOPT_0x40
-	CALL __CMPF12
-	BREQ PC+4
-	BRCS PC+3
-	JMP  _0x80056
-	TST  R10
-	BREQ _0x80055
-_0x80056:
-; 0004 0250                                     heater_power -= 10;
-	LDS  R30,_heater_power
-	SUBI R30,LOW(10)
-	STS  _heater_power,R30
-; 0004 0251                                     pressureOver = 1;
-	LDI  R30,LOW(1)
-	MOV  R10,R30
-; 0004 0252                                 }
-; 0004 0253                             #endif
-; 0004 0254                             if ((fabs(t_kolona_up_old - t_kolona_up) <= 2.0*DELTA) && !startStop && t_kuba > 75.0 && !pwmOn) { // Сигнализация по температуре
-_0x80055:
+; 0004 026A                             #ifdef P_SENS_ON
+; 0004 026B                                 if ((p_kolona > rect_p_kol_max) || pressureOver) {
+; 0004 026C                                     heater_power -= 10;
+; 0004 026D                                     pressureOver = 1;
+; 0004 026E                                 }
+; 0004 026F                             #endif
+; 0004 0270                             if ((fabs(t_kolona_up_old - t_kolona_up) <= 2.0*DELTA) && !startStop && t_kuba > 75.0 && !pwmOn) { // Сигнализация по температуре
 	LDS  R26,_t_kolona_up
 	LDS  R27,_t_kolona_up+1
 	LDS  R24,_t_kolona_up+2
@@ -6104,119 +6140,117 @@ _0x80055:
 	CALL __CMPF12
 	BREQ PC+4
 	BRCS PC+3
-	JMP  _0x80059
+	JMP  _0x80065
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x80059
+	BRNE _0x80065
 	CALL SUBOPT_0x4E
 	__GETD1N 0x42960000
 	CALL __CMPF12
 	BREQ PC+2
 	BRCC PC+3
-	JMP  _0x80059
+	JMP  _0x80065
 	LDS  R30,_pwmOn
 	CPI  R30,0
-	BREQ _0x8005A
-_0x80059:
-	RJMP _0x80058
-_0x8005A:
-; 0004 0255                                 if ((timerSign >= 600) && !timerSignOn) { // 10 min
+	BREQ _0x80066
+_0x80065:
+	RJMP _0x80064
+_0x80066:
+; 0004 0271                                 if ((timerSign >= 600) && !timerSignOn) { // 10 min
 	LDS  R26,_timerSign
 	LDS  R27,_timerSign+1
 	CPI  R26,LOW(0x258)
 	LDI  R30,HIGH(0x258)
 	CPC  R27,R30
-	BRLO _0x8005C
+	BRLO _0x80068
 	TST  R13
-	BREQ _0x8005D
-_0x8005C:
-	RJMP _0x8005B
-_0x8005D:
-; 0004 0256                                     timerSignOn = 1;
+	BREQ _0x80069
+_0x80068:
+	RJMP _0x80067
+_0x80069:
+; 0004 0272                                     timerSignOn = 1;
 	LDI  R30,LOW(1)
 	MOV  R13,R30
-; 0004 0257                                     BEEP_ON;
+; 0004 0273                                     BEEP_ON;
 	LDI  R30,LOW(127)
 	OUT  0x31,R30
-; 0004 0258                                 } else {
-	RJMP _0x8005E
-_0x8005B:
-; 0004 0259                                     timerSign ++;
+; 0004 0274                                 } else {
+	RJMP _0x8006A
+_0x80067:
+; 0004 0275                                     timerSign ++;
 	LDI  R26,LOW(_timerSign)
 	LDI  R27,HIGH(_timerSign)
 	CALL SUBOPT_0x1
-; 0004 025A                                 }
-_0x8005E:
-; 0004 025B                             } else {
-	RJMP _0x8005F
-_0x80058:
-; 0004 025C                                 timerSign = 0;
+; 0004 0276                                 }
+_0x8006A:
+; 0004 0277                             } else {
+	RJMP _0x8006B
+_0x80064:
+; 0004 0278                                 timerSign = 0;
 	LDI  R30,LOW(0)
 	STS  _timerSign,R30
 	STS  _timerSign+1,R30
-; 0004 025D                             }
-_0x8005F:
-; 0004 025E                         }
-; 0004 025F 
-; 0004 0260                         if (!startStop) { // считаем количество голов
-_0x80054:
+; 0004 0279                             }
+_0x8006B:
+; 0004 027A                         }
+; 0004 027B 
+; 0004 027C                         if (!startStop) { // считаем количество голов
+_0x80063:
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x80060
-; 0004 0261                             //headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse * 0.65;  // 0.65 попытка скорректировать пропуски открытия клапана при опросе датчиков  температуры
-; 0004 0262                             headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse;
-	CALL SUBOPT_0x4F
+	BRNE _0x8006C
+; 0004 027D                             //headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse * 0.65;  // 0.65 попытка скорректировать пропуски открытия клапана при опросе датчиков  температуры
+; 0004 027E                             headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse;
+	CALL SUBOPT_0x50
 	MOVW R26,R30
 	MOVW R24,R22
-	CALL SUBOPT_0x3E
-	CALL SUBOPT_0x50
-; 0004 0263                         } else {
-	RJMP _0x80061
-_0x80060:
-; 0004 0264                             headDisp = 0.0;
+	CALL SUBOPT_0x3D
+	CALL SUBOPT_0x51
+; 0004 027F                         } else {
+	RJMP _0x8006D
+_0x8006C:
+; 0004 0280                             headDisp = 0.0;
 	LDI  R30,LOW(0)
 	STS  _headDisp,R30
 	STS  _headDisp+1,R30
 	STS  _headDisp+2,R30
 	STS  _headDisp+3,R30
-; 0004 0265                         }
-_0x80061:
-; 0004 0266                         // оключаем клапан по кокнчанию отбора голов
-; 0004 0267                         if ((headDisp >= (float)(rect_head_val)) && !startStop && pwmOn) {
+; 0004 0281                         }
+_0x8006D:
+; 0004 0282                         // оключаем клапан по кокнчанию отбора голов
+; 0004 0283                         if ((headDisp >= (float)(rect_head_val)) && !startStop && pwmOn) {
 	LDS  R30,_rect_head_val
 	LDS  R31,_rect_head_val+1
-	CALL SUBOPT_0x40
+	CALL SUBOPT_0x3F
 	LDS  R26,_headDisp
 	LDS  R27,_headDisp+1
 	LDS  R24,_headDisp+2
 	LDS  R25,_headDisp+3
 	CALL __CMPF12
-	BRLO _0x80063
+	BRLO _0x8006F
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x80063
+	BRNE _0x8006F
 	LDS  R30,_pwmOn
 	CPI  R30,0
-	BRNE _0x80064
-_0x80063:
-	RJMP _0x80062
-_0x80064:
-; 0004 0268                             pwmOn = 0;
-	LDI  R30,LOW(0)
-	STS  _pwmOn,R30
-; 0004 0269                             VALVE_CLS;
-	CBI  0x1B,3
-; 0004 026A                         }
-; 0004 026B 
-; 0004 026C                         // StartStop
-; 0004 026D                         if (startStop) {
-_0x80062:
+	BRNE _0x80070
+_0x8006F:
+	RJMP _0x8006E
+_0x80070:
+; 0004 0284                             pwmOn = 0;
+	CALL SUBOPT_0x42
+; 0004 0285                             VALVE_CLS;
+; 0004 0286                         }
+; 0004 0287 
+; 0004 0288                         // StartStop
+; 0004 0289                         if (startStop) {
+_0x8006E:
 	LDS  R30,_startStop
 	CPI  R30,0
 	BRNE PC+3
-	JMP _0x80065
-; 0004 026E 
-; 0004 026F                             if (t_kolona_down >= rect_dt_otbora + rect_t_otbora ) {
+	JMP _0x80071
+; 0004 028A 
+; 0004 028B                             if (t_kolona_down >= rect_dt_otbora + rect_t_otbora ) {
 	LDS  R30,_rect_t_otbora
 	LDS  R31,_rect_t_otbora+1
 	LDS  R22,_rect_t_otbora+2
@@ -6226,61 +6260,61 @@ _0x80062:
 	LDS  R24,_rect_dt_otbora+2
 	LDS  R25,_rect_dt_otbora+3
 	CALL __ADDF12
-	CALL SUBOPT_0x51
+	CALL SUBOPT_0x52
 	CALL __CMPF12
-	BRLO _0x80066
-; 0004 0270                                 timer = 0;
+	BRLO _0x80072
+; 0004 028C                                 timer = 0;
 	LDI  R30,LOW(0)
 	STS  _timer,R30
 	STS  _timer+1,R30
-; 0004 0271                                 VALVE_CLS;
+; 0004 028D                                 VALVE_CLS;
 	CBI  0x1B,3
-; 0004 0272                                 pwmOn = 0;
+; 0004 028E                                 pwmOn = 0;
 	STS  _pwmOn,R30
-; 0004 0273                                 timerOn = 0;
+; 0004 028F                                 timerOn = 0;
 	STS  _timerOn,R30
-; 0004 0274                                 if (ssTrig == 0) {
+; 0004 0290                                 if (ssTrig == 0) {
 	TST  R12
-	BRNE _0x80067
-; 0004 0275                                     ssTrig = 1;
+	BRNE _0x80073
+; 0004 0291                                     ssTrig = 1;
 	LDI  R30,LOW(1)
 	MOV  R12,R30
-; 0004 0276                                     ssCounter ++;
+; 0004 0292                                     ssCounter ++;
 	LDI  R26,LOW(_ssCounter)
 	LDI  R27,HIGH(_ssCounter)
 	CALL SUBOPT_0x1
-; 0004 0277                                     //уменьшаем скорость отбора на 5% при каждой остановке колоны (Защита от Буратин!!!)
-; 0004 0278                                     rect_body_speed =(int)((float)rect_body_speed * 0.97);
-	CALL SUBOPT_0x3A
+; 0004 0293                                     //уменьшаем скорость отбора на 3% при каждой остановке колоны (Защита от Буратин!!!)
+; 0004 0294                                     rect_body_speed =(int)((float)rect_body_speed * 0.97);
+	CALL SUBOPT_0x37
 	__GETD2N 0x3F7851EC
 	CALL __MULF12
 	CALL __CFD1
 	STS  _rect_body_speed,R30
 	STS  _rect_body_speed+1,R31
-; 0004 0279                                 }
-; 0004 027A                             } else {
-_0x80067:
-	RJMP _0x80068
-_0x80066:
-; 0004 027B                                 timer_off = 0;
+; 0004 0295                                 }
+; 0004 0296                             } else {
+_0x80073:
+	RJMP _0x80074
+_0x80072:
+; 0004 0297                                 timer_off = 0;
 	LDI  R30,LOW(0)
 	STS  _timer_off,R30
 	STS  _timer_off+1,R30
-; 0004 027C                                 if (timerOn) {
+; 0004 0298                                 if (timerOn) {
 	LDS  R30,_timerOn
 	CPI  R30,0
-	BREQ _0x80069
-; 0004 027D                                     //VALVE_OPN;
-; 0004 027E                                     pwmOn = 1;
+	BREQ _0x80075
+; 0004 0299                                     //VALVE_OPN;
+; 0004 029A                                     pwmOn = 1;
 	LDI  R30,LOW(1)
 	STS  _pwmOn,R30
-; 0004 027F                                     ssTrig = 0;
+; 0004 029B                                     ssTrig = 0;
 	CLR  R12
-; 0004 0280                                     //timer = 0;
-; 0004 0281                                 } else {
-	RJMP _0x8006A
-_0x80069:
-; 0004 0282                                     if (t_kuba > rect_t_kuba_valve) {
+; 0004 029C                                     //timer = 0;
+; 0004 029D                                 } else {
+	RJMP _0x80076
+_0x80075:
+; 0004 029E                                     if (t_kuba > rect_t_kuba_valve) {
 	LDS  R30,_rect_t_kuba_valve
 	LDS  R31,_rect_t_kuba_valve+1
 	LDS  R22,_rect_t_kuba_valve+2
@@ -6289,1073 +6323,1274 @@ _0x80069:
 	CALL __CMPF12
 	BREQ PC+2
 	BRCC PC+3
-	JMP  _0x8006B
-; 0004 0283                                         if (timer >= rect_T2_valve * 60) {
+	JMP  _0x80077
+; 0004 029F                                         if (timer >= rect_T2_valve * 60) {
 	LDS  R26,_rect_T2_valve
 	LDS  R27,_rect_T2_valve+1
-	CALL SUBOPT_0x52
-	BRLO _0x8006C
-; 0004 0284                                             timerOn = 1;
+	CALL SUBOPT_0x53
+	BRLO _0x80078
+; 0004 02A0                                             timerOn = 1;
 	LDI  R30,LOW(1)
 	STS  _timerOn,R30
-; 0004 0285                                         }
-; 0004 0286                                     } else {
-_0x8006C:
-	RJMP _0x8006D
-_0x8006B:
-; 0004 0287                                         if (timer >= rect_T1_valve * 60) {
+; 0004 02A1                                         }
+; 0004 02A2                                     } else {
+_0x80078:
+	RJMP _0x80079
+_0x80077:
+; 0004 02A3                                         if (timer >= rect_T1_valve * 60) {
 	LDS  R26,_rect_T1_valve
 	LDS  R27,_rect_T1_valve+1
-	CALL SUBOPT_0x52
-	BRLO _0x8006E
-; 0004 0288                                             timerOn = 1;
+	CALL SUBOPT_0x53
+	BRLO _0x8007A
+; 0004 02A4                                             timerOn = 1;
 	LDI  R30,LOW(1)
 	STS  _timerOn,R30
-; 0004 0289                                         }
-; 0004 028A                                     }
-_0x8006E:
-_0x8006D:
-; 0004 028B                                 }
-_0x8006A:
-; 0004 028C                             }
-_0x80068:
-; 0004 028D                         }
-; 0004 028E 
-; 0004 028F                         if (t_kuba >= rect_t_kuba_off) {
-_0x80065:
+; 0004 02A5                                         }
+; 0004 02A6                                     }
+_0x8007A:
+_0x80079:
+; 0004 02A7                                 }
+_0x80076:
+; 0004 02A8                             }
+_0x80074:
+; 0004 02A9                         }
+; 0004 02AA 
+; 0004 02AB                         if (t_kuba >= rect_t_kuba_off) {
+_0x80071:
 	LDS  R30,_rect_t_kuba_off
 	LDS  R31,_rect_t_kuba_off+1
 	LDS  R22,_rect_t_kuba_off+2
 	LDS  R23,_rect_t_kuba_off+3
 	CALL SUBOPT_0x4E
 	CALL __CMPF12
-	BRLO _0x8006F
-; 0004 0290                         // end process
-; 0004 0291                             StopProcess();
+	BRLO _0x8007B
+; 0004 02AC                         // end process
+; 0004 02AD                             StopProcess();
 	RCALL _StopProcess
-; 0004 0292                             return;
+; 0004 02AE                             return;
 	RET
-; 0004 0293                         }
-; 0004 0294                         break;
-_0x8006F:
-	RJMP _0x8004E
-; 0004 0295 
-; 0004 0296         case CALIBRATE_RUN:
-_0x80053:
+; 0004 02AF                         }
+; 0004 02B0                         break;
+_0x8007B:
+	RJMP _0x80057
+; 0004 02B1 
+; 0004 02B2         case CALIBRATE_RUN:
+_0x80062:
 	CPI  R30,LOW(0x8)
 	LDI  R26,HIGH(0x8)
 	CPC  R31,R26
-	BRNE _0x8004E
-; 0004 0297                         //Calibrate_View();
-; 0004 0298                         headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse;
-	CALL SUBOPT_0x4F
+	BRNE _0x80057
+; 0004 02B3                         //Calibrate_View();
+; 0004 02B4                         headDisp = (float)impulseCounter * onePulseDose * (float)valvePulse;
+	CALL SUBOPT_0x50
 	MOVW R26,R30
 	MOVW R24,R22
-	CALL SUBOPT_0x3E
-	CALL SUBOPT_0x50
-; 0004 0299                         break;
-; 0004 029A     }
-_0x8004E:
-; 0004 029B 
-; 0004 029C     //StartAllConvert_T(BUS);
-; 0004 029D }
+	CALL SUBOPT_0x3D
+	CALL SUBOPT_0x51
+; 0004 02B5                         break;
+; 0004 02B6     }
+_0x80057:
+; 0004 02B7 
+; 0004 02B8     //StartAllConvert_T(BUS);
+; 0004 02B9 }
 	RET
 ;
 ;//обработчик события - таймер 250 ms  обновление экрана
 ;void HandlerEventTimer_250ms(void)
-; 0004 02A1 {
+; 0004 02BD {
 _HandlerEventTimer_250ms:
-; 0004 02A2       switch (mode) {
+; 0004 02BE       switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 02A3         case MENU:
+; 0004 02BF         case MENU:
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
-	BRNE _0x80074
-; 0004 02A4                         print_menu();
+	BRNE _0x80080
+; 0004 02C0                         print_menu();
 	RCALL _print_menu
-; 0004 02A5                         break;
-	RJMP _0x80073
-; 0004 02A6 
-; 0004 02A7         case SETTINGS:
-_0x80074:
+; 0004 02C1                         break;
+	RJMP _0x8007F
+; 0004 02C2 
+; 0004 02C3         case SETTINGS:
+_0x80080:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BREQ _0x800E1
-; 0004 02A8                         ViewSettings();
-; 0004 02A9                         break;
-; 0004 02AA 
-; 0004 02AB         case RUN_RECT_SET:
+	BREQ _0x8010A
+; 0004 02C4                         ViewSettings();
+; 0004 02C5                         break;
+; 0004 02C6 
+; 0004 02C7         case RUN_RECT_SET:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BREQ _0x800E1
-; 0004 02AC                         ViewSettings();
-; 0004 02AD                         break;
-; 0004 02AE 
-; 0004 02AF         case RUN_DIST:
+	BREQ _0x8010A
+; 0004 02C8                         ViewSettings();
+; 0004 02C9                         break;
+; 0004 02CA 
+; 0004 02CB         case RUN_DIST:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x80077
-; 0004 02B0                         ViewDistilation();
+	BRNE _0x80083
+; 0004 02CC                         ViewDistilation();
 	RCALL _ViewDistilation
-; 0004 02B1                         break;
-	RJMP _0x80073
-; 0004 02B2 
-; 0004 02B3         case RUN_RECT:
-_0x80077:
+; 0004 02CD                         break;
+	RJMP _0x8007F
+; 0004 02CE 
+; 0004 02CF         case RUN_RECT:
+_0x80083:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x80078
-; 0004 02B4                         ViewRectification();
+	BRNE _0x80084
+; 0004 02D0                         ViewRectification();
 	RCALL _ViewRectification
-; 0004 02B5                         break;
-	RJMP _0x80073
-; 0004 02B6 
-; 0004 02B7         case CALIBRATE_RUN:
-_0x80078:
+; 0004 02D1                         break;
+	RJMP _0x8007F
+; 0004 02D2 
+; 0004 02D3         case CALIBRATE_RUN:
+_0x80084:
 	CPI  R30,LOW(0x8)
 	LDI  R26,HIGH(0x8)
 	CPC  R31,R26
-	BRNE _0x80079
-; 0004 02B8                         CalibrateView();
+	BRNE _0x80085
+; 0004 02D4                         CalibrateView();
 	RCALL _CalibrateView
-; 0004 02B9                         break;
-	RJMP _0x80073
-; 0004 02BA 
-; 0004 02BB         case CALIBRATE_MOD:
-_0x80079:
+; 0004 02D5                         break;
+	RJMP _0x8007F
+; 0004 02D6 
+; 0004 02D7         case CALIBRATE_MOD:
+_0x80085:
 	CPI  R30,LOW(0x9)
 	LDI  R26,HIGH(0x9)
 	CPC  R31,R26
-	BRNE _0x80073
-; 0004 02BC                         ViewSettings();
-_0x800E1:
+	BRNE _0x8007F
+; 0004 02D8                         ViewSettings();
+_0x8010A:
 	CALL _ViewSettings
-; 0004 02BD                         break;
-; 0004 02BE 
-; 0004 02BF     }
-_0x80073:
-; 0004 02C0 }
+; 0004 02D9                         break;
+; 0004 02DA 
+; 0004 02DB     }
+_0x8007F:
+; 0004 02DC }
 	RET
 ;
 ;//обработчик события - таймер 10 ms
 ;void HandlerEventTimer_10ms(void){
-; 0004 02C3 void HandlerEventTimer_10ms(void){
+; 0004 02DF void HandlerEventTimer_10ms(void){
 _HandlerEventTimer_10ms:
-; 0004 02C4     uint8_t but, code;
-; 0004 02C5     BUT_Poll();
+; 0004 02E0     uint8_t but, code;
+; 0004 02E1     BUT_Poll();
 	ST   -Y,R17
 	ST   -Y,R16
 ;	but -> R17
 ;	code -> R16
 	CALL _BUT_Poll
-; 0004 02C6     but = BUT_GetBut();
+; 0004 02E2     but = BUT_GetBut();
 	CALL _BUT_GetBut
 	MOV  R17,R30
-; 0004 02C7     if (but){
+; 0004 02E3     if (but){
 	CPI  R17,0
-	BREQ _0x8007B
-; 0004 02C8         code = BUT_GetBut();
+	BREQ _0x80087
+; 0004 02E4         code = BUT_GetBut();
 	CALL _BUT_GetBut
 	MOV  R16,R30
-; 0004 02C9       if (code == 1) {
+; 0004 02E5       if (code == 1) {
 	CPI  R16,1
-	BRNE _0x8007C
-; 0004 02CA         //DEBUG_LED_XOR;
-; 0004 02CB         switch(but) {
+	BRNE _0x80088
+; 0004 02E6         //DEBUG_LED_XOR;
+; 0004 02E7         switch(but) {
 	CALL SUBOPT_0x10
-; 0004 02CC             case BUT_1_ID:{
+; 0004 02E8             case BUT_1_ID:{
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
-	BRNE _0x80080
-; 0004 02CD                    ES_PlaceEvent(KEY_DOWN);
+	BRNE _0x8008C
+; 0004 02E9                    ES_PlaceEvent(KEY_DOWN);
 	LDI  R26,LOW(2)
 	CALL _ES_PlaceEvent
-; 0004 02CE                    cod = 'd';
+; 0004 02EA                    cod = 'd';
 	LDI  R30,LOW(100)
-	RJMP _0x800E2
-; 0004 02CF                    break;
-; 0004 02D0                    }
-; 0004 02D1 
-; 0004 02D2             case BUT_2_ID:{
-_0x80080:
+	RJMP _0x8010B
+; 0004 02EB                    break;
+; 0004 02EC                    }
+; 0004 02ED 
+; 0004 02EE             case BUT_2_ID:{
+_0x8008C:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BRNE _0x80081
-; 0004 02D3                    ES_PlaceEvent(KEY_UP);
+	BRNE _0x8008D
+; 0004 02EF                    ES_PlaceEvent(KEY_UP);
 	LDI  R26,LOW(1)
 	CALL _ES_PlaceEvent
-; 0004 02D4                    cod = 'u';
+; 0004 02F0                    cod = 'u';
 	LDI  R30,LOW(117)
-	RJMP _0x800E2
-; 0004 02D5                    break;
-; 0004 02D6                    }
-; 0004 02D7             case BUT_3_ID:{
-_0x80081:
+	RJMP _0x8010B
+; 0004 02F1                    break;
+; 0004 02F2                    }
+; 0004 02F3             case BUT_3_ID:{
+_0x8008D:
 	CPI  R30,LOW(0x3)
 	LDI  R26,HIGH(0x3)
 	CPC  R31,R26
-	BRNE _0x80082
-; 0004 02D8                    ES_PlaceEvent(KEY_ENTER);
+	BRNE _0x8008E
+; 0004 02F4                    ES_PlaceEvent(KEY_ENTER);
 	LDI  R26,LOW(3)
 	CALL _ES_PlaceEvent
-; 0004 02D9                    cod = 'e';
+; 0004 02F5                    cod = 'e';
 	LDI  R30,LOW(101)
-	RJMP _0x800E2
-; 0004 02DA                    break;
-; 0004 02DB                    }
-; 0004 02DC             case BUT_4_ID:{
-_0x80082:
+	RJMP _0x8010B
+; 0004 02F6                    break;
+; 0004 02F7                    }
+; 0004 02F8             case BUT_4_ID:{
+_0x8008E:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x8007F
-; 0004 02DD                    ES_PlaceEvent(KEY_ESC);
+	BRNE _0x8008B
+; 0004 02F9                    ES_PlaceEvent(KEY_ESC);
 	LDI  R26,LOW(4)
 	CALL _ES_PlaceEvent
-; 0004 02DE                    cod = 'b';
+; 0004 02FA                    cod = 'b';
 	LDI  R30,LOW(98)
-_0x800E2:
+_0x8010B:
 	STS  _cod,R30
-; 0004 02DF                    break;
-; 0004 02E0                    }
-; 0004 02E1         }
-_0x8007F:
-; 0004 02E2       } else {
-	RJMP _0x80084
-_0x8007C:
-; 0004 02E3         switch(but) {
+; 0004 02FB                    break;
+; 0004 02FC                    }
+; 0004 02FD         }
+_0x8008B:
+; 0004 02FE       } else {
+	RJMP _0x80090
+_0x80088:
+; 0004 02FF         switch(but) {
 	CALL SUBOPT_0x10
-; 0004 02E4             case BUT_1_ID:{
+; 0004 0300             case BUT_1_ID:{
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
-	BRNE _0x80088
-; 0004 02E5                    ES_PlaceEvent(KEY_L_DOWN);
+	BRNE _0x80094
+; 0004 0301                    ES_PlaceEvent(KEY_L_DOWN);
 	LDI  R26,LOW(9)
-	RJMP _0x800E3
-; 0004 02E6                    //cod = 'd';
-; 0004 02E7                    break;
-; 0004 02E8                    }
-; 0004 02E9 
-; 0004 02EA             case BUT_2_ID:{
-_0x80088:
+	RJMP _0x8010C
+; 0004 0302                    //cod = 'd';
+; 0004 0303                    break;
+; 0004 0304                    }
+; 0004 0305 
+; 0004 0306             case BUT_2_ID:{
+_0x80094:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BRNE _0x80087
-; 0004 02EB                    ES_PlaceEvent(KEY_L_UP);
+	BRNE _0x80093
+; 0004 0307                    ES_PlaceEvent(KEY_L_UP);
 	LDI  R26,LOW(8)
-_0x800E3:
+_0x8010C:
 	CALL _ES_PlaceEvent
-; 0004 02EC                    //cod = 'u';
-; 0004 02ED                    break;
-; 0004 02EE                    }
-; 0004 02EF         }
+; 0004 0308                    //cod = 'u';
+; 0004 0309                    break;
+; 0004 030A                    }
+; 0004 030B         }
+_0x80093:
+; 0004 030C       }
+_0x80090:
+; 0004 030D     }
+; 0004 030E }
 _0x80087:
-; 0004 02F0       }
-_0x80084:
-; 0004 02F1     }
-; 0004 02F2 }
-_0x8007B:
 	LD   R16,Y+
 	LD   R17,Y+
 	RET
 ;
 ;//обработчик кнопки Enter
 ;void HandlerEventButEnter(void) {
-; 0004 02F5 void HandlerEventButEnter(void) {
+; 0004 0311 void HandlerEventButEnter(void) {
 _HandlerEventButEnter:
-; 0004 02F6   switch (mode) {
+; 0004 0312   switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 02F7         case MENU:
+; 0004 0313         case MENU:
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
-	BRNE _0x8008D
-; 0004 02F8                         menu[current_menu].items_submenu[current_pos].function();
-	CALL SUBOPT_0x53
+	BRNE _0x80099
+; 0004 0314                         menu[current_menu].items_submenu[current_pos].function();
 	CALL SUBOPT_0x54
+	CALL SUBOPT_0x55
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,2
 	LD   R30,X+
 	LD   R31,X+
 	ICALL
-; 0004 02F9                         if (mode == MENU){
+; 0004 0315                         if (mode == MENU){
 	LDS  R26,_mode
 	CPI  R26,LOW(0x1)
-	BRNE _0x8008E
-; 0004 02FA                             print_menu();
+	BRNE _0x8009A
+; 0004 0316                             print_menu();
 	RCALL _print_menu
-; 0004 02FB                         }
-; 0004 02FC                         break;
-_0x8008E:
-	RJMP _0x8008C
-; 0004 02FD 
-; 0004 02FE         case SETTINGS:
-_0x8008D:
+; 0004 0317                         }
+; 0004 0318                         break;
+_0x8009A:
+	RJMP _0x80098
+; 0004 0319 
+; 0004 031A         case SETTINGS:
+_0x80099:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BRNE _0x8008F
-; 0004 02FF                         SetNewParams();
+	BRNE _0x8009B
+; 0004 031B                         SetNewParams();
 	CALL _SetNewParams
-; 0004 0300                         SaveParam();
+; 0004 031C                         SaveParam();
 	CALL _SaveParam
-; 0004 0301                         nlcd_Clear();
-	CALL SUBOPT_0x55
-; 0004 0302                         mode = MENU;
-; 0004 0303                         break;
-	RJMP _0x8008C
-; 0004 0304         case INIT:
-_0x8008F:
+; 0004 031D                         nlcd_Clear();
+	CALL SUBOPT_0x56
+; 0004 031E                         mode = MENU;
+; 0004 031F                         break;
+	RJMP _0x80098
+; 0004 0320         case INIT:
+_0x8009B:
 	CPI  R30,LOW(0x3)
 	LDI  R26,HIGH(0x3)
 	CPC  R31,R26
-	BRNE _0x80090
-; 0004 0305                         SetSensors();
+	BRNE _0x8009C
+; 0004 0321                         SetSensors();
 	CALL _SetSensors
-; 0004 0306                         nlcd_Clear();
-	CALL SUBOPT_0x55
-; 0004 0307                         mode = MENU;
-; 0004 0308                         break;
-	RJMP _0x8008C
-; 0004 0309         case END_PROC:
-_0x80090:
+; 0004 0322                         nlcd_Clear();
+	CALL SUBOPT_0x56
+; 0004 0323                         mode = MENU;
+; 0004 0324                         break;
+	RJMP _0x80098
+; 0004 0325         case END_PROC:
+_0x8009C:
 	SBIW R30,0
-	BRNE _0x80091
-; 0004 030A                         mode = MENU;
+	BRNE _0x8009D
+; 0004 0326                         mode = MENU;
 	LDI  R30,LOW(1)
 	STS  _mode,R30
-; 0004 030B                         BEEP_OFF;
+; 0004 0327                         BEEP_OFF;
 	LDI  R30,LOW(0)
 	OUT  0x31,R30
-; 0004 030C                         nlcd_Clear();
-	RJMP _0x800E4
-; 0004 030D                         print_menu();
-; 0004 030E                         break;
-; 0004 030F         case RUN_DIST:
-_0x80091:
+; 0004 0328                         nlcd_Clear();
+	RJMP _0x8010D
+; 0004 0329                         print_menu();
+; 0004 032A                         break;
+; 0004 032B         case RUN_DIST:
+_0x8009D:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x80092
-; 0004 0310                         if (abortProcess) {
+	BRNE _0x8009E
+; 0004 032C                         if (abortProcess) {
 	LDS  R30,_abortProcess
 	CPI  R30,0
-	BREQ _0x80093
-; 0004 0311                             StopProcess();
-	CALL SUBOPT_0x56
-; 0004 0312                             BEEP_OFF;
-; 0004 0313                             mode = MENU;
-; 0004 0314                             nlcd_Clear();
-; 0004 0315                             print_menu();
-; 0004 0316                         }
-; 0004 0317                         break;
-_0x80093:
-	RJMP _0x8008C
-; 0004 0318         case RUN_RECT:
-_0x80092:
+	BREQ _0x8009F
+; 0004 032D                             StopProcess();
+	CALL SUBOPT_0x57
+; 0004 032E                             BEEP_OFF;
+; 0004 032F                             mode = MENU;
+; 0004 0330                             nlcd_Clear();
+; 0004 0331                             print_menu();
+; 0004 0332                         } else { // перебираем параметры для изменения
+	RJMP _0x800A0
+_0x8009F:
+; 0004 0333                             distSettingMode ++;
+	LDS  R30,_distSettingMode
+	SUBI R30,-LOW(1)
+	STS  _distSettingMode,R30
+; 0004 0334                             distSettingMode %= 3;
+	LDS  R26,_distSettingMode
+	CLR  R27
+	LDI  R30,LOW(3)
+	LDI  R31,HIGH(3)
+	CALL __MODW21
+	STS  _distSettingMode,R30
+; 0004 0335                         }
+_0x800A0:
+; 0004 0336                         break;
+	RJMP _0x80098
+; 0004 0337         case RUN_RECT:
+_0x8009E:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x80094
-; 0004 0319                         if (abortProcess) {
+	BRNE _0x800A1
+; 0004 0338                         if (abortProcess) {
 	LDS  R30,_abortProcess
 	CPI  R30,0
-	BREQ _0x80095
-; 0004 031A                             StopProcess();
-	CALL SUBOPT_0x56
-; 0004 031B                             BEEP_OFF;
-; 0004 031C                             mode = MENU;
-; 0004 031D                             nlcd_Clear();
-; 0004 031E                             print_menu();
-; 0004 031F                         } else {
-	RJMP _0x80096
-_0x80095:
-; 0004 0320                         // Вызов параметров отбора
-; 0004 0321                             nlcd_Clear();
+	BREQ _0x800A2
+; 0004 0339                             StopProcess();
+	CALL SUBOPT_0x57
+; 0004 033A                             BEEP_OFF;
+; 0004 033B                             mode = MENU;
+; 0004 033C                             nlcd_Clear();
+; 0004 033D                             print_menu();
+; 0004 033E                         } else {
+	RJMP _0x800A3
+_0x800A2:
+; 0004 033F                         // Вызов параметров отбора
+; 0004 0340                             nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 0322                             mode = RUN_RECT_SET;
+; 0004 0341                             mode = RUN_RECT_SET;
 	LDI  R30,LOW(6)
 	STS  _mode,R30
-; 0004 0323                             param_id = 4;
+; 0004 0342                             param_id = 4;
 	LDI  R30,LOW(4)
 	CALL SUBOPT_0x43
-; 0004 0324                             params[param_id].value = t_kolona_down * 100;
+; 0004 0343                             params[param_id].value = t_kolona_down * 100;
 	PUSH R31
 	PUSH R30
-	CALL SUBOPT_0x51
-	CALL SUBOPT_0x57
+	CALL SUBOPT_0x52
+	CALL SUBOPT_0x58
 	CALL __MULF12
 	POP  R26
 	POP  R27
 	CALL __CFD1U
 	ST   X+,R30
 	ST   X,R31
-; 0004 0325                             last_menu = current_menu;
+; 0004 0344                             last_menu = current_menu;
 	CALL SUBOPT_0x44
-; 0004 0326                             last_pos = current_pos;
-; 0004 0327                             current_menu = MENU_RECT;
-; 0004 0328                             current_pos = 2; // Температура отбора тела
+; 0004 0345                             last_pos = current_pos;
+; 0004 0346                             current_menu = MENU_RECT;
+; 0004 0347                             current_pos = 2; // Температура отбора тела
 	LDI  R30,LOW(2)
 	STS  _current_pos,R30
-; 0004 0329                             ViewSettings();
+; 0004 0348                             ViewSettings();
 	CALL _ViewSettings
-; 0004 032A                         }
-_0x80096:
-; 0004 032B                         break;
-	RJMP _0x8008C
-; 0004 032C 
-; 0004 032D         case RUN_RECT_SET:
-_0x80094:
+; 0004 0349                         }
+_0x800A3:
+; 0004 034A                         break;
+	RJMP _0x80098
+; 0004 034B 
+; 0004 034C         case RUN_RECT_SET:
+_0x800A1:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BRNE _0x80097
-; 0004 032E                         SetNewParams();
+	BRNE _0x800A4
+; 0004 034D                         SetNewParams();
 	CALL _SetNewParams
-; 0004 032F                         SaveParam();
+; 0004 034E                         SaveParam();
 	CALL _SaveParam
-; 0004 0330                         current_menu = last_menu;
-	CALL SUBOPT_0x58
-; 0004 0331                         current_pos = last_pos;
-; 0004 0332                         startStop = 1;       // Запускаем ШИМ отбор
+; 0004 034F                         current_menu = last_menu;
+	CALL SUBOPT_0x59
+; 0004 0350                         current_pos = last_pos;
+; 0004 0351                         startStop = 1;       // Запускаем ШИМ отбор
 	STS  _startStop,R30
-; 0004 0333                         ssCounter = 0;
-	CALL SUBOPT_0x2F
-; 0004 0334                         ssTrig = 0;
-; 0004 0335                         impulseCounter = 0;
+; 0004 0352                         ssCounter = 0;
 	CALL SUBOPT_0x2E
-; 0004 0336                         pwmOn = 1;
+; 0004 0353                         ssTrig = 0;
+; 0004 0354                         impulseCounter = 0;
+	CALL SUBOPT_0x2D
+; 0004 0355                         pwmOn = 1;
 	LDI  R30,LOW(1)
 	STS  _pwmOn,R30
-; 0004 0337                         t_kuba_avg = t_kuba;
+; 0004 0356                         t_kuba_avg = t_kuba;
 	CALL SUBOPT_0x4D
 	CALL SUBOPT_0x49
-; 0004 0338                         t_kuba_sum = 0.0;
-; 0004 0339                         t_kuba_count = 0;
-; 0004 033A                         CalculateBodySpeed();
-; 0004 033B                         //VALVE_OPN;
-; 0004 033C                         nlcd_Clear();
+; 0004 0357                         t_kuba_sum = 0.0;
+; 0004 0358                         t_kuba_count = 0;
+; 0004 0359                         CalculateBodySpeed();
+; 0004 035A                         //VALVE_OPN;
+; 0004 035B                         nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 033D                         mode = RUN_RECT;
+; 0004 035C                         mode = RUN_RECT;
 	LDI  R30,LOW(5)
 	STS  _mode,R30
-; 0004 033E                         break;
-	RJMP _0x8008C
-; 0004 033F 
-; 0004 0340        case CALIBRATE:
-_0x80097:
+; 0004 035D                         break;
+	RJMP _0x80098
+; 0004 035E 
+; 0004 035F        case CALIBRATE:
+_0x800A4:
 	CPI  R30,LOW(0x7)
 	LDI  R26,HIGH(0x7)
 	CPC  R31,R26
-	BRNE _0x80098
-; 0004 0341                        // mode = CALIBRATE_RUN;   // Запус процесса калибровки
-; 0004 0342                         nlcd_Clear();
+	BRNE _0x800A5
+; 0004 0360                        // mode = CALIBRATE_RUN;   // Запус процесса калибровки
+; 0004 0361                         nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 0343                         CalibrateRun();
+; 0004 0362                         CalibrateRun();
 	RCALL _CalibrateRun
-; 0004 0344                         CalibrateView();
+; 0004 0363                         CalibrateView();
 	RCALL _CalibrateView
-; 0004 0345                         break;
-	RJMP _0x8008C
-; 0004 0346 
-; 0004 0347        case CALIBRATE_RUN:                      // Дозируем 50 мл для калибровки
-_0x80098:
+; 0004 0364                         break;
+	RJMP _0x80098
+; 0004 0365 
+; 0004 0366        case CALIBRATE_RUN:                      // Дозируем 50 мл для калибровки
+_0x800A5:
 	CPI  R30,LOW(0x8)
 	LDI  R26,HIGH(0x8)
 	CPC  R31,R26
-	BRNE _0x80099
-; 0004 0348                         if (abortProcess) {    // прерываем процесс
+	BRNE _0x800A6
+; 0004 0367                         if (abortProcess) {    // прерываем процесс
 	LDS  R30,_abortProcess
 	CPI  R30,0
-	BREQ _0x8009A
-; 0004 0349                             VALVE_CLS;
+	BREQ _0x800A7
+; 0004 0368                             VALVE_CLS;
 	CBI  0x1B,3
-; 0004 034A                             pwmOn = 0;
+; 0004 0369                             pwmOn = 0;
 	LDI  R30,LOW(0)
 	STS  _pwmOn,R30
-; 0004 034B                             abortProcess = 0;
+; 0004 036A                             abortProcess = 0;
 	STS  _abortProcess,R30
-; 0004 034C                             mode = MENU;
+; 0004 036B                             mode = MENU;
 	LDI  R30,LOW(1)
 	STS  _mode,R30
-; 0004 034D                             nlcd_Clear();
-	CALL SUBOPT_0x2D
-; 0004 034E                             print_menu();
-; 0004 034F                         }
-; 0004 0350                         break;
-_0x8009A:
-	RJMP _0x8008C
-; 0004 0351 
-; 0004 0352        case CALIBRATE_MOD:
-_0x80099:
+; 0004 036C                             nlcd_Clear();
+	CALL SUBOPT_0x2C
+; 0004 036D                             print_menu();
+; 0004 036E                         }
+; 0004 036F                         break;
+_0x800A7:
+	RJMP _0x80098
+; 0004 0370 
+; 0004 0371        case CALIBRATE_MOD:
+_0x800A6:
 	CPI  R30,LOW(0x9)
 	LDI  R26,HIGH(0x9)
 	CPC  R31,R26
-	BRNE _0x8008C
-; 0004 0353                         SetNewParams();                 // закончили калибровку, сохраняем параметры и выходим в меню
+	BRNE _0x80098
+; 0004 0372                         SetNewParams();                 // закончили калибровку, сохраняем параметры и выходим в меню
 	CALL _SetNewParams
-; 0004 0354                         CalibrateStop();
+; 0004 0373                         CalibrateStop();
 	RCALL _CalibrateStop
-; 0004 0355                         current_menu = last_menu;
-	CALL SUBOPT_0x58
-; 0004 0356                         current_pos = last_pos;
-; 0004 0357                         mode = MENU;
+; 0004 0374                         current_menu = last_menu;
+	CALL SUBOPT_0x59
+; 0004 0375                         current_pos = last_pos;
+; 0004 0376                         mode = MENU;
 	STS  _mode,R30
-; 0004 0358                         nlcd_Clear();
-_0x800E4:
+; 0004 0377                         nlcd_Clear();
+_0x8010D:
 	CALL _nlcd_Clear
-; 0004 0359                         print_menu();
+; 0004 0378                         print_menu();
 	RCALL _print_menu
-; 0004 035A                         break;
-; 0004 035B     }
-_0x8008C:
-; 0004 035C }
+; 0004 0379                         break;
+; 0004 037A     }
+_0x80098:
+; 0004 037B }
 	RET
 ;
 ;//обработчик кнопки Esc
 ;void HandlerEventButEsc(void) {
-; 0004 035F void HandlerEventButEsc(void) {
+; 0004 037E void HandlerEventButEsc(void) {
 _HandlerEventButEsc:
-; 0004 0360   switch (mode) {
+; 0004 037F   switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 0361 
-; 0004 0362         case SETTINGS:
+; 0004 0380 
+; 0004 0381         case SETTINGS:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BRNE _0x8009F
-; 0004 0363                         nlcd_Clear();
-	CALL SUBOPT_0x55
-; 0004 0364                         mode = MENU;
-; 0004 0365                         break;
-	RJMP _0x8009E
-; 0004 0366         case INIT:
-_0x8009F:
+	BRNE _0x800AC
+; 0004 0382                         nlcd_Clear();
+	CALL SUBOPT_0x56
+; 0004 0383                         mode = MENU;
+; 0004 0384                         break;
+	RJMP _0x800AB
+; 0004 0385         case INIT:
+_0x800AC:
 	CPI  R30,LOW(0x3)
 	LDI  R26,HIGH(0x3)
 	CPC  R31,R26
-	BRNE _0x800A0
-; 0004 0367                         nlcd_Clear();
-	CALL SUBOPT_0x55
-; 0004 0368                         mode = MENU;
-; 0004 0369                         break;
-	RJMP _0x8009E
-; 0004 036A 
-; 0004 036B         case MENU:
-_0x800A0:
+	BRNE _0x800AD
+; 0004 0386                         nlcd_Clear();
+	CALL SUBOPT_0x56
+; 0004 0387                         mode = MENU;
+; 0004 0388                         break;
+	RJMP _0x800AB
+; 0004 0389 
+; 0004 038A         case MENU:
+_0x800AD:
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
-	BRNE _0x800A1
-; 0004 036C                         if (current_menu != 0) {
+	BRNE _0x800AE
+; 0004 038B                         if (current_menu != 0) {
 	LDS  R30,_current_menu
 	CPI  R30,0
-	BREQ _0x800A2
-; 0004 036D                             goto_menu();
+	BREQ _0x800AF
+; 0004 038C                             goto_menu();
 	RCALL _goto_menu
-; 0004 036E                             print_menu();
-	RJMP _0x800E5
-; 0004 036F                         } else if (current_menu == 0){
-_0x800A2:
+; 0004 038D                             print_menu();
+	RJMP _0x8010E
+; 0004 038E                         } else if (current_menu == 0){
+_0x800AF:
 	LDS  R30,_current_menu
 	CPI  R30,0
-	BRNE _0x800A4
-; 0004 0370                            // mode = GENERAL;
-; 0004 0371                             nlcd_Clear();
+	BRNE _0x800B1
+; 0004 038F                            // mode = GENERAL;
+; 0004 0390                             nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 0372                             print_menu();
-_0x800E5:
+; 0004 0391                             print_menu();
+_0x8010E:
 	RCALL _print_menu
-; 0004 0373                            // ES_PlaceEvent(EVENT_TIMER_1S);
-; 0004 0374                         }
-; 0004 0375                         break;
-_0x800A4:
-	RJMP _0x8009E
-; 0004 0376 
-; 0004 0377         case END_PROC:
-_0x800A1:
+; 0004 0392                            // ES_PlaceEvent(EVENT_TIMER_1S);
+; 0004 0393                         }
+; 0004 0394                         break;
+_0x800B1:
+	RJMP _0x800AB
+; 0004 0395 
+; 0004 0396         case END_PROC:
+_0x800AE:
 	SBIW R30,0
-	BRNE _0x800A5
-; 0004 0378                         mode = MENU;
+	BRNE _0x800B2
+; 0004 0397                         mode = MENU;
 	LDI  R30,LOW(1)
 	STS  _mode,R30
-; 0004 0379                         BEEP_OFF;
+; 0004 0398                         BEEP_OFF;
 	LDI  R30,LOW(0)
 	OUT  0x31,R30
-; 0004 037A                         nlcd_Clear();
-	CALL SUBOPT_0x2D
-; 0004 037B                         print_menu();
-; 0004 037C                         break;
-	RJMP _0x8009E
-; 0004 037D         case RUN_DIST:
-_0x800A5:
+; 0004 0399                         nlcd_Clear();
+	CALL SUBOPT_0x2C
+; 0004 039A                         print_menu();
+; 0004 039B                         break;
+	RJMP _0x800AB
+; 0004 039C         case RUN_DIST:
+_0x800B2:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BREQ _0x800E6
-; 0004 037E                         abortProcess = !abortProcess;
-; 0004 037F                         nlcd_Clear();
-; 0004 0380                         break;
-; 0004 0381 
-; 0004 0382         case RUN_RECT:
+	BREQ _0x8010F
+; 0004 039D                         abortProcess = !abortProcess;
+; 0004 039E                         nlcd_Clear();
+; 0004 039F                         break;
+; 0004 03A0 
+; 0004 03A1         case RUN_RECT:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x800A7
-; 0004 0383                         if (timerSignOn) {
+	BRNE _0x800B4
+; 0004 03A2                         if (timerSignOn) {
 	TST  R13
-	BREQ _0x800A8
-; 0004 0384                             BEEP_OFF;
+	BREQ _0x800B5
+; 0004 03A3                             BEEP_OFF;
 	LDI  R30,LOW(0)
 	OUT  0x31,R30
-; 0004 0385                             timerSignOn = 0;
+; 0004 03A4                             timerSignOn = 0;
 	CLR  R13
-; 0004 0386                             timerSign = 0;
+; 0004 03A5                             timerSign = 0;
 	STS  _timerSign,R30
 	STS  _timerSign+1,R30
-; 0004 0387                         } else {
-	RJMP _0x800A9
-_0x800A8:
-; 0004 0388                             abortProcess = !abortProcess;
+; 0004 03A6                         } else {
+	RJMP _0x800B6
+_0x800B5:
+; 0004 03A7                             abortProcess = !abortProcess;
 	LDS  R30,_abortProcess
-	CALL SUBOPT_0x59
-; 0004 0389                             nlcd_Clear();
-; 0004 038A                         }
-_0x800A9:
-; 0004 038B                         break;
-	RJMP _0x8009E
-; 0004 038C 
-; 0004 038D         case RUN_RECT_SET:
-_0x800A7:
+	CALL SUBOPT_0x5A
+; 0004 03A8                             nlcd_Clear();
+; 0004 03A9                         }
+_0x800B6:
+; 0004 03AA                         break;
+	RJMP _0x800AB
+; 0004 03AB 
+; 0004 03AC         case RUN_RECT_SET:
+_0x800B4:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BRNE _0x800AA
-; 0004 038E                         current_menu = last_menu;
+	BRNE _0x800B7
+; 0004 03AD                         current_menu = last_menu;
 	LDS  R30,_last_menu
 	STS  _current_menu,R30
-; 0004 038F                         current_pos = last_pos;
+; 0004 03AE                         current_pos = last_pos;
 	LDS  R30,_last_pos
 	STS  _current_pos,R30
-; 0004 0390                         nlcd_Clear();
+; 0004 03AF                         nlcd_Clear();
 	CALL _nlcd_Clear
-; 0004 0391                         mode = RUN_RECT;
+; 0004 03B0                         mode = RUN_RECT;
 	LDI  R30,LOW(5)
 	STS  _mode,R30
-; 0004 0392                         break;
-	RJMP _0x8009E
-; 0004 0393 
-; 0004 0394         case CALIBRATE_RUN:
-_0x800AA:
+; 0004 03B1                         break;
+	RJMP _0x800AB
+; 0004 03B2 
+; 0004 03B3         case CALIBRATE_RUN:
+_0x800B7:
 	CPI  R30,LOW(0x8)
 	LDI  R26,HIGH(0x8)
 	CPC  R31,R26
-	BRNE _0x8009E
-; 0004 0395                         abortProcess = !abortProcess;
-_0x800E6:
+	BRNE _0x800AB
+; 0004 03B4                         abortProcess = !abortProcess;
+_0x8010F:
 	LDS  R30,_abortProcess
-	CALL SUBOPT_0x59
-; 0004 0396                         nlcd_Clear();
-; 0004 0397                         //Calibrate_View();
-; 0004 0398                         break;
-; 0004 0399 
-; 0004 039A      }
-_0x8009E:
-; 0004 039B }
+	CALL SUBOPT_0x5A
+; 0004 03B5                         nlcd_Clear();
+; 0004 03B6                         //Calibrate_View();
+; 0004 03B7                         break;
+; 0004 03B8 
+; 0004 03B9      }
+_0x800AB:
+; 0004 03BA }
 	RET
 ;
 ;//обработчик кнопки Up
 ;void HandlerEventButUp(void) {
-; 0004 039E void HandlerEventButUp(void) {
+; 0004 03BD void HandlerEventButUp(void) {
 _HandlerEventButUp:
-; 0004 039F    switch (mode) {
+; 0004 03BE    switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 03A0         case MENU:
-	CPI  R30,LOW(0x1)
-	LDI  R26,HIGH(0x1)
-	CPC  R31,R26
-	BRNE _0x800AF
-; 0004 03A1                         if (current_pos <= 0) {
-	LDS  R26,_current_pos
-	CPI  R26,0
-	BRNE _0x800B0
-; 0004 03A2                                 current_pos=menu[current_menu].num_selections-1;
-	CALL SUBOPT_0x53
-	CALL SUBOPT_0x5A
-	RJMP _0x800E7
-; 0004 03A3                         } else {
-_0x800B0:
-; 0004 03A4                                 current_pos--;
-	LDS  R30,_current_pos
-_0x800E7:
-	SUBI R30,LOW(1)
-	STS  _current_pos,R30
-; 0004 03A5                         }
-; 0004 03A6                         nlcd_Clear();
-	CALL SUBOPT_0x2D
-; 0004 03A7                         print_menu();
-; 0004 03A8                         break;
-	RJMP _0x800AE
-; 0004 03A9 
-; 0004 03AA         case SETTINGS:
-_0x800AF:
-	CPI  R30,LOW(0x2)
-	LDI  R26,HIGH(0x2)
-	CPC  R31,R26
-	BREQ _0x800E8
-; 0004 03AB                         nlcd_Clear();
-; 0004 03AC                         ParamInc();
-; 0004 03AD                         break;
-; 0004 03AE 
-; 0004 03AF         case RUN_RECT_SET:
-	CPI  R30,LOW(0x6)
-	LDI  R26,HIGH(0x6)
-	CPC  R31,R26
-	BREQ _0x800E8
-; 0004 03B0                         nlcd_Clear();
-; 0004 03B1                         ParamInc();
-; 0004 03B2                         break;
-; 0004 03B3 
-; 0004 03B4         case RUN_DIST:
-	CPI  R30,LOW(0x4)
-	LDI  R26,HIGH(0x4)
-	CPC  R31,R26
-	BRNE _0x800B4
-; 0004 03B5                         heater_power += 1;   //5
-	LDS  R30,_heater_power
-	SUBI R30,-LOW(1)
-	CALL SUBOPT_0x5B
-; 0004 03B6                         if (heater_power > 100){
-	CPI  R26,LOW(0x65)
-	BRLO _0x800B5
-; 0004 03B7                             heater_power = 100;
-	LDI  R30,LOW(100)
-	STS  _heater_power,R30
-; 0004 03B8                         }
-; 0004 03B9                         break;
-_0x800B5:
-	RJMP _0x800AE
-; 0004 03BA         case RUN_RECT:
-_0x800B4:
-	CPI  R30,LOW(0x5)
-	LDI  R26,HIGH(0x5)
-	CPC  R31,R26
-	BRNE _0x800B6
-; 0004 03BB                         if (!startStop) {
-	LDS  R30,_startStop
-	CPI  R30,0
-	BRNE _0x800B7
-; 0004 03BC                             VALVE_OPN;
-	SBI  0x1B,3
-; 0004 03BD                         }
-; 0004 03BE                         break;
-_0x800B7:
-	RJMP _0x800AE
-; 0004 03BF 
-; 0004 03C0         case CALIBRATE_MOD:                 // вводим реальное значение объема
-_0x800B6:
-	CPI  R30,LOW(0x9)
-	LDI  R26,HIGH(0x9)
-	CPC  R31,R26
-	BRNE _0x800AE
-; 0004 03C1                         nlcd_Clear();
-_0x800E8:
-	CALL _nlcd_Clear
-; 0004 03C2                         ParamInc();
-	CALL _ParamInc
-; 0004 03C3                         break;
-; 0004 03C4     }
-_0x800AE:
-; 0004 03C5 }
-	RET
-;
-;//обработчик кнопки Down
-;void HandlerEventButDown(void) {
-; 0004 03C8 void HandlerEventButDown(void) {
-_HandlerEventButDown:
-; 0004 03C9   switch (mode) {
-	CALL SUBOPT_0x46
-; 0004 03CA        case MENU:
+; 0004 03BF         case MENU:
 	CPI  R30,LOW(0x1)
 	LDI  R26,HIGH(0x1)
 	CPC  R31,R26
 	BRNE _0x800BC
-; 0004 03CB                          if(current_pos>=menu[current_menu].num_selections-1) {
-	CALL SUBOPT_0x53
-	CALL SUBOPT_0x5A
+; 0004 03C0                         if (current_pos <= 0) {
+	LDS  R26,_current_pos
+	CPI  R26,0
+	BRNE _0x800BD
+; 0004 03C1                                 current_pos=menu[current_menu].num_selections-1;
+	CALL SUBOPT_0x54
+	CALL SUBOPT_0x5B
+	RJMP _0x80110
+; 0004 03C2                         } else {
+_0x800BD:
+; 0004 03C3                                 current_pos--;
+	LDS  R30,_current_pos
+_0x80110:
+	SUBI R30,LOW(1)
+	STS  _current_pos,R30
+; 0004 03C4                         }
+; 0004 03C5                         nlcd_Clear();
+	CALL SUBOPT_0x2C
+; 0004 03C6                         print_menu();
+; 0004 03C7                         break;
+	RJMP _0x800BB
+; 0004 03C8 
+; 0004 03C9         case SETTINGS:
+_0x800BC:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x800BF
+; 0004 03CA                         nlcd_Clear();
+	RJMP _0x80111
+; 0004 03CB                         ParamInc();
+; 0004 03CC                         break;
+; 0004 03CD 
+; 0004 03CE         case RUN_RECT_SET:
+_0x800BF:
+	CPI  R30,LOW(0x6)
+	LDI  R26,HIGH(0x6)
+	CPC  R31,R26
+	BRNE _0x800C0
+; 0004 03CF                         nlcd_Clear();
+	RJMP _0x80111
+; 0004 03D0                         ParamInc();
+; 0004 03D1                         break;
+; 0004 03D2 
+; 0004 03D3         case RUN_DIST:
+_0x800C0:
+	CPI  R30,LOW(0x4)
+	LDI  R26,HIGH(0x4)
+	CPC  R31,R26
+	BRNE _0x800C1
+; 0004 03D4                         switch(distSettingMode) {
+	CALL SUBOPT_0x5C
+; 0004 03D5                             case DIST_SET_MODE_PWR:
+	BRNE _0x800C5
+; 0004 03D6                                 {
+; 0004 03D7                                     heater_power += 1;   //5
+	LDS  R30,_heater_power
+	SUBI R30,-LOW(1)
+	CALL SUBOPT_0x5D
+; 0004 03D8                                     if (heater_power > 100){
+	CPI  R26,LOW(0x65)
+	BRLO _0x800C6
+; 0004 03D9                                         heater_power = 100;
+	LDI  R30,LOW(100)
+	STS  _heater_power,R30
+; 0004 03DA                                     }
+; 0004 03DB                                     break;
+_0x800C6:
+	RJMP _0x800C4
+; 0004 03DC                                 }
+; 0004 03DD                             case DIST_SET_MODE_VALV:
+_0x800C5:
+	CPI  R30,LOW(0x1)
+	LDI  R26,HIGH(0x1)
+	CPC  R31,R26
+	BRNE _0x800C7
+; 0004 03DE                                 {
+; 0004 03DF                                     distValveMode ++;
+	LDS  R30,_distValveMode
+	SUBI R30,-LOW(1)
+	STS  _distValveMode,R30
+; 0004 03E0                                     distValveMode %= 3;
+	LDS  R26,_distValveMode
+	CLR  R27
+	LDI  R30,LOW(3)
+	LDI  R31,HIGH(3)
+	CALL __MODW21
+	STS  _distValveMode,R30
+; 0004 03E1                                     break;
+	RJMP _0x800C4
+; 0004 03E2                                 }
+; 0004 03E3                             case DIST_SET_MODE_FLOW:
+_0x800C7:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x800C4
+; 0004 03E4                                 {
+; 0004 03E5                                     if (Votb < 2000.0) {
+	CALL SUBOPT_0x5E
+	BRSH _0x800C9
+; 0004 03E6                                         Votb += 10;
+	CALL SUBOPT_0x28
+	CALL SUBOPT_0x35
+	CALL __ADDF12
+	CALL SUBOPT_0x15
+; 0004 03E7                                     }
+; 0004 03E8                                     CalculateDistBodySpeed();
+_0x800C9:
+	RCALL _CalculateDistBodySpeed
+; 0004 03E9                                     break;
+; 0004 03EA                                 }
+; 0004 03EB 
+; 0004 03EC                         }
+_0x800C4:
+; 0004 03ED                         break;
+	RJMP _0x800BB
+; 0004 03EE         case RUN_RECT:
+_0x800C1:
+	CPI  R30,LOW(0x5)
+	LDI  R26,HIGH(0x5)
+	CPC  R31,R26
+	BRNE _0x800CA
+; 0004 03EF                         if (!startStop) {
+	LDS  R30,_startStop
+	CPI  R30,0
+	BRNE _0x800CB
+; 0004 03F0                             VALVE_OPN;
+	SBI  0x1B,3
+; 0004 03F1                         }
+; 0004 03F2                         break;
+_0x800CB:
+	RJMP _0x800BB
+; 0004 03F3 
+; 0004 03F4         case CALIBRATE_MOD:                 // вводим реальное значение объема
+_0x800CA:
+	CPI  R30,LOW(0x9)
+	LDI  R26,HIGH(0x9)
+	CPC  R31,R26
+	BRNE _0x800BB
+; 0004 03F5                         nlcd_Clear();
+_0x80111:
+	CALL _nlcd_Clear
+; 0004 03F6                         ParamInc();
+	CALL _ParamInc
+; 0004 03F7                         break;
+; 0004 03F8     }
+_0x800BB:
+; 0004 03F9 }
+	RET
+;
+;//обработчик кнопки Down
+;void HandlerEventButDown(void) {
+; 0004 03FC void HandlerEventButDown(void) {
+_HandlerEventButDown:
+; 0004 03FD   switch (mode) {
+	CALL SUBOPT_0x46
+; 0004 03FE        case MENU:
+	CPI  R30,LOW(0x1)
+	LDI  R26,HIGH(0x1)
+	CPC  R31,R26
+	BRNE _0x800D0
+; 0004 03FF                          if(current_pos>=menu[current_menu].num_selections-1) {
+	CALL SUBOPT_0x54
+	CALL SUBOPT_0x5B
 	LDI  R31,0
 	SBIW R30,1
 	LDS  R26,_current_pos
 	LDI  R27,0
 	CP   R26,R30
 	CPC  R27,R31
-	BRLT _0x800BD
-; 0004 03CC                              current_pos=0;
+	BRLT _0x800D1
+; 0004 0400                              current_pos=0;
 	LDI  R30,LOW(0)
-	RJMP _0x800E9
-; 0004 03CD                          } else {
-_0x800BD:
-; 0004 03CE                              current_pos++;
+	RJMP _0x80112
+; 0004 0401                          } else {
+_0x800D1:
+; 0004 0402                              current_pos++;
 	LDS  R30,_current_pos
 	SUBI R30,-LOW(1)
-_0x800E9:
+_0x80112:
 	STS  _current_pos,R30
-; 0004 03CF                          }
-; 0004 03D0                          nlcd_Clear();
-	CALL SUBOPT_0x2D
-; 0004 03D1                          print_menu();
-; 0004 03D2                          break;
-	RJMP _0x800BB
-; 0004 03D3 
-; 0004 03D4        case SETTINGS:
-_0x800BC:
+; 0004 0403                          }
+; 0004 0404                          nlcd_Clear();
+	CALL SUBOPT_0x2C
+; 0004 0405                          print_menu();
+; 0004 0406                          break;
+	RJMP _0x800CF
+; 0004 0407 
+; 0004 0408        case SETTINGS:
+_0x800D0:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BREQ _0x800EA
-; 0004 03D5                          nlcd_Clear();
-; 0004 03D6                          ParamDec();
-; 0004 03D7                          break;
-; 0004 03D8 
-; 0004 03D9        case RUN_RECT_SET:
+	BRNE _0x800D3
+; 0004 0409                          nlcd_Clear();
+	RJMP _0x80113
+; 0004 040A                          ParamDec();
+; 0004 040B                          break;
+; 0004 040C 
+; 0004 040D        case RUN_RECT_SET:
+_0x800D3:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BREQ _0x800EA
-; 0004 03DA                         nlcd_Clear();
-; 0004 03DB                         ParamDec();
-; 0004 03DC                         break;
-; 0004 03DD 
-; 0004 03DE        case RUN_DIST:
+	BRNE _0x800D4
+; 0004 040E                         nlcd_Clear();
+	RJMP _0x80113
+; 0004 040F                         ParamDec();
+; 0004 0410                         break;
+; 0004 0411 
+; 0004 0412        case RUN_DIST:
+_0x800D4:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x800C1
-; 0004 03DF                         heater_power -= 1; //5
+	BRNE _0x800D5
+; 0004 0413                         switch(distSettingMode) {
+	CALL SUBOPT_0x5C
+; 0004 0414                             case DIST_SET_MODE_PWR:
+	BRNE _0x800D9
+; 0004 0415                                 {
+; 0004 0416                                     heater_power -= 1; //5
 	LDS  R30,_heater_power
 	SUBI R30,LOW(1)
-	CALL SUBOPT_0x5B
-; 0004 03E0                         if (heater_power < 1){
+	CALL SUBOPT_0x5D
+; 0004 0417                                     if (heater_power < 1){
 	CPI  R26,LOW(0x1)
-	BRSH _0x800C2
-; 0004 03E1                             heater_power = 1;
+	BRSH _0x800DA
+; 0004 0418                                         heater_power = 1;
 	LDI  R30,LOW(1)
 	STS  _heater_power,R30
-; 0004 03E2                         }
-; 0004 03E3                         break;
-_0x800C2:
-	RJMP _0x800BB
-; 0004 03E4        case RUN_RECT:
-_0x800C1:
+; 0004 0419                                     }
+; 0004 041A                                     break;
+_0x800DA:
+	RJMP _0x800D8
+; 0004 041B                                 }
+; 0004 041C                             case DIST_SET_MODE_VALV:
+_0x800D9:
+	CPI  R30,LOW(0x1)
+	LDI  R26,HIGH(0x1)
+	CPC  R31,R26
+	BRNE _0x800DB
+; 0004 041D                                 {
+; 0004 041E                                     if (distValveMode > 0) {
+	LDS  R26,_distValveMode
+	CPI  R26,LOW(0x1)
+	BRLO _0x800DC
+; 0004 041F                                         distValveMode --;
+	LDS  R30,_distValveMode
+	SUBI R30,LOW(1)
+	RJMP _0x80114
+; 0004 0420                                     } else {
+_0x800DC:
+; 0004 0421                                         distValveMode = 2;
+	LDI  R30,LOW(2)
+_0x80114:
+	STS  _distValveMode,R30
+; 0004 0422                                     }
+; 0004 0423                                     break;
+	RJMP _0x800D8
+; 0004 0424                                 }
+; 0004 0425                             case DIST_SET_MODE_FLOW:
+_0x800DB:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x800D8
+; 0004 0426                                 {
+; 0004 0427                                     if (Votb >= 20.0) {
+	CALL SUBOPT_0x38
+	__GETD1N 0x41A00000
+	CALL __CMPF12
+	BRLO _0x800DF
+; 0004 0428                                         Votb -= 10;
+	CALL SUBOPT_0x28
+	CALL SUBOPT_0x35
+	CALL __SUBF12
+	CALL SUBOPT_0x15
+; 0004 0429                                     }
+; 0004 042A                                     CalculateDistBodySpeed();
+_0x800DF:
+	RCALL _CalculateDistBodySpeed
+; 0004 042B                                     break;
+; 0004 042C                                 }
+; 0004 042D 
+; 0004 042E                         }
+_0x800D8:
+; 0004 042F                         break;
+	RJMP _0x800CF
+; 0004 0430        case RUN_RECT:
+_0x800D5:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x800C3
-; 0004 03E5                         if (!startStop) {
+	BRNE _0x800E0
+; 0004 0431                         if (!startStop) {
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x800C4
-; 0004 03E6                             VALVE_CLS;
+	BRNE _0x800E1
+; 0004 0432                             VALVE_CLS;
 	CBI  0x1B,3
-; 0004 03E7                         }
-; 0004 03E8                         break;
-_0x800C4:
-	RJMP _0x800BB
-; 0004 03E9 
-; 0004 03EA        case CALIBRATE_MOD:                 // вводим реальное значение объема
-_0x800C3:
+; 0004 0433                         }
+; 0004 0434                         break;
+_0x800E1:
+	RJMP _0x800CF
+; 0004 0435 
+; 0004 0436        case CALIBRATE_MOD:                 // вводим реальное значение объема
+_0x800E0:
 	CPI  R30,LOW(0x9)
 	LDI  R26,HIGH(0x9)
 	CPC  R31,R26
-	BRNE _0x800BB
-; 0004 03EB                         nlcd_Clear();
-_0x800EA:
+	BRNE _0x800CF
+; 0004 0437                         nlcd_Clear();
+_0x80113:
 	CALL _nlcd_Clear
-; 0004 03EC                         ParamDec();
+; 0004 0438                         ParamDec();
 	CALL _ParamDec
-; 0004 03ED                         break;
-; 0004 03EE     }
-_0x800BB:
-; 0004 03EF }
+; 0004 0439                         break;
+; 0004 043A     }
+_0x800CF:
+; 0004 043B }
 	RET
 ;
 ;
 ;
 ;void HandlerEventButLUp(void){
-; 0004 03F3 void HandlerEventButLUp(void){
+; 0004 043F void HandlerEventButLUp(void){
 _HandlerEventButLUp:
-; 0004 03F4    switch (mode) {
+; 0004 0440    switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 03F5 
-; 0004 03F6         case SETTINGS:
+; 0004 0441 
+; 0004 0442         case SETTINGS:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BREQ _0x800EB
-; 0004 03F7                         nlcd_Clear();
-; 0004 03F8                         ParamDec();
-; 0004 03F9                         Param10Inc();
-; 0004 03FA                         break;
-; 0004 03FB 
-; 0004 03FC         case RUN_RECT_SET:
+	BREQ _0x80115
+; 0004 0443                         nlcd_Clear();
+; 0004 0444                         ParamDec();
+; 0004 0445                         Param10Inc();
+; 0004 0446                         break;
+; 0004 0447 
+; 0004 0448         case RUN_RECT_SET:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BREQ _0x800EB
-; 0004 03FD                         nlcd_Clear();
-; 0004 03FE                         ParamDec();
-; 0004 03FF                         Param10Inc();
-; 0004 0400                         break;
-; 0004 0401         case RUN_RECT:
+	BREQ _0x80115
+; 0004 0449                         nlcd_Clear();
+; 0004 044A                         ParamDec();
+; 0004 044B                         Param10Inc();
+; 0004 044C                         break;
+; 0004 044D         case RUN_RECT:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x800CB
-; 0004 0402                         if (!startStop) {
+	BRNE _0x800E8
+; 0004 044E                         if (!startStop) {
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x800CC
-; 0004 0403                             CalculateHead();
+	BRNE _0x800E9
+; 0004 044F                             CalculateHead();
 	RCALL _CalculateHead
-; 0004 0404                             pwmOn = 1;
+; 0004 0450                             pwmOn = 1;
 	LDI  R30,LOW(1)
 	STS  _pwmOn,R30
-; 0004 0405                         }
-; 0004 0406                         break;
-_0x800CC:
-	RJMP _0x800C8
-; 0004 0407         case RUN_DIST:
-_0x800CB:
+; 0004 0451                         }
+; 0004 0452                         break;
+_0x800E9:
+	RJMP _0x800E5
+; 0004 0453         case RUN_DIST:
+_0x800E8:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x800CD
-; 0004 0408                         heater_power += 4;
+	BRNE _0x800EA
+; 0004 0454                         switch(distSettingMode) {
+	CALL SUBOPT_0x5C
+; 0004 0455                             case DIST_SET_MODE_PWR:
+	BRNE _0x800EE
+; 0004 0456                                 {
+; 0004 0457                                     heater_power += 4;
 	LDS  R30,_heater_power
 	SUBI R30,-LOW(4)
-	CALL SUBOPT_0x5B
-; 0004 0409                         if (heater_power > 100){
+	CALL SUBOPT_0x5D
+; 0004 0458                                     if (heater_power > 100){
 	CPI  R26,LOW(0x65)
-	BRLO _0x800CE
-; 0004 040A                             heater_power = 100;
+	BRLO _0x800EF
+; 0004 0459                                         heater_power = 100;
 	LDI  R30,LOW(100)
 	STS  _heater_power,R30
-; 0004 040B                         }
-; 0004 040C                         break;
-_0x800CE:
-	RJMP _0x800C8
-; 0004 040D 
-; 0004 040E         case CALIBRATE_MOD:                 // вводим реальное значение объема
-_0x800CD:
+; 0004 045A                                     }
+; 0004 045B                                     break;
+_0x800EF:
+	RJMP _0x800ED
+; 0004 045C                                 }
+; 0004 045D 
+; 0004 045E                             case DIST_SET_MODE_FLOW:
+_0x800EE:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x800ED
+; 0004 045F                                 {
+; 0004 0460                                     if (Votb < 2000.0) {
+	CALL SUBOPT_0x5E
+	BRSH _0x800F1
+; 0004 0461                                         Votb += 90;
+	CALL SUBOPT_0x5F
+	CALL __ADDF12
+	CALL SUBOPT_0x15
+; 0004 0462                                     }
+; 0004 0463                                     CalculateDistBodySpeed();
+_0x800F1:
+	RCALL _CalculateDistBodySpeed
+; 0004 0464                                     break;
+; 0004 0465                                 }
+; 0004 0466 
+; 0004 0467                         }
+_0x800ED:
+; 0004 0468                         break;
+	RJMP _0x800E5
+; 0004 0469 
+; 0004 046A         case CALIBRATE_MOD:                 // вводим реальное значение объема
+_0x800EA:
 	CPI  R30,LOW(0x9)
 	LDI  R26,HIGH(0x9)
 	CPC  R31,R26
-	BRNE _0x800C8
-; 0004 040F                         nlcd_Clear();
-_0x800EB:
+	BRNE _0x800E5
+; 0004 046B                         nlcd_Clear();
+_0x80115:
 	CALL _nlcd_Clear
-; 0004 0410                         ParamDec();
+; 0004 046C                         ParamDec();
 	CALL _ParamDec
-; 0004 0411                         Param10Inc();
+; 0004 046D                         Param10Inc();
 	CALL _Param10Inc
-; 0004 0412                         break;
-; 0004 0413     }
-_0x800C8:
-; 0004 0414 
-; 0004 0415 }
+; 0004 046E                         break;
+; 0004 046F     }
+_0x800E5:
+; 0004 0470 
+; 0004 0471 }
 	RET
 ;
 ;void HandlerEventButLDown(void){
-; 0004 0417 void HandlerEventButLDown(void){
+; 0004 0473 void HandlerEventButLDown(void){
 _HandlerEventButLDown:
-; 0004 0418    switch (mode) {
+; 0004 0474    switch (mode) {
 	CALL SUBOPT_0x46
-; 0004 0419 
-; 0004 041A        case SETTINGS:
+; 0004 0475 
+; 0004 0476        case SETTINGS:
 	CPI  R30,LOW(0x2)
 	LDI  R26,HIGH(0x2)
 	CPC  R31,R26
-	BREQ _0x800EC
-; 0004 041B                          nlcd_Clear();
-; 0004 041C                          ParamInc();
-; 0004 041D                          Param10Dec();
-; 0004 041E                          break;
-; 0004 041F 
-; 0004 0420        case RUN_RECT_SET:
+	BREQ _0x80116
+; 0004 0477                          nlcd_Clear();
+; 0004 0478                          ParamInc();
+; 0004 0479                          Param10Dec();
+; 0004 047A                          break;
+; 0004 047B 
+; 0004 047C        case RUN_RECT_SET:
 	CPI  R30,LOW(0x6)
 	LDI  R26,HIGH(0x6)
 	CPC  R31,R26
-	BREQ _0x800EC
-; 0004 0421                          nlcd_Clear();
-; 0004 0422                          ParamInc();
-; 0004 0423                          Param10Dec();
-; 0004 0424                          break;
-; 0004 0425        case RUN_RECT:
+	BREQ _0x80116
+; 0004 047D                          nlcd_Clear();
+; 0004 047E                          ParamInc();
+; 0004 047F                          Param10Dec();
+; 0004 0480                          break;
+; 0004 0481        case RUN_RECT:
 	CPI  R30,LOW(0x5)
 	LDI  R26,HIGH(0x5)
 	CPC  R31,R26
-	BRNE _0x800D5
-; 0004 0426                         if (!startStop) {
+	BRNE _0x800F8
+; 0004 0482                         if (!startStop) {
 	LDS  R30,_startStop
 	CPI  R30,0
-	BRNE _0x800D6
-; 0004 0427                             VALVE_CLS;
+	BRNE _0x800F9
+; 0004 0483                             VALVE_CLS;
 	CBI  0x1B,3
-; 0004 0428                         }
-; 0004 0429                         pwmOn = 0;
-_0x800D6:
+; 0004 0484                         }
+; 0004 0485                         pwmOn = 0;
+_0x800F9:
 	LDI  R30,LOW(0)
 	STS  _pwmOn,R30
-; 0004 042A                         break;
-	RJMP _0x800D2
-; 0004 042B        case RUN_DIST:
-_0x800D5:
+; 0004 0486                         break;
+	RJMP _0x800F5
+; 0004 0487        case RUN_DIST:
+_0x800F8:
 	CPI  R30,LOW(0x4)
 	LDI  R26,HIGH(0x4)
 	CPC  R31,R26
-	BRNE _0x800D7
-; 0004 042C                         heater_power -= 4;
+	BRNE _0x800FA
+; 0004 0488 
+; 0004 0489                         switch(distSettingMode) {
+	CALL SUBOPT_0x5C
+; 0004 048A                             case DIST_SET_MODE_PWR:
+	BRNE _0x800FE
+; 0004 048B                                 {
+; 0004 048C                                     heater_power -= 4;
 	LDS  R30,_heater_power
 	SUBI R30,LOW(4)
-	CALL SUBOPT_0x5B
-; 0004 042D                         if (heater_power < 5){
+	CALL SUBOPT_0x5D
+; 0004 048D                                     if (heater_power < 5){
 	CPI  R26,LOW(0x5)
-	BRSH _0x800D8
-; 0004 042E                             heater_power = 1;
+	BRSH _0x800FF
+; 0004 048E                                         heater_power = 1;
 	LDI  R30,LOW(1)
 	STS  _heater_power,R30
-; 0004 042F                         }
-; 0004 0430                         break;
-_0x800D8:
-	RJMP _0x800D2
-; 0004 0431 
-; 0004 0432        case CALIBRATE_MOD:                 // вводим реальное значение объема
-_0x800D7:
+; 0004 048F                                     }
+; 0004 0490                                     break;
+_0x800FF:
+	RJMP _0x800FD
+; 0004 0491                                 }
+; 0004 0492 
+; 0004 0493                             case DIST_SET_MODE_FLOW:
+_0x800FE:
+	CPI  R30,LOW(0x2)
+	LDI  R26,HIGH(0x2)
+	CPC  R31,R26
+	BRNE _0x800FD
+; 0004 0494                                 {
+; 0004 0495                                     if (Votb >= 100.0) {
+	CALL SUBOPT_0x38
+	CALL SUBOPT_0x58
+	CALL __CMPF12
+	BRLO _0x80101
+; 0004 0496                                         Votb -= 90;
+	CALL SUBOPT_0x5F
+	CALL __SUBF12
+	CALL SUBOPT_0x15
+; 0004 0497                                     }
+; 0004 0498                                     CalculateDistBodySpeed();
+_0x80101:
+	RCALL _CalculateDistBodySpeed
+; 0004 0499                                     break;
+; 0004 049A                                 }
+; 0004 049B 
+; 0004 049C                         }
+_0x800FD:
+; 0004 049D                         break;
+	RJMP _0x800F5
+; 0004 049E 
+; 0004 049F        case CALIBRATE_MOD:                 // вводим реальное значение объема
+_0x800FA:
 	CPI  R30,LOW(0x9)
 	LDI  R26,HIGH(0x9)
 	CPC  R31,R26
-	BRNE _0x800D2
-; 0004 0433                         nlcd_Clear();
-_0x800EC:
+	BRNE _0x800F5
+; 0004 04A0                         nlcd_Clear();
+_0x80116:
 	CALL _nlcd_Clear
-; 0004 0434                         ParamInc();
+; 0004 04A1                         ParamInc();
 	CALL _ParamInc
-; 0004 0435                         Param10Dec();
+; 0004 04A2                         Param10Dec();
 	CALL _Param10Dec
-; 0004 0436                         break;
-; 0004 0437     }
-_0x800D2:
-; 0004 0438 }
+; 0004 04A3                         break;
+; 0004 04A4     }
+_0x800F5:
+; 0004 04A5 }
 	RET
 ;#include <menu.h>
 ;#include <handlers.h>
@@ -7491,8 +7726,8 @@ _goto_menu:
 	LDI  R26,HIGH(0x65)
 	CPC  R31,R26
 	BRNE _0xA000C
-	CALL SUBOPT_0x53
 	CALL SUBOPT_0x54
+	CALL SUBOPT_0x55
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,4
@@ -7503,8 +7738,8 @@ _0xA000C:
 	LDI  R26,HIGH(0x62)
 	CPC  R31,R26
 	BRNE _0xA000B
-	CALL SUBOPT_0x53
 	CALL SUBOPT_0x54
+	CALL SUBOPT_0x55
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,5
@@ -7539,24 +7774,25 @@ _print_menu:
 	CPI  R30,0
 	BREQ _0xA000E
 ; 0005 007B         strcpyf(tmp, menu[0].items_submenu[menu[current_menu].items_submenu[current_pos].parent].name_item);
-	CALL SUBOPT_0x5C
-	CALL SUBOPT_0x54
-	CALL SUBOPT_0x5D
+	CALL SUBOPT_0x60
+	CALL SUBOPT_0x55
+	CALL SUBOPT_0x61
 ; 0005 007C         sprintf(buf,"-%s-", tmp);
 	__POINTW1FN _0xA0000,0
-	CALL SUBOPT_0x5E
-	CALL SUBOPT_0x7
+	CALL SUBOPT_0x62
 ; 0005 007D         nlcd_GotoXY(7 - strlen(buf)/2, 1);
-	CALL SUBOPT_0x5F
+	CALL SUBOPT_0x63
 	LDI  R26,LOW(7)
+	LDI  R27,HIGH(7)
 	SUB  R26,R30
+	SBC  R27,R31
 	ST   -Y,R26
 	RJMP _0xA001A
 ; 0005 007E         nlcd_Print(buf);
 ; 0005 007F     } else {
 _0xA000E:
 ; 0005 0080         sprintf(buf,"-=Меню=-");
-	CALL SUBOPT_0x24
+	CALL SUBOPT_0x32
 	__POINTW1FN _0xA0000,5
 	ST   -Y,R31
 	ST   -Y,R30
@@ -7568,7 +7804,7 @@ _0xA000E:
 	ST   -Y,R30
 _0xA001A:
 	LDI  R26,LOW(1)
-	CALL SUBOPT_0x60
+	CALL SUBOPT_0x64
 ; 0005 0082         nlcd_Print(buf);
 ; 0005 0083     }
 ; 0005 0084     c = 5;
@@ -7576,35 +7812,29 @@ _0xA001A:
 ; 0005 0085     t = 2;
 	LDI  R18,LOW(2)
 ; 0005 0086     if (menu[current_menu].num_selections > c) {
-	CALL SUBOPT_0x53
+	CALL SUBOPT_0x54
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,1
 	LD   R26,X
 	MOV  R30,R21
-	CALL SUBOPT_0x61
+	CALL SUBOPT_0x65
 	BRGE _0xA0010
 ; 0005 0087         if (current_pos - (c - (signed char)1) > 0){
-	LDS  R26,_current_pos
-	CLR  R27
-	MOV  R30,R21
-	LDI  R31,0
-	SBRC R30,7
-	SER  R31
-	SBIW R30,1
+	CALL SUBOPT_0x66
 	SUB  R26,R30
 	SBC  R27,R31
 	CALL __CPW02
 	BRGE _0xA0011
 ; 0005 0088          s = current_pos - (c - (signed char)1);
-	MOV  R30,R21
-	SUBI R30,LOW(1)
-	LDS  R26,_current_pos
-	SUB  R26,R30
-	MOV  R16,R26
+	CALL SUBOPT_0x66
+	CALL __SWAPW12
+	SUB  R30,R26
+	SBC  R31,R27
+	MOV  R16,R30
 ; 0005 0089          f = current_pos + 1;
-	LDS  R30,_current_pos
-	SUBI R30,-LOW(1)
+	CALL SUBOPT_0x67
+	ADIW R30,1
 	MOV  R19,R30
 ; 0005 008A         } else {
 	RJMP _0xA0012
@@ -7619,7 +7849,7 @@ _0xA0012:
 	RJMP _0xA0013
 _0xA0010:
 ; 0005 008F        f = menu[current_menu].num_selections;
-	CALL SUBOPT_0x53
+	CALL SUBOPT_0x54
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,1
@@ -7644,26 +7874,24 @@ _0xA0015:
 	CPC  R31,R27
 	BRNE _0xA0017
 ; 0005 0094             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
-	CALL SUBOPT_0x5C
-	CALL SUBOPT_0x62
-	CALL SUBOPT_0x63
+	CALL SUBOPT_0x60
+	CALL SUBOPT_0x68
+	CALL SUBOPT_0x69
 ; 0005 0095             sprintf(buf,"[%s]", tmp);
 	__POINTW1FN _0xA0000,14
-	CALL SUBOPT_0x5E
-	CALL SUBOPT_0x7
+	CALL SUBOPT_0x62
 ; 0005 0096             nlcd_GotoXY(0, t++);
 	LDI  R30,LOW(0)
 	RJMP _0xA001B
 ; 0005 0097         } else {
 _0xA0017:
 ; 0005 0098             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
-	CALL SUBOPT_0x5C
-	CALL SUBOPT_0x62
-	CALL SUBOPT_0x63
+	CALL SUBOPT_0x60
+	CALL SUBOPT_0x68
+	CALL SUBOPT_0x69
 ; 0005 0099             sprintf(buf,"%s", tmp);
 	__POINTW1FN _0xA0000,19
-	CALL SUBOPT_0x5E
-	CALL SUBOPT_0x7
+	CALL SUBOPT_0x62
 ; 0005 009A             nlcd_GotoXY(1, t++);
 	LDI  R30,LOW(1)
 _0xA001B:
@@ -7778,7 +8006,7 @@ _0xA0016:
 	.CSEG
 _ParamInc:
 ; 0006 004E     if (++params[param_id].value > params[param_id].max_value) {
-	CALL SUBOPT_0x64
+	CALL SUBOPT_0x6A
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
 	MOVW R26,R30
@@ -7787,12 +8015,12 @@ _ParamInc:
 	MOVW R30,R0
 	__ADDW1MN _params,4
 	MOVW R26,R30
-	CALL SUBOPT_0x65
+	CALL SUBOPT_0x6B
 	BRSH _0xC0003
 ; 0006 004F         params[param_id].value = params[param_id].min_value;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x66
-	CALL SUBOPT_0x67
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x6D
 ; 0006 0050     }
 ; 0006 0051 }
 _0xC0003:
@@ -7802,14 +8030,14 @@ _0xC0003:
 ; 0006 0053 void ParamDec() {
 _ParamDec:
 ; 0006 0054     if (params[param_id].value > params[param_id].min_value) {
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x68
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6E
 	__ADDW2MN _params,2
-	CALL SUBOPT_0x65
+	CALL SUBOPT_0x6B
 	BRSH _0xC0004
 ; 0006 0055         params[param_id].value--;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x69
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6F
 	SBIW R30,1
 	ST   -X,R31
 	ST   -X,R30
@@ -7817,9 +8045,9 @@ _ParamDec:
 	RJMP _0xC0005
 _0xC0004:
 ; 0006 0057         params[param_id].value = params[param_id].max_value;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x66
 	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x70
 ; 0006 0058     }
 _0xC0005:
 ; 0006 0059 }
@@ -7830,22 +8058,22 @@ _0xC0005:
 ; 0006 005C void Param10Inc() {
 _Param10Inc:
 ; 0006 005D     params[param_id].value += 100;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x69
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6F
 	SUBI R30,LOW(-100)
 	SBCI R31,HIGH(-100)
 	ST   -X,R31
 	ST   -X,R30
 ; 0006 005E     if (params[param_id].value > params[param_id].max_value) {
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x68
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6E
 	__ADDW2MN _params,4
-	CALL SUBOPT_0x65
+	CALL SUBOPT_0x6B
 	BRSH _0xC0006
 ; 0006 005F         params[param_id].value = params[param_id].min_value;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x66
-	CALL SUBOPT_0x67
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x6D
 ; 0006 0060     }
 ; 0006 0061 }
 _0xC0006:
@@ -7855,8 +8083,8 @@ _0xC0006:
 ; 0006 0063 void Param10Dec() {
 _Param10Dec:
 ; 0006 0064     if (params[param_id].value > (params[param_id].min_value + 100)) {
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x68
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6E
 	__ADDW2MN _params,2
 	CALL __GETW1P
 	SUBI R30,LOW(-100)
@@ -7865,8 +8093,8 @@ _Param10Dec:
 	CPC  R31,R23
 	BRSH _0xC0007
 ; 0006 0065         params[param_id].value -= 100;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x69
+	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6F
 	SUBI R30,LOW(100)
 	SBCI R31,HIGH(100)
 	ST   -X,R31
@@ -7875,9 +8103,9 @@ _Param10Dec:
 	RJMP _0xC0008
 _0xC0007:
 ; 0006 0067         params[param_id].value = params[param_id].max_value;
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x66
 	CALL SUBOPT_0x6A
+	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x70
 ; 0006 0068     }
 _0xC0008:
 ; 0006 0069 }
@@ -7891,7 +8119,7 @@ _SetParam:
 	ST   -Y,R17
 ;	i -> R17
 	LDI  R30,LOW(2)
-	CALL SUBOPT_0x6B
+	CALL SUBOPT_0x71
 ; 0006 006E     nlcd_Clear();
 ; 0006 006F     param_id = 0;
 	LDI  R30,LOW(0)
@@ -7903,23 +8131,27 @@ _0xC000A:
 	CP   R17,R30
 	BRSH _0xC000B
 ; 0006 0071         param_id += menu[i].num_selections;
+	LDS  R0,_param_id
+	CLR  R1
 	MOV  R30,R17
 	LDI  R26,LOW(_menu)
 	LDI  R27,HIGH(_menu)
 	LDI  R31,0
 	CALL __LSLW2
-	CALL SUBOPT_0x5A
-	LDS  R26,_param_id
-	ADD  R30,R26
+	CALL SUBOPT_0x5B
+	LDI  R31,0
+	ADD  R30,R0
+	ADC  R31,R1
 	STS  _param_id,R30
 ; 0006 0072     }
 	SUBI R17,-1
 	RJMP _0xC000A
 _0xC000B:
 ; 0006 0073     param_id += current_pos;
-	LDS  R30,_current_pos
 	LDS  R26,_param_id
-	ADD  R30,R26
+	CLR  R27
+	LDS  R30,_current_pos
+	CALL SUBOPT_0xC
 	STS  _param_id,R30
 ; 0006 0074 };
 	RJMP _0x20A000E
@@ -7932,111 +8164,114 @@ _ViewSettings:
 ; 0006 0079     strcpyf(tmp, menu[0].items_submenu[menu[current_menu].items_submenu[current_pos].parent].name_item);
 	SBIW R28,17
 ;	tmp -> Y+0
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x53
-	CALL SUBOPT_0x54
-	CALL SUBOPT_0x5D
+	CALL SUBOPT_0x72
+	CALL SUBOPT_0x55
+	CALL SUBOPT_0x61
 ; 0006 007A     sprintf(buf,"-%s-", tmp);
 	__POINTW1FN _0xC0000,0
-	CALL SUBOPT_0x36
+	CALL SUBOPT_0x33
 	CALL SUBOPT_0x7
 ; 0006 007B     nlcd_GotoXY(8 - strlen(buf)/2, 1);
-	CALL SUBOPT_0x5F
-	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x63
+	CALL SUBOPT_0x73
+	LDI  R26,LOW(1)
+	CALL SUBOPT_0x64
 ; 0006 007C     nlcd_Print(buf);
 ; 0006 007D     strcpyf(tmp, menu[current_menu].items_submenu[current_pos].name_item);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x53
-	CALL SUBOPT_0x54
-	CALL SUBOPT_0x6D
+	CALL SUBOPT_0x72
+	CALL SUBOPT_0x55
+	CALL SUBOPT_0x74
 ; 0006 007E     sprintf(buf,"*%s*", tmp);
 	__POINTW1FN _0xC0000,5
-	CALL SUBOPT_0x36
+	CALL SUBOPT_0x33
 	CALL SUBOPT_0x7
 ; 0006 007F     nlcd_GotoXY(8 - strlen(buf)/2, 2);
-	CALL SUBOPT_0x5F
-	LDI  R26,LOW(8)
-	SUB  R26,R30
-	ST   -Y,R26
+	CALL SUBOPT_0x63
+	CALL SUBOPT_0x73
 	LDI  R26,LOW(2)
-	CALL SUBOPT_0x60
+	CALL SUBOPT_0x64
 ; 0006 0080     nlcd_Print(buf);
 ; 0006 0081 
 ; 0006 0082     if (params[param_id].type == PT_DOUBLE){  // for k-factor
-	CALL SUBOPT_0x64
+	CALL SUBOPT_0x6A
 	__ADDW1MN _params,8
 	LD   R26,Z
 	CPI  R26,LOW(0x3)
 	BRNE _0xC000C
 ; 0006 0083         strcpyf(tmp, labels[params[param_id].units]);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x6E
+	CALL SUBOPT_0x75
+	CALL SUBOPT_0x76
 ; 0006 0084         sprintf(buf,"%1.4f %s", params[param_id].value / 10000.0, tmp);
 	__POINTW1FN _0xC0000,10
-	CALL SUBOPT_0x6F
-	CALL SUBOPT_0x70
-	CALL SUBOPT_0x71
-	CALL SUBOPT_0x72
+	CALL SUBOPT_0x77
+	CALL SUBOPT_0x78
+	CALL SUBOPT_0x79
+	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x2A
 ; 0006 0085     } else
 	RJMP _0xC000D
 _0xC000C:
 ; 0006 0086     if (params[param_id].type == PT_FLOAT){  // for tempreture
-	CALL SUBOPT_0x64
+	CALL SUBOPT_0x6A
 	__ADDW1MN _params,8
 	LD   R26,Z
 	CPI  R26,LOW(0x2)
 	BRNE _0xC000E
 ; 0006 0087         strcpyf(tmp, labels[params[param_id].units]);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x6E
+	CALL SUBOPT_0x75
+	CALL SUBOPT_0x76
 ; 0006 0088         sprintf(buf,"%3.2f %s", params[param_id].value / 100.0, tmp);
 	__POINTW1FN _0xC0000,19
-	CALL SUBOPT_0x6F
-	CALL SUBOPT_0x70
-	CALL SUBOPT_0x57
-	CALL SUBOPT_0x72
+	CALL SUBOPT_0x77
+	CALL SUBOPT_0x78
+	CALL SUBOPT_0x58
+	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x2A
 ; 0006 0089     } else
 	RJMP _0xC000F
 _0xC000E:
 ; 0006 008A     if (params[param_id].type == PT_DIGIT) {
-	CALL SUBOPT_0x64
+	CALL SUBOPT_0x6A
 	__ADDW1MN _params,8
 	LD   R26,Z
 	CPI  R26,LOW(0x1)
 	BRNE _0xC0010
 ; 0006 008B         strcpyf(tmp, labels[params[param_id].units]);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x6E
+	CALL SUBOPT_0x75
+	CALL SUBOPT_0x76
 ; 0006 008C         sprintf(buf,"%u %s", params[param_id].value, tmp);
 	__POINTW1FN _0xC0000,28
-	CALL SUBOPT_0x6F
-	CALL SUBOPT_0x73
+	CALL SUBOPT_0x77
+	CALL SUBOPT_0x7B
 	CLR  R22
 	CLR  R23
 	CALL __PUTPARD1
-	CALL SUBOPT_0x23
+	CALL SUBOPT_0x27
+	CALL SUBOPT_0x2A
 ; 0006 008D     } else
 	RJMP _0xC0011
 _0xC0010:
 ; 0006 008E         if(params[param_id].type == PT_YESNO) {
-	CALL SUBOPT_0x64
+	CALL SUBOPT_0x6A
 	__ADDW1MN _params,8
 	LD   R30,Z
 	CPI  R30,0
 	BRNE _0xC0012
 ; 0006 008F             strcpyf(tmp, yesno[params[param_id].value]);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x64
-	CALL SUBOPT_0x73
+	CALL SUBOPT_0x75
+	CALL SUBOPT_0x7B
 	LDI  R26,LOW(_yesno*2)
 	LDI  R27,HIGH(_yesno*2)
-	CALL SUBOPT_0x35
+	LSL  R30
+	ROL  R31
+	ADD  R30,R26
+	ADC  R31,R27
+	CALL __GETW2PF
+	CALL _strcpyf
 ; 0006 0090             sprintf(buf,"<%s>", tmp);
+	CALL SUBOPT_0x32
 	__POINTW1FN _0xC0000,34
-	CALL SUBOPT_0x36
+	CALL SUBOPT_0x33
 	CALL SUBOPT_0x7
 ; 0006 0091     }
 ; 0006 0092     nlcd_GotoXY(7 - strlen(buf)/2, 4);
@@ -8044,9 +8279,11 @@ _0xC0012:
 _0xC0011:
 _0xC000F:
 _0xC000D:
-	CALL SUBOPT_0x5F
+	CALL SUBOPT_0x63
 	LDI  R26,LOW(7)
+	LDI  R27,HIGH(7)
 	SUB  R26,R30
+	SBC  R27,R31
 	ST   -Y,R26
 	LDI  R26,LOW(4)
 	RJMP _0x20A000F
@@ -8064,7 +8301,7 @@ _SetNewParams:
 ;	k -> R16
 	LDS  R30,_params
 	LDS  R31,_params+1
-	CALL SUBOPT_0x74
+	CALL SUBOPT_0x7C
 	STS  _dis_t_kuba,R30
 	STS  _dis_t_kuba+1,R31
 	STS  _dis_t_kuba+2,R22
@@ -8083,14 +8320,14 @@ _SetNewParams:
 	STS  _rect_p_kol_max+1,R31
 ; 0006 009C     rect_t_otbora = params[4].value / 100.0;
 	__GETW1MN _params,36
-	CALL SUBOPT_0x74
+	CALL SUBOPT_0x7C
 	STS  _rect_t_otbora,R30
 	STS  _rect_t_otbora+1,R31
 	STS  _rect_t_otbora+2,R22
 	STS  _rect_t_otbora+3,R23
 ; 0006 009D     rect_dt_otbora = params[5].value / 100.0;
 	__GETW1MN _params,45
-	CALL SUBOPT_0x74
+	CALL SUBOPT_0x7C
 	STS  _rect_dt_otbora,R30
 	STS  _rect_dt_otbora+1,R31
 	STS  _rect_dt_otbora+2,R22
@@ -8105,14 +8342,14 @@ _SetNewParams:
 	STS  _rect_T2_valve+1,R31
 ; 0006 00A0     rect_t_kuba_valve = params[8].value / 100.0;
 	__GETW1MN _params,72
-	CALL SUBOPT_0x74
+	CALL SUBOPT_0x7C
 	STS  _rect_t_kuba_valve,R30
 	STS  _rect_t_kuba_valve+1,R31
 	STS  _rect_t_kuba_valve+2,R22
 	STS  _rect_t_kuba_valve+3,R23
 ; 0006 00A1     rect_t_kuba_off = params[9].value / 100.0;
 	__GETW1MN _params,81
-	CALL SUBOPT_0x74
+	CALL SUBOPT_0x7C
 	STS  _rect_t_kuba_off,R30
 	STS  _rect_t_kuba_off+1,R31
 	STS  _rect_t_kuba_off+2,R22
@@ -8133,7 +8370,7 @@ _SetNewParams:
 	STS  _factCalibrateQ,R30
 	STS  _factCalibrateQ+1,R31
 ; 0006 00A6     onePulseDose = (float)params[14].value / 10000.0;
-	CALL SUBOPT_0x75
+	CALL SUBOPT_0x7D
 ; 0006 00A7     //onePulseDose = onePulseDose_eeprom;
 ; 0006 00A8 
 ; 0006 00A9     for (j=0; j<MAX_DS1820; j++){
@@ -8193,7 +8430,7 @@ _0xC001A:
 	LDI  R26,LOW(9)
 	MUL  R17,R26
 	MOVW R30,R0
-	CALL SUBOPT_0x66
+	CALL SUBOPT_0x6C
 	MOVW R30,R26
 	SUBI R30,LOW(-_params_eeprom)
 	SBCI R31,HIGH(-_params_eeprom)
@@ -8206,7 +8443,7 @@ _0xC001A:
 _0xC001B:
 ; 0006 00B5    //onePulseDose = onePulseDose_eeprom;
 ; 0006 00B6    onePulseDose = params[14].value / 10000.0;
-	CALL SUBOPT_0x75
+	CALL SUBOPT_0x7D
 ; 0006 00B7 }
 	RJMP _0x20A000E
 ;
@@ -8222,7 +8459,7 @@ _SaveParam:
 	LDS  R27,_onePulseDose+1
 	LDS  R24,_onePulseDose+2
 	LDS  R25,_onePulseDose+3
-	CALL SUBOPT_0x71
+	CALL SUBOPT_0x79
 	CALL __MULF12
 	CALL __CFD1U
 	__PUTW1MN _params,126
@@ -8241,7 +8478,7 @@ _0xC001D:
 	SBCI R31,HIGH(-_params_eeprom)
 	MOVW R22,R30
 	MOVW R30,R26
-	CALL SUBOPT_0x73
+	CALL SUBOPT_0x7B
 	MOVW R26,R22
 	CALL __EEPROMWRW
 ; 0006 00C0     }
@@ -8260,7 +8497,7 @@ _InitSensors:
 	SBIW R28,17
 ;	tmp -> Y+0
 	LDI  R30,LOW(3)
-	CALL SUBOPT_0x6B
+	CALL SUBOPT_0x71
 ; 0006 00C7     nlcd_Clear();
 ; 0006 00C8     nlcd_GotoXY(1,0);
 	LDI  R30,LOW(1)
@@ -8269,55 +8506,56 @@ _InitSensors:
 	__POINTW2MN _0xC001F,0
 	CALL _nlcd_PrintF
 ; 0006 00CA     strcpyf(tmp, menu[current_menu].items_submenu[current_pos].name_item);
-	CALL SUBOPT_0x34
-	CALL SUBOPT_0x53
-	CALL SUBOPT_0x54
-	CALL SUBOPT_0x6D
+	CALL SUBOPT_0x72
+	CALL SUBOPT_0x55
+	CALL SUBOPT_0x74
 ; 0006 00CB     sprintf(buf,"%s", tmp);
 	__POINTW1FN _0xC0000,16
-	CALL SUBOPT_0x36
+	CALL SUBOPT_0x33
 	CALL SUBOPT_0x7
 ; 0006 00CC     nlcd_GotoXY(8 - strlen(buf)/2, 1);
-	CALL SUBOPT_0x5F
-	CALL SUBOPT_0x6C
+	CALL SUBOPT_0x63
+	CALL SUBOPT_0x73
+	LDI  R26,LOW(1)
+	CALL SUBOPT_0x64
 ; 0006 00CD     nlcd_Print(buf);
 ; 0006 00CE     nlcd_GotoXY(0,2);
 	CALL SUBOPT_0x3
 ; 0006 00CF     nlcd_PrintF("Подключите один");
 	__POINTW2MN _0xC001F,14
-	CALL SUBOPT_0x1D
+	CALL _nlcd_PrintF
 ; 0006 00D0     nlcd_GotoXY(3,3);
-	LDI  R26,LOW(3)
-	CALL _nlcd_GotoXY
+	LDI  R30,LOW(3)
+	CALL SUBOPT_0x3B
 ; 0006 00D1     nlcd_PrintF("датчик !!!");
 	__POINTW2MN _0xC001F,30
 	CALL _nlcd_PrintF
 ; 0006 00D2     nlcd_GotoXY(2,4);
 	LDI  R30,LOW(2)
-	CALL SUBOPT_0x3D
+	CALL SUBOPT_0x3C
 ; 0006 00D3     nlcd_PrintF("нажмите <ENT>");
 	__POINTW2MN _0xC001F,41
 	CALL _nlcd_PrintF
 ; 0006 00D4     //sprintf(buf,"ID:%X", t_sens_eeprom_code[current_pos].id[7]);
 ; 0006 00D5     sprintf(buf,"ID:%2X%2X",t_rom_codes[current_pos].id[6], t_rom_codes[current_pos].id[7] );
-	CALL SUBOPT_0x24
+	CALL SUBOPT_0x32
 	__POINTW1FN _0xC0000,94
 	ST   -Y,R31
 	ST   -Y,R30
-	CALL SUBOPT_0x76
+	CALL SUBOPT_0x67
+	CALL __LSLW3
 	__ADDW1MN _t_rom_codes,6
-	CALL SUBOPT_0x77
-	CALL SUBOPT_0x76
+	LD   R30,Z
+	CALL SUBOPT_0x26
+	CALL SUBOPT_0x67
+	CALL __LSLW3
 	__ADDW1MN _t_rom_codes,7
-	CALL SUBOPT_0x77
-	LDI  R24,8
-	CALL _sprintf
-	ADIW R28,12
+	LD   R30,Z
+	CALL SUBOPT_0x26
+	CALL SUBOPT_0x2A
 ; 0006 00D6     nlcd_GotoXY(8 - strlen(buf)/2, 5);
-	CALL SUBOPT_0x5F
-	LDI  R26,LOW(8)
-	SUB  R26,R30
-	ST   -Y,R26
+	CALL SUBOPT_0x63
+	CALL SUBOPT_0x73
 	LDI  R26,LOW(5)
 _0x20A000F:
 	CALL _nlcd_GotoXY
@@ -8355,7 +8593,8 @@ _0xC0022:
 	CPI  R17,9
 	BRSH _0xC0023
 ; 0006 00E3             t_sens_eeprom_code[current_pos].id[k] = ds1820_rom_codes[0].id[k];
-	CALL SUBOPT_0x76
+	CALL SUBOPT_0x67
+	CALL __LSLW3
 	SUBI R30,LOW(-_t_sens_eeprom_code)
 	SBCI R31,HIGH(-_t_sens_eeprom_code)
 	MOVW R26,R30
@@ -8377,16 +8616,16 @@ _0xC0023:
 	CALL SUBOPT_0x3
 ; 0006 00E7         nlcd_PrintF(" Инициализация ");
 	__POINTW2MN _0xC0024,0
-	CALL SUBOPT_0x1D
+	CALL _nlcd_PrintF
 ; 0006 00E8         nlcd_GotoXY(3,3);
-	LDI  R26,LOW(3)
-	CALL _nlcd_GotoXY
+	LDI  R30,LOW(3)
+	CALL SUBOPT_0x3B
 ; 0006 00E9         nlcd_PrintF(" прошла");
 	__POINTW2MN _0xC0024,16
 	CALL _nlcd_PrintF
 ; 0006 00EA         nlcd_GotoXY(2,4);
 	LDI  R30,LOW(2)
-	CALL SUBOPT_0x3D
+	CALL SUBOPT_0x3C
 ; 0006 00EB         nlcd_PrintF(" успешно!");
 	__POINTW2MN _0xC0024,24
 	CALL _nlcd_PrintF
@@ -8406,25 +8645,25 @@ _0xC0020:
 	CALL SUBOPT_0x3
 ; 0006 00F1         nlcd_PrintF(" Инициализация ");
 	__POINTW2MN _0xC0024,34
-	CALL SUBOPT_0x16
+	CALL SUBOPT_0x17
 ; 0006 00F2         nlcd_GotoXY(0,3);
 	LDI  R26,LOW(3)
 	CALL _nlcd_GotoXY
 ; 0006 00F3         nlcd_PrintF(" не прошла. Для");
 	__POINTW2MN _0xC0024,50
-	CALL SUBOPT_0x16
+	CALL SUBOPT_0x17
 ; 0006 00F4         nlcd_GotoXY(0,4);
 	LDI  R26,LOW(4)
 	CALL _nlcd_GotoXY
 ; 0006 00F5         nlcd_PrintF("повтора нажмите");
 	__POINTW2MN _0xC0024,66
-	CALL SUBOPT_0x16
+	CALL _nlcd_PrintF
 ; 0006 00F6         nlcd_GotoXY(0,5);
-	LDI  R26,LOW(5)
-	CALL _nlcd_GotoXY
+	LDI  R30,LOW(0)
+	CALL SUBOPT_0x8
 ; 0006 00F7         nlcd_PrintF("<ENT>. <ESC>");
 	__POINTW2MN _0xC0024,82
-	CALL SUBOPT_0x16
+	CALL SUBOPT_0x17
 ; 0006 00F8         nlcd_GotoXY(0,6);
 	LDI  R26,LOW(6)
 	CALL _nlcd_GotoXY
@@ -8450,10 +8689,10 @@ _0xC0024:
 _CalibrateValve:
 ; 0006 00FF     mode = CALIBRATE;
 	LDI  R30,LOW(7)
-	CALL SUBOPT_0x6B
+	CALL SUBOPT_0x71
 ; 0006 0100     nlcd_Clear();
 ; 0006 0101     nlcd_GotoXY(0,1);
-	CALL SUBOPT_0x15
+	CALL SUBOPT_0x16
 ; 0006 0102     nlcd_PrintF("   Калибровка   ");
 	__POINTW2MN _0xC0026,0
 	CALL _nlcd_PrintF
@@ -8799,32 +9038,15 @@ _HW_Init:
 ;
 ;#ifdef HW1_P
 ;void PresureInit(){
-; 0007 00D5 void PresureInit(){
-_PresureInit:
-; 0007 00D6     p_offset = read_adc(0);
-	CALL SUBOPT_0x78
-; 0007 00D7     nlcd_GotoXY(0,1);
-	CALL SUBOPT_0x15
-; 0007 00D8     nlcd_PrintF("   Калибровка   ");
-	__POINTW2MN _0xE0003,0
-	CALL _nlcd_PrintF
-; 0007 00D9     nlcd_PrintF("    датчика     ");
-	__POINTW2MN _0xE0003,17
-	CALL _nlcd_PrintF
-; 0007 00DA     nlcd_PrintF("  давления...   ");
-	__POINTW2MN _0xE0003,34
-	CALL _nlcd_PrintF
-; 0007 00DB     delay_ms(2000);
-	CALL SUBOPT_0x4
-; 0007 00DC     nlcd_Clear();
-; 0007 00DD     p_offset = read_adc(0);
-	CALL SUBOPT_0x78
-; 0007 00DE };
-	RET
-
-	.DSEG
-_0xE0003:
-	.BYTE 0x33
+;    p_offset = read_adc(0);
+;    nlcd_GotoXY(0,1);
+;    nlcd_PrintF("   Калибровка   ");
+;    nlcd_PrintF("    датчика     ");
+;    nlcd_PrintF("  давления...   ");
+;    delay_ms(2000);
+;    nlcd_Clear();
+;    p_offset = read_adc(0);
+;};
 ;#endif
 ;// This file has been prepared for Doxygen automatic documentation generation.
 ;/*! \file ********************************************************************
@@ -9431,7 +9653,7 @@ _0x120015:
 _0x12001A:
 ; 0009 00D0             {
 ; 0009 00D1                 (*bitPattern) &= ~bitMask;
-	CALL SUBOPT_0x79
+	CALL SUBOPT_0x7E
 _0x120046:
 	ST   X,R30
 ; 0009 00D2             }
@@ -9464,7 +9686,7 @@ _0x12001D:
 	BRSH _0x12001F
 ; 0009 00DF             {
 ; 0009 00E0                 (*bitPattern) &= ~bitMask;
-	CALL SUBOPT_0x79
+	CALL SUBOPT_0x7E
 	ST   X,R30
 ; 0009 00E1                 newDeviation = currentBit;
 	MOV  R16,R17
@@ -9531,7 +9753,7 @@ _0x120024:
 ; 0009 0102             bitMask = 0x01;
 	LDI  R19,LOW(1)
 ; 0009 0103             bitPattern++;
-	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x7F
 ; 0009 0104         }
 ; 0009 0105     }
 _0x120025:
@@ -9605,7 +9827,7 @@ _0x12002A:
 ; 0009 0127         {
 ; 0009 0128             devices[i].id[j] = 0x00;
 	CALL SUBOPT_0x10
-	CALL SUBOPT_0x7B
+	CALL SUBOPT_0x80
 	ADD  R26,R30
 	ADC  R27,R31
 	CLR  R30
@@ -9672,7 +9894,7 @@ _0x12002F:
 	STD  Y+7,R30
 ; 0009 013B       newID=devices[numFoundDevices].id;
 	LDI  R31,0
-	CALL SUBOPT_0x7B
+	CALL SUBOPT_0x80
 	ADD  R30,R26
 	ADC  R31,R27
 	MOVW R18,R30
@@ -9693,7 +9915,7 @@ _0x120031:
 ; 0009 0142         // If any id has a crc error, return error.
 ; 0009 0143         if(OWI_CheckRomCRC(devices[i].id) != OWI_CRC_OK)
 	CALL SUBOPT_0x10
-	CALL SUBOPT_0x7B
+	CALL SUBOPT_0x80
 	ADD  R26,R30
 	ADC  R27,R31
 	RCALL _OWI_CheckRomCRC
@@ -9913,8 +10135,8 @@ _0x12003D:
 	CALL __LSLW4
 	OR   R30,R26
 	OR   R31,R27
-	CALL SUBOPT_0x3B
-	CALL SUBOPT_0x7C
+	CALL SUBOPT_0x39
+	CALL SUBOPT_0x81
 ; 0009 01B7     temperature += ((float)(scratchpad[0]&15) * 0.0625);
 	LDD  R30,Y+4
 	ANDI R30,LOW(0xF)
@@ -9923,7 +10145,7 @@ _0x12003D:
 	CALL __MULF12
 	__GETD2S 13
 	CALL __ADDF12
-	CALL SUBOPT_0x7C
+	CALL SUBOPT_0x81
 ; 0009 01B8 
 ; 0009 01B9     if (sig) {
 	MOV  R0,R18
@@ -9933,7 +10155,7 @@ _0x12003D:
 	__GETD2S 13
 	__GETD1N 0xBF800000
 	CALL __MULF12
-	CALL SUBOPT_0x7C
+	CALL SUBOPT_0x81
 ; 0009 01BB     }
 ; 0009 01BC     return temperature;
 _0x12003E:
@@ -9960,28 +10182,28 @@ _InitSensor:
 ;	resolution -> Y+10
 ;	scratchpad -> Y+1
 ;	i -> R17
-	CALL SUBOPT_0x7D
+	CALL SUBOPT_0x82
 ; 0009 01C5      OWI_MatchRom(romValue, pin);
 ; 0009 01C6      OWI_SendByte(DS18B20_WRITE_SCRATCHPAD, pin);
 	LDI  R30,LOW(78)
-	CALL SUBOPT_0x7E
+	CALL SUBOPT_0x83
 ; 0009 01C7      OWI_SendByte(hiAlm, pin);
 	LDD  R30,Y+11
-	CALL SUBOPT_0x7E
+	CALL SUBOPT_0x83
 ; 0009 01C8      OWI_SendByte(lowAlm, pin);
 	LDD  R30,Y+12
-	CALL SUBOPT_0x7E
+	CALL SUBOPT_0x83
 ; 0009 01C9      OWI_SendByte(resolution, pin);
 	LDD  R30,Y+10
-	CALL SUBOPT_0x7E
+	CALL SUBOPT_0x83
 ; 0009 01CA 
 ; 0009 01CB      // check settings
 ; 0009 01CC      OWI_DetectPresence(pin);
-	CALL SUBOPT_0x7D
+	CALL SUBOPT_0x82
 ; 0009 01CD      OWI_MatchRom(romValue, pin);
 ; 0009 01CE      OWI_SendByte(DS18B20_READ_SCRATCHPAD, pin);
 	LDI  R30,LOW(190)
-	CALL SUBOPT_0x7E
+	CALL SUBOPT_0x83
 ; 0009 01CF      for (i=0; i<8; i++) {
 	LDI  R17,LOW(0)
 _0x120040:
@@ -10008,11 +10230,11 @@ _0x120041:
 ; 0009 01D3      if (scratchpad[2] == hiAlm && scratchpad[3] == lowAlm && scratchpad[4] == resolution) {
 	LDD  R30,Y+11
 	LDD  R26,Y+3
-	CALL SUBOPT_0x61
+	CALL SUBOPT_0x65
 	BRNE _0x120043
 	LDD  R30,Y+12
 	LDD  R26,Y+4
-	CALL SUBOPT_0x61
+	CALL SUBOPT_0x65
 	BRNE _0x120043
 	LDD  R30,Y+10
 	LDD  R26,Y+5
@@ -10092,9 +10314,9 @@ _OWI_Init:
 	IN   R30,0x11
 	MOV  R26,R30
 	LD   R30,Y
-	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x84
 	LD   R30,Y
-	CALL SUBOPT_0x80
+	CALL SUBOPT_0x85
 ; 000A 0029     // The first rising edge can be interpreted by a slave as the end of a
 ; 000A 002A     // Reset pulse. Delay for the required reset recovery time (H) to be
 ; 000A 002B     // sure that the real reset is interpreted correctly.
@@ -10129,7 +10351,7 @@ _OWI_WriteBit1:
 ; 000A 003E 
 ; 000A 003F     // Drive bus low and delay.
 ; 000A 0040     OWI_PULL_BUS_LOW(pins);
-	CALL SUBOPT_0x81
+	CALL SUBOPT_0x86
 ; 000A 0041     __delay_cycles(OWI_DELAY_A_STD_MODE);
 	__DELAY_USB 25
 ; 000A 0042 
@@ -10138,7 +10360,7 @@ _OWI_WriteBit1:
 	IN   R30,0x11
 	MOV  R26,R30
 	LDD  R30,Y+1
-	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x84
 	LDD  R30,Y+1
 	COM  R30
 	AND  R30,R26
@@ -10176,7 +10398,7 @@ _OWI_WriteBit0:
 ; 000A 005A 
 ; 000A 005B     // Drive bus low and delay.
 ; 000A 005C     OWI_PULL_BUS_LOW(pins);
-	CALL SUBOPT_0x81
+	CALL SUBOPT_0x86
 ; 000A 005D     __delay_cycles(OWI_DELAY_C_STD_MODE);
 	__DELAY_USW 229
 ; 000A 005E 
@@ -10185,7 +10407,7 @@ _OWI_WriteBit0:
 	IN   R30,0x11
 	MOV  R26,R30
 	LDD  R30,Y+1
-	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x84
 	LDD  R30,Y+1
 	COM  R30
 	AND  R30,R26
@@ -10231,7 +10453,7 @@ _OWI_ReadBit:
 ; 000A 0078 
 ; 000A 0079     // Drive bus low and delay.
 ; 000A 007A     OWI_PULL_BUS_LOW(pins);
-	CALL SUBOPT_0x82
+	CALL SUBOPT_0x87
 	COM  R30
 	AND  R30,R26
 	OUT  0x12,R30
@@ -10243,7 +10465,7 @@ _OWI_ReadBit:
 	IN   R30,0x11
 	MOV  R26,R30
 	LDD  R30,Y+2
-	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x84
 	LDD  R30,Y+2
 	COM  R30
 	AND  R30,R26
@@ -10298,8 +10520,8 @@ _OWI_DetectPresence:
 ; 000A 009E 
 ; 000A 009F     // Drive bus low and delay.
 ; 000A 00A0     OWI_PULL_BUS_LOW(pins);
-	CALL SUBOPT_0x82
-	CALL SUBOPT_0x80
+	CALL SUBOPT_0x87
+	CALL SUBOPT_0x85
 ; 000A 00A1     __delay_cycles(OWI_DELAY_H_STD_MODE);
 ; 000A 00A2 
 ; 000A 00A3     // Release bus and delay.
@@ -10307,7 +10529,7 @@ _OWI_DetectPresence:
 	IN   R30,0x11
 	MOV  R26,R30
 	LDD  R30,Y+2
-	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x84
 	LDD  R30,Y+2
 	COM  R30
 	AND  R30,R26
@@ -10645,7 +10867,7 @@ _0x2020015:
 	ADIW R28,5
 	RET
 __ftoe_G101:
-	CALL SUBOPT_0x83
+	CALL SUBOPT_0x88
 	LDI  R30,LOW(128)
 	STD  Y+2,R30
 	LDI  R30,LOW(63)
@@ -10689,49 +10911,49 @@ _0x202001C:
 	SUBI R17,1
 	CPI  R30,0
 	BREQ _0x202001E
-	CALL SUBOPT_0x84
+	CALL SUBOPT_0x89
 	RJMP _0x202001C
 _0x202001E:
 	__GETD1S 12
 	CALL __CPD10
 	BRNE _0x202001F
 	LDI  R19,LOW(0)
-	CALL SUBOPT_0x84
+	CALL SUBOPT_0x89
 	RJMP _0x2020020
 _0x202001F:
 	LDD  R19,Y+11
-	CALL SUBOPT_0x85
+	CALL SUBOPT_0x8A
 	BREQ PC+2
 	BRCC PC+3
 	JMP  _0x2020021
-	CALL SUBOPT_0x84
+	CALL SUBOPT_0x89
 _0x2020022:
-	CALL SUBOPT_0x85
+	CALL SUBOPT_0x8A
 	BRLO _0x2020024
-	CALL SUBOPT_0x86
-	CALL SUBOPT_0x87
+	CALL SUBOPT_0x8B
+	CALL SUBOPT_0x8C
 	RJMP _0x2020022
 _0x2020024:
 	RJMP _0x2020025
 _0x2020021:
 _0x2020026:
-	CALL SUBOPT_0x85
+	CALL SUBOPT_0x8A
 	BRSH _0x2020028
-	CALL SUBOPT_0x86
-	CALL SUBOPT_0x88
-	CALL SUBOPT_0x89
+	CALL SUBOPT_0x8B
+	CALL SUBOPT_0x8D
+	CALL SUBOPT_0x8E
 	SUBI R19,LOW(1)
 	RJMP _0x2020026
 _0x2020028:
-	CALL SUBOPT_0x84
+	CALL SUBOPT_0x89
 _0x2020025:
 	__GETD1S 12
+	CALL SUBOPT_0x8F
+	CALL SUBOPT_0x8E
 	CALL SUBOPT_0x8A
-	CALL SUBOPT_0x89
-	CALL SUBOPT_0x85
 	BRLO _0x2020029
-	CALL SUBOPT_0x86
-	CALL SUBOPT_0x87
+	CALL SUBOPT_0x8B
+	CALL SUBOPT_0x8C
 _0x2020029:
 _0x2020020:
 	LDI  R17,LOW(0)
@@ -10740,33 +10962,33 @@ _0x202002A:
 	CP   R30,R17
 	BRLO _0x202002C
 	__GETD2S 4
-	CALL SUBOPT_0x8B
-	CALL SUBOPT_0x8A
+	CALL SUBOPT_0x90
+	CALL SUBOPT_0x8F
 	MOVW R26,R30
 	MOVW R24,R22
 	CALL _floor
 	__PUTD1S 4
-	CALL SUBOPT_0x86
-	CALL SUBOPT_0x3F
+	CALL SUBOPT_0x8B
+	CALL SUBOPT_0x3E
 	MOV  R16,R30
-	CALL SUBOPT_0x8C
-	CALL SUBOPT_0x8D
+	CALL SUBOPT_0x91
+	CALL SUBOPT_0x92
 	CALL SUBOPT_0x47
 	__GETD2S 4
 	CALL __MULF12
-	CALL SUBOPT_0x86
-	CALL SUBOPT_0x39
-	CALL SUBOPT_0x89
+	CALL SUBOPT_0x8B
+	CALL SUBOPT_0x36
+	CALL SUBOPT_0x8E
 	MOV  R30,R17
 	SUBI R17,-1
 	CPI  R30,0
 	BRNE _0x202002A
-	CALL SUBOPT_0x8C
+	CALL SUBOPT_0x91
 	LDI  R30,LOW(46)
 	ST   X,R30
 	RJMP _0x202002A
 _0x202002C:
-	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x7F
 	SBIW R30,1
 	LDD  R26,Y+10
 	STD  Z+0,R26
@@ -10783,8 +11005,8 @@ _0x202002E:
 	LDI  R30,LOW(43)
 _0x202010E:
 	ST   X,R30
-	CALL SUBOPT_0x7A
-	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x7F
+	CALL SUBOPT_0x7F
 	SBIW R30,1
 	MOVW R22,R30
 	MOV  R26,R19
@@ -10793,7 +11015,7 @@ _0x202010E:
 	SUBI R30,-LOW(48)
 	MOVW R26,R22
 	ST   X,R30
-	CALL SUBOPT_0x7A
+	CALL SUBOPT_0x7F
 	SBIW R30,1
 	MOVW R22,R30
 	MOV  R26,R19
@@ -10849,7 +11071,7 @@ _0x2020030:
 	LDI  R17,LOW(1)
 	RJMP _0x2020038
 _0x2020037:
-	CALL SUBOPT_0x8E
+	CALL SUBOPT_0x93
 _0x2020038:
 	RJMP _0x2020035
 _0x2020036:
@@ -10857,7 +11079,7 @@ _0x2020036:
 	BRNE _0x2020039
 	CPI  R18,37
 	BRNE _0x202003A
-	CALL SUBOPT_0x8E
+	CALL SUBOPT_0x93
 	RJMP _0x202010F
 _0x202003A:
 	LDI  R17,LOW(2)
@@ -10955,12 +11177,12 @@ _0x202004E:
 	MOV  R30,R18
 	CPI  R30,LOW(0x63)
 	BRNE _0x2020053
-	CALL SUBOPT_0x8F
-	CALL SUBOPT_0x90
-	CALL SUBOPT_0x8F
+	CALL SUBOPT_0x94
+	CALL SUBOPT_0x95
+	CALL SUBOPT_0x94
 	LDD  R26,Z+4
 	ST   -Y,R26
-	CALL SUBOPT_0x91
+	CALL SUBOPT_0x96
 	RJMP _0x2020054
 _0x2020053:
 	CPI  R30,LOW(0x45)
@@ -10978,10 +11200,10 @@ _0x2020059:
 	ADIW R30,22
 	STD  Y+14,R30
 	STD  Y+14+1,R31
-	CALL SUBOPT_0x92
+	CALL SUBOPT_0x97
 	CALL __GETD1P
-	CALL SUBOPT_0x93
-	CALL SUBOPT_0x94
+	CALL SUBOPT_0x98
+	CALL SUBOPT_0x99
 	LDD  R26,Y+13
 	TST  R26
 	BRMI _0x202005B
@@ -10990,9 +11212,9 @@ _0x2020059:
 	BREQ _0x202005D
 	RJMP _0x202005E
 _0x202005B:
-	CALL SUBOPT_0x95
+	CALL SUBOPT_0x9A
 	CALL __ANEGF1
-	CALL SUBOPT_0x93
+	CALL SUBOPT_0x98
 	LDI  R30,LOW(45)
 	STD  Y+21,R30
 _0x202005D:
@@ -11000,7 +11222,7 @@ _0x202005D:
 	RJMP _0x202005F
 	LDD  R30,Y+21
 	ST   -Y,R30
-	CALL SUBOPT_0x91
+	CALL SUBOPT_0x96
 	RJMP _0x2020060
 _0x202005F:
 	LDD  R30,Y+14
@@ -11017,7 +11239,7 @@ _0x202005E:
 	LDI  R20,LOW(6)
 	CPI  R18,102
 	BRNE _0x2020062
-	CALL SUBOPT_0x95
+	CALL SUBOPT_0x9A
 	CALL __PUTPARD1
 	ST   -Y,R20
 	LDD  R26,Y+19
@@ -11025,7 +11247,7 @@ _0x202005E:
 	CALL _ftoa
 	RJMP _0x2020063
 _0x2020062:
-	CALL SUBOPT_0x95
+	CALL SUBOPT_0x9A
 	CALL __PUTPARD1
 	ST   -Y,R20
 	ST   -Y,R18
@@ -11035,20 +11257,20 @@ _0x2020062:
 _0x2020063:
 	MOVW R30,R28
 	ADIW R30,22
-	CALL SUBOPT_0x96
+	CALL SUBOPT_0x9B
 	RJMP _0x2020064
 _0x202005A:
 	CPI  R30,LOW(0x73)
 	BRNE _0x2020066
-	CALL SUBOPT_0x94
-	CALL SUBOPT_0x97
-	CALL SUBOPT_0x96
+	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9C
+	CALL SUBOPT_0x9B
 	RJMP _0x2020067
 _0x2020066:
 	CPI  R30,LOW(0x70)
 	BRNE _0x2020069
-	CALL SUBOPT_0x94
-	CALL SUBOPT_0x97
+	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9C
 	STD  Y+14,R30
 	STD  Y+14+1,R31
 	LDD  R26,Y+14
@@ -11090,12 +11312,12 @@ _0x2020072:
 	SBRS R16,1
 	RJMP _0x2020074
 	__GETD1N 0x3B9ACA00
-	CALL SUBOPT_0x98
+	CALL SUBOPT_0x9D
 	LDI  R17,LOW(10)
 	RJMP _0x2020075
 _0x2020074:
 	__GETD1N 0x2710
-	CALL SUBOPT_0x98
+	CALL SUBOPT_0x9D
 	LDI  R17,LOW(5)
 	RJMP _0x2020075
 _0x2020073:
@@ -11113,12 +11335,12 @@ _0x2020078:
 	SBRS R16,1
 	RJMP _0x202007A
 	__GETD1N 0x10000000
-	CALL SUBOPT_0x98
+	CALL SUBOPT_0x9D
 	LDI  R17,LOW(8)
 	RJMP _0x2020075
 _0x202007A:
 	__GETD1N 0x1000
-	CALL SUBOPT_0x98
+	CALL SUBOPT_0x9D
 	LDI  R17,LOW(4)
 _0x2020075:
 	CPI  R20,0
@@ -11130,21 +11352,21 @@ _0x202007B:
 _0x202007C:
 	SBRS R16,1
 	RJMP _0x202007D
-	CALL SUBOPT_0x94
-	CALL SUBOPT_0x92
+	CALL SUBOPT_0x99
+	CALL SUBOPT_0x97
 	ADIW R26,4
 	CALL __GETD1P
 	RJMP _0x2020110
 _0x202007D:
 	SBRS R16,2
 	RJMP _0x202007F
-	CALL SUBOPT_0x94
-	CALL SUBOPT_0x97
+	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9C
 	CALL __CWD1
 	RJMP _0x2020110
 _0x202007F:
-	CALL SUBOPT_0x94
-	CALL SUBOPT_0x97
+	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9C
 	CLR  R22
 	CLR  R23
 _0x2020110:
@@ -11154,9 +11376,9 @@ _0x2020110:
 	LDD  R26,Y+13
 	TST  R26
 	BRPL _0x2020082
-	CALL SUBOPT_0x95
+	CALL SUBOPT_0x9A
 	CALL __ANEGD1
-	CALL SUBOPT_0x93
+	CALL SUBOPT_0x98
 	LDI  R30,LOW(45)
 	STD  Y+21,R30
 _0x2020082:
@@ -11197,7 +11419,7 @@ _0x202008D:
 _0x202008B:
 	LDI  R18,LOW(32)
 _0x202008E:
-	CALL SUBOPT_0x8E
+	CALL SUBOPT_0x93
 	SUBI R21,LOW(1)
 	RJMP _0x2020086
 _0x2020088:
@@ -11208,7 +11430,7 @@ _0x202008F:
 	ORI  R16,LOW(16)
 	SBRS R16,2
 	RJMP _0x2020092
-	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9E
 	BREQ _0x2020093
 	SUBI R21,LOW(1)
 _0x2020093:
@@ -11217,7 +11439,7 @@ _0x2020093:
 _0x2020092:
 	LDI  R30,LOW(48)
 	ST   -Y,R30
-	CALL SUBOPT_0x91
+	CALL SUBOPT_0x96
 	CPI  R21,0
 	BREQ _0x2020094
 	SUBI R21,LOW(1)
@@ -11247,7 +11469,7 @@ _0x2020099:
 	STD  Y+14,R26
 	STD  Y+14+1,R27
 _0x202009A:
-	CALL SUBOPT_0x8E
+	CALL SUBOPT_0x93
 	CPI  R21,0
 	BREQ _0x202009B
 	SUBI R21,LOW(1)
@@ -11258,7 +11480,7 @@ _0x2020098:
 	RJMP _0x202009C
 _0x2020095:
 _0x202009E:
-	CALL SUBOPT_0x9A
+	CALL SUBOPT_0x9F
 	CALL __DIVD21U
 	MOV  R18,R30
 	CPI  R18,10
@@ -11302,30 +11524,30 @@ _0x20200A9:
 	ORI  R16,LOW(16)
 	SBRS R16,2
 	RJMP _0x20200AF
-	CALL SUBOPT_0x99
+	CALL SUBOPT_0x9E
 	BREQ _0x20200B0
 	SUBI R21,LOW(1)
 _0x20200B0:
 _0x20200AF:
 _0x20200AE:
 _0x20200A5:
-	CALL SUBOPT_0x8E
+	CALL SUBOPT_0x93
 	CPI  R21,0
 	BREQ _0x20200B1
 	SUBI R21,LOW(1)
 _0x20200B1:
 _0x20200AB:
 	SUBI R19,LOW(1)
-	CALL SUBOPT_0x9A
+	CALL SUBOPT_0x9F
 	CALL __MODD21U
-	CALL SUBOPT_0x93
+	CALL SUBOPT_0x98
 	LDD  R30,Y+20
 	__GETD2S 16
 	CLR  R31
 	CLR  R22
 	CLR  R23
 	CALL __DIVD21U
-	CALL SUBOPT_0x98
+	CALL SUBOPT_0x9D
 	__GETD1S 16
 	CALL __CPD10
 	BREQ _0x202009F
@@ -11340,7 +11562,7 @@ _0x20200B3:
 	SUBI R21,LOW(1)
 	LDI  R30,LOW(32)
 	ST   -Y,R30
-	CALL SUBOPT_0x91
+	CALL SUBOPT_0x96
 	RJMP _0x20200B3
 _0x20200B5:
 _0x20200B2:
@@ -11363,7 +11585,7 @@ _sprintf:
 	MOV  R15,R24
 	SBIW R28,6
 	CALL __SAVELOCR4
-	CALL SUBOPT_0x9B
+	CALL SUBOPT_0xA0
 	SBIW R30,0
 	BRNE _0x20200B7
 	LDI  R30,LOW(65535)
@@ -11374,7 +11596,7 @@ _0x20200B7:
 	ADIW R26,6
 	CALL __ADDW2R15
 	MOVW R16,R26
-	CALL SUBOPT_0x9B
+	CALL SUBOPT_0xA0
 	STD  Y+6,R30
 	STD  Y+6+1,R31
 	LDI  R30,LOW(0)
@@ -11417,7 +11639,7 @@ _fabs:
     cbr  r23,0x80
     ret
 _ftoa:
-	CALL SUBOPT_0x83
+	CALL SUBOPT_0x88
 	LDI  R30,LOW(0)
 	STD  Y+2,R30
 	LDI  R30,LOW(63)
@@ -11430,7 +11652,7 @@ _ftoa:
 	LDI  R26,HIGH(0xFFFF)
 	CPC  R31,R26
 	BRNE _0x204000D
-	CALL SUBOPT_0x9C
+	CALL SUBOPT_0xA1
 	__POINTW2FN _0x2040000,0
 	CALL _strcpyf
 	RJMP _0x20A0003
@@ -11439,7 +11661,7 @@ _0x204000D:
 	LDI  R26,HIGH(0x7FFF)
 	CPC  R31,R26
 	BRNE _0x204000C
-	CALL SUBOPT_0x9C
+	CALL SUBOPT_0xA1
 	__POINTW2FN _0x2040000,1
 	CALL _strcpyf
 	RJMP _0x20A0003
@@ -11449,8 +11671,8 @@ _0x204000C:
 	BRPL _0x204000F
 	__GETD1S 9
 	CALL __ANEGF1
-	CALL SUBOPT_0x9D
-	CALL SUBOPT_0x9E
+	CALL SUBOPT_0xA2
+	CALL SUBOPT_0xA3
 	LDI  R30,LOW(45)
 	ST   X,R30
 _0x204000F:
@@ -11466,28 +11688,28 @@ _0x2040011:
 	SUBI R17,1
 	CPI  R30,0
 	BREQ _0x2040013
-	CALL SUBOPT_0x9F
-	CALL SUBOPT_0x8B
-	CALL SUBOPT_0xA0
+	CALL SUBOPT_0xA4
+	CALL SUBOPT_0x90
+	CALL SUBOPT_0xA5
 	RJMP _0x2040011
 _0x2040013:
-	CALL SUBOPT_0xA1
+	CALL SUBOPT_0xA6
 	CALL __ADDF12
-	CALL SUBOPT_0x9D
+	CALL SUBOPT_0xA2
 	LDI  R17,LOW(0)
 	__GETD1N 0x3F800000
-	CALL SUBOPT_0xA0
+	CALL SUBOPT_0xA5
 _0x2040014:
-	CALL SUBOPT_0xA1
+	CALL SUBOPT_0xA6
 	CALL __CMPF12
 	BRLO _0x2040016
-	CALL SUBOPT_0x9F
-	CALL SUBOPT_0x88
-	CALL SUBOPT_0xA0
+	CALL SUBOPT_0xA4
+	CALL SUBOPT_0x8D
+	CALL SUBOPT_0xA5
 	SUBI R17,-LOW(1)
 	CPI  R17,39
 	BRLO _0x2040017
-	CALL SUBOPT_0x9C
+	CALL SUBOPT_0xA1
 	__POINTW2FN _0x2040000,5
 	CALL _strcpyf
 	RJMP _0x20A0003
@@ -11496,7 +11718,7 @@ _0x2040017:
 _0x2040016:
 	CPI  R17,0
 	BRNE _0x2040018
-	CALL SUBOPT_0x9E
+	CALL SUBOPT_0xA3
 	LDI  R30,LOW(48)
 	ST   X,R30
 	RJMP _0x2040019
@@ -11506,32 +11728,32 @@ _0x204001A:
 	SUBI R17,1
 	CPI  R30,0
 	BREQ _0x204001C
-	CALL SUBOPT_0x9F
-	CALL SUBOPT_0x8B
-	CALL SUBOPT_0x8A
+	CALL SUBOPT_0xA4
+	CALL SUBOPT_0x90
+	CALL SUBOPT_0x8F
 	MOVW R26,R30
 	MOVW R24,R22
 	CALL _floor
-	CALL SUBOPT_0xA0
-	CALL SUBOPT_0xA1
-	CALL SUBOPT_0x3F
+	CALL SUBOPT_0xA5
+	CALL SUBOPT_0xA6
+	CALL SUBOPT_0x3E
 	MOV  R16,R30
-	CALL SUBOPT_0x9E
-	CALL SUBOPT_0x8D
+	CALL SUBOPT_0xA3
+	CALL SUBOPT_0x92
 	LDI  R31,0
-	CALL SUBOPT_0x9F
-	CALL SUBOPT_0x3B
-	CALL __MULF12
-	CALL SUBOPT_0xA2
+	CALL SUBOPT_0xA4
 	CALL SUBOPT_0x39
-	CALL SUBOPT_0x9D
+	CALL __MULF12
+	CALL SUBOPT_0xA7
+	CALL SUBOPT_0x36
+	CALL SUBOPT_0xA2
 	RJMP _0x204001A
 _0x204001C:
 _0x2040019:
 	LDD  R30,Y+8
 	CPI  R30,0
 	BREQ _0x20A0002
-	CALL SUBOPT_0x9E
+	CALL SUBOPT_0xA3
 	LDI  R30,LOW(46)
 	ST   X,R30
 _0x204001E:
@@ -11540,19 +11762,19 @@ _0x204001E:
 	STD  Y+8,R30
 	SUBI R30,-LOW(1)
 	BREQ _0x2040020
+	CALL SUBOPT_0xA7
+	CALL SUBOPT_0x8D
 	CALL SUBOPT_0xA2
-	CALL SUBOPT_0x88
-	CALL SUBOPT_0x9D
 	__GETD1S 9
 	CALL __CFD1U
 	MOV  R16,R30
-	CALL SUBOPT_0x9E
-	CALL SUBOPT_0x8D
+	CALL SUBOPT_0xA3
+	CALL SUBOPT_0x92
 	LDI  R31,0
-	CALL SUBOPT_0xA2
-	CALL SUBOPT_0x3B
+	CALL SUBOPT_0xA7
 	CALL SUBOPT_0x39
-	CALL SUBOPT_0x9D
+	CALL SUBOPT_0x36
+	CALL SUBOPT_0xA2
 	RJMP _0x204001E
 _0x2040020:
 _0x20A0002:
@@ -11661,8 +11883,6 @@ _timer_off:
 	.BYTE 0x2
 _ds1820_devices:
 	.BYTE 0x1
-_p_offset:
-	.BYTE 0x2
 _sec:
 	.BYTE 0x1
 _minutes:
@@ -11821,8 +12041,6 @@ _t_kolona_down_old:
 	.BYTE 0x4
 _t_kolona_up_old:
 	.BYTE 0x4
-_p_kolona:
-	.BYTE 0x4
 _headDisp:
 	.BYTE 0x4
 _t_kuba_avg:
@@ -11837,6 +12055,10 @@ _Votb:
 	.BYTE 0x4
 _ssCounter:
 	.BYTE 0x2
+_distSettingMode:
+	.BYTE 0x1
+_distValveMode:
+	.BYTE 0x1
 _menu__G005:
 	.BYTE 0x15
 _menu_settings_G005:
@@ -11897,7 +12119,7 @@ SUBOPT_0x3:
 	LDI  R26,LOW(2)
 	JMP  _nlcd_GotoXY
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
 SUBOPT_0x4:
 	LDI  R26,LOW(2000)
 	LDI  R27,HIGH(2000)
@@ -11929,27 +12151,26 @@ SUBOPT_0x6:
 	ST   -Y,R30
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 16 TIMES, CODE SIZE REDUCTION:27 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 13 TIMES, CODE SIZE REDUCTION:21 WORDS
 SUBOPT_0x7:
 	LDI  R24,4
 	CALL _sprintf
 	ADIW R28,8
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:3 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
 SUBOPT_0x8:
-	LDI  R30,LOW(1)
 	ST   -Y,R30
 	LDI  R26,LOW(5)
 	JMP  _nlcd_GotoXY
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 24 TIMES, CODE SIZE REDUCTION:43 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 23 TIMES, CODE SIZE REDUCTION:41 WORDS
 SUBOPT_0x9:
 	LDI  R26,LOW(_buf)
 	LDI  R27,HIGH(_buf)
 	JMP  _nlcd_Print
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 20 TIMES, CODE SIZE REDUCTION:35 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 21 TIMES, CODE SIZE REDUCTION:37 WORDS
 SUBOPT_0xA:
 	CALL _nlcd_SendByte
 	LDI  R30,LOW(0)
@@ -11963,7 +12184,7 @@ SUBOPT_0xB:
 	LDI  R26,LOW(0)
 	JMP  _nlcd_SendByte
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:9 WORDS
 SUBOPT_0xC:
 	LDI  R31,0
 	ADD  R30,R26
@@ -12052,22 +12273,30 @@ SUBOPT_0x14:
 	STS  _hours,R30
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:9 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:21 WORDS
 SUBOPT_0x15:
+	STS  _Votb,R30
+	STS  _Votb+1,R31
+	STS  _Votb+2,R22
+	STS  _Votb+3,R23
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
+SUBOPT_0x16:
 	LDI  R30,LOW(0)
 	ST   -Y,R30
 	LDI  R26,LOW(1)
 	JMP  _nlcd_GotoXY
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 8 TIMES, CODE SIZE REDUCTION:11 WORDS
-SUBOPT_0x16:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:9 WORDS
+SUBOPT_0x17:
 	CALL _nlcd_PrintF
 	LDI  R30,LOW(0)
 	ST   -Y,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:51 WORDS
-SUBOPT_0x17:
+SUBOPT_0x18:
 	LDS  R26,_t_kuba_old
 	LDS  R27,_t_kuba_old+1
 	LDS  R24,_t_kuba_old+2
@@ -12082,19 +12311,19 @@ SUBOPT_0x17:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
-SUBOPT_0x18:
+SUBOPT_0x19:
 	__GETD1N 0x3E000000
 	CALL __CMPF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
-SUBOPT_0x19:
+SUBOPT_0x1A:
 	__GETD1N 0xBE000000
 	CALL __CMPF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:51 WORDS
-SUBOPT_0x1A:
+SUBOPT_0x1B:
 	LDS  R26,_t_kolona_up_old
 	LDS  R27,_t_kolona_up_old+1
 	LDS  R24,_t_kolona_up_old+2
@@ -12108,55 +12337,22 @@ SUBOPT_0x1A:
 	MOVW R24,R22
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:38 WORDS
-SUBOPT_0x1B:
-	LDI  R26,LOW(0)
-	CALL _read_adc
-	LDS  R26,_p_offset
-	LDS  R27,_p_offset+1
-	SUB  R30,R26
-	SBC  R31,R27
-	CALL __CWD1
-	CALL __CDF1
-	__GETD2N 0x409C28F6
-	CALL __MULF12
-	MOVW R26,R30
-	MOVW R24,R22
-	__GETD1N 0x40F05A1D
-	CALL __DIVF21
-	MOVW R26,R30
-	MOVW R24,R22
-	__GETD1N 0x415986E7
-	CALL __DIVF21
-	STS  _p_kolona,R30
-	STS  _p_kolona+1,R31
-	STS  _p_kolona+2,R22
-	STS  _p_kolona+3,R23
-	RET
-
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
 SUBOPT_0x1C:
 	ST   -Y,R30
 	LDI  R26,LOW(0)
 	JMP  _nlcd_GotoXY
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x1D:
-	CALL _nlcd_PrintF
-	LDI  R30,LOW(3)
-	ST   -Y,R30
-	RET
-
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x1E:
+SUBOPT_0x1D:
 	CALL _nlcd_PrintF
 	LDI  R30,LOW(1)
 	ST   -Y,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x1F:
-	LDI  R26,LOW(3)
+SUBOPT_0x1E:
+	LDI  R26,LOW(2)
 	CALL _nlcd_GotoXY
 	LDI  R30,LOW(_buf)
 	LDI  R31,HIGH(_buf)
@@ -12165,8 +12361,8 @@ SUBOPT_0x1F:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:55 WORDS
-SUBOPT_0x20:
-	__POINTW1FN _0x80000,283
+SUBOPT_0x1F:
+	__POINTW1FN _0x80000,275
 	ST   -Y,R31
 	ST   -Y,R30
 	LDS  R30,_hours
@@ -12190,10 +12386,10 @@ SUBOPT_0x20:
 	RJMP SUBOPT_0x9
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x21:
+SUBOPT_0x20:
 	LDI  R30,LOW(1)
 	ST   -Y,R30
-	LDI  R26,LOW(4)
+	LDI  R26,LOW(3)
 	CALL _nlcd_GotoXY
 	LDI  R30,LOW(_buf)
 	LDI  R31,HIGH(_buf)
@@ -12202,8 +12398,8 @@ SUBOPT_0x21:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x22:
-	__POINTW1FN _0x80000,301
+SUBOPT_0x21:
+	__POINTW1FN _0x80000,293
 	ST   -Y,R31
 	ST   -Y,R30
 	LDS  R30,_t_kolona_up
@@ -12213,29 +12409,27 @@ SUBOPT_0x22:
 	CALL __PUTPARD1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x23:
-	MOVW R30,R28
-	ADIW R30,8
+;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:37 WORDS
+SUBOPT_0x22:
 	CLR  R22
 	CLR  R23
 	CALL __PUTPARD1
 	LDI  R24,8
 	CALL _sprintf
 	ADIW R28,12
-	RET
+	RJMP SUBOPT_0x9
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 26 TIMES, CODE SIZE REDUCTION:47 WORDS
-SUBOPT_0x24:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:18 WORDS
+SUBOPT_0x23:
+	LDI  R30,LOW(1)
+	ST   -Y,R30
+	LDI  R26,LOW(4)
+	CALL _nlcd_GotoXY
 	LDI  R30,LOW(_buf)
 	LDI  R31,HIGH(_buf)
 	ST   -Y,R31
 	ST   -Y,R30
-	RET
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x25:
-	__POINTW1FN _0x80000,318
+	__POINTW1FN _0x80000,310
 	ST   -Y,R31
 	ST   -Y,R30
 	LDS  R30,_t_kuba
@@ -12245,77 +12439,93 @@ SUBOPT_0x25:
 	CALL __PUTPARD1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x26:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x24:
+	ST   -Y,R30
+	LDI  R26,LOW(6)
+	CALL _nlcd_GotoXY
 	MOVW R30,R28
-	ADIW R30,10
+	ST   -Y,R31
+	ST   -Y,R30
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:10 WORDS
+SUBOPT_0x25:
+	LDI  R31,0
+	LSL  R30
+	ROL  R31
+	ADD  R30,R26
+	ADC  R31,R27
+	CALL __GETW2PF
+	CALL _strcpyf
+	LDI  R30,LOW(_buf)
+	LDI  R31,HIGH(_buf)
+	ST   -Y,R31
+	ST   -Y,R30
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:15 WORDS
+SUBOPT_0x26:
+	CLR  R31
 	CLR  R22
 	CLR  R23
 	CALL __PUTPARD1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:9 WORDS
 SUBOPT_0x27:
-	LDI  R24,8
-	CALL _sprintf
-	ADIW R28,12
-	RJMP SUBOPT_0x9
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x28:
-	ST   -Y,R30
-	LDI  R26,LOW(6)
-	JMP  _nlcd_GotoXY
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:11 WORDS
-SUBOPT_0x29:
-	__POINTW1FN _0x80000,335
-	ST   -Y,R31
-	ST   -Y,R30
-	LDS  R30,_p_kolona
-	LDS  R31,_p_kolona+1
-	LDS  R22,_p_kolona+2
-	LDS  R23,_p_kolona+3
-	CALL __PUTPARD1
-	RJMP SUBOPT_0x7
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x2A:
-	CALL _nlcd_GotoXY
-	RJMP SUBOPT_0x24
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x2B:
-	ST   -Y,R31
-	ST   -Y,R30
-	LDS  R30,_heater_power
-	CLR  R31
+	MOVW R30,R28
+	ADIW R30,8
 	CLR  R22
 	CLR  R23
 	CALL __PUTPARD1
-	RJMP SUBOPT_0x7
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:33 WORDS
+SUBOPT_0x28:
+	LDS  R30,_Votb
+	LDS  R31,_Votb+1
+	LDS  R22,_Votb+2
+	LDS  R23,_Votb+3
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
+SUBOPT_0x29:
+	CALL _nlcd_GotoXY
+	LDI  R30,LOW(_buf)
+	LDI  R31,HIGH(_buf)
+	ST   -Y,R31
+	ST   -Y,R30
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
+SUBOPT_0x2A:
+	LDI  R24,8
+	CALL _sprintf
+	ADIW R28,12
+	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x2C:
+SUBOPT_0x2B:
 	__POINTW1MN _t_rom_codes,16
 	ST   -Y,R31
 	ST   -Y,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x2D:
+SUBOPT_0x2C:
 	CALL _nlcd_Clear
 	JMP  _print_menu
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x2E:
+SUBOPT_0x2D:
 	LDI  R30,LOW(0)
 	STS  _impulseCounter,R30
 	STS  _impulseCounter+1,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x2F:
+SUBOPT_0x2E:
 	LDI  R30,LOW(0)
 	STS  _ssCounter,R30
 	STS  _ssCounter+1,R30
@@ -12323,14 +12533,14 @@ SUBOPT_0x2F:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x30:
+SUBOPT_0x2F:
 	CALL _nlcd_PrintF
 	LDI  R30,LOW(4)
 	ST   -Y,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:15 WORDS
-SUBOPT_0x31:
+SUBOPT_0x30:
 	LDS  R26,_t_kolona_down_old
 	LDS  R27,_t_kolona_down_old+1
 	LDS  R24,_t_kolona_down_old+2
@@ -12344,40 +12554,24 @@ SUBOPT_0x31:
 	MOVW R24,R22
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x32:
-	CLR  R22
-	CLR  R23
-	CALL __PUTPARD1
-	RJMP SUBOPT_0x27
-
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x33:
+SUBOPT_0x31:
 	LDS  R30,_t_kolona_down
 	LDS  R31,_t_kolona_down+1
 	LDS  R22,_t_kolona_down+2
 	LDS  R23,_t_kolona_down+3
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 8 TIMES, CODE SIZE REDUCTION:11 WORDS
-SUBOPT_0x34:
-	MOVW R30,R28
+;OPTIMIZER ADDED SUBROUTINE, CALLED 16 TIMES, CODE SIZE REDUCTION:27 WORDS
+SUBOPT_0x32:
+	LDI  R30,LOW(_buf)
+	LDI  R31,HIGH(_buf)
 	ST   -Y,R31
 	ST   -Y,R30
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:29 WORDS
-SUBOPT_0x35:
-	LSL  R30
-	ROL  R31
-	ADD  R30,R26
-	ADC  R31,R27
-	CALL __GETW2PF
-	CALL _strcpyf
-	RJMP SUBOPT_0x24
-
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x36:
+SUBOPT_0x33:
 	ST   -Y,R31
 	ST   -Y,R30
 	MOVW R30,R28
@@ -12387,16 +12581,8 @@ SUBOPT_0x36:
 	CALL __PUTPARD1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x37:
-	LDS  R30,_Votb
-	LDS  R31,_Votb+1
-	LDS  R22,_Votb+2
-	LDS  R23,_Votb+3
-	RET
-
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x38:
+SUBOPT_0x34:
 	ST   -Y,R31
 	ST   -Y,R30
 	LDS  R30,_headDisp
@@ -12405,14 +12591,19 @@ SUBOPT_0x38:
 	LDS  R23,_headDisp+3
 	RET
 
+;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
+SUBOPT_0x35:
+	__GETD2N 0x41200000
+	RET
+
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x39:
+SUBOPT_0x36:
 	CALL __SWAPD12
 	CALL __SUBF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x3A:
+SUBOPT_0x37:
 	LDS  R30,_rect_body_speed
 	LDS  R31,_rect_body_speed+1
 	CLR  R22
@@ -12420,14 +12611,22 @@ SUBOPT_0x3A:
 	CALL __CDF1
 	RET
 
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:21 WORDS
+SUBOPT_0x38:
+	LDS  R26,_Votb
+	LDS  R27,_Votb+1
+	LDS  R24,_Votb+2
+	LDS  R25,_Votb+3
+	RET
+
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x3B:
+SUBOPT_0x39:
 	CALL __CWD1
 	CALL __CDF1
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x3C:
+SUBOPT_0x3A:
 	LDS  R26,_onePulseDose
 	LDS  R27,_onePulseDose+1
 	LDS  R24,_onePulseDose+2
@@ -12435,14 +12634,20 @@ SUBOPT_0x3C:
 	CALL __MULF12
 	RET
 
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x3B:
+	ST   -Y,R30
+	LDI  R26,LOW(3)
+	JMP  _nlcd_GotoXY
+
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x3D:
+SUBOPT_0x3C:
 	ST   -Y,R30
 	LDI  R26,LOW(4)
 	JMP  _nlcd_GotoXY
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:7 WORDS
-SUBOPT_0x3E:
+SUBOPT_0x3D:
 	LDS  R30,_valvePulse
 	CLR  R31
 	CLR  R22
@@ -12451,20 +12656,20 @@ SUBOPT_0x3E:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x3F:
+SUBOPT_0x3E:
 	CALL __DIVF21
 	CALL __CFD1U
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 14 TIMES, CODE SIZE REDUCTION:23 WORDS
-SUBOPT_0x40:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 13 TIMES, CODE SIZE REDUCTION:21 WORDS
+SUBOPT_0x3F:
 	CLR  R22
 	CLR  R23
 	CALL __CDF1
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x41:
+SUBOPT_0x40:
 	LDS  R30,_impulseCounter
 	LDS  R31,_impulseCounter+1
 	CLR  R22
@@ -12472,12 +12677,19 @@ SUBOPT_0x41:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:13 WORDS
-SUBOPT_0x42:
+SUBOPT_0x41:
 	CALL __DIVF21
 	STS  _onePulseDose,R30
 	STS  _onePulseDose+1,R31
 	STS  _onePulseDose+2,R22
 	STS  _onePulseDose+3,R23
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
+SUBOPT_0x42:
+	LDI  R30,LOW(0)
+	STS  _pwmOn,R30
+	CBI  0x1B,3
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
@@ -12500,7 +12712,7 @@ SUBOPT_0x44:
 	STS  _current_menu,R30
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0x45:
 	CALL __PUTPARD1
 	RJMP SUBOPT_0x7
@@ -12601,15 +12813,21 @@ SUBOPT_0x4E:
 	LDS  R25,_t_kuba+3
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
 SUBOPT_0x4F:
+	LDI  R31,0
+	SBIW R30,0
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x50:
 	LDS  R30,_impulseCounter
 	LDS  R31,_impulseCounter+1
-	RCALL SUBOPT_0x40
-	RJMP SUBOPT_0x3C
+	RCALL SUBOPT_0x3F
+	RJMP SUBOPT_0x3A
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x50:
+SUBOPT_0x51:
 	CALL __MULF12
 	STS  _headDisp,R30
 	STS  _headDisp+1,R31
@@ -12618,7 +12836,7 @@ SUBOPT_0x50:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x51:
+SUBOPT_0x52:
 	LDS  R26,_t_kolona_down
 	LDS  R27,_t_kolona_down+1
 	LDS  R24,_t_kolona_down+2
@@ -12626,7 +12844,7 @@ SUBOPT_0x51:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x52:
+SUBOPT_0x53:
 	LDI  R30,LOW(60)
 	CALL __MULB1W2U
 	LDS  R26,_timer
@@ -12636,7 +12854,7 @@ SUBOPT_0x52:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 13 TIMES, CODE SIZE REDUCTION:81 WORDS
-SUBOPT_0x53:
+SUBOPT_0x54:
 	LDS  R30,_current_menu
 	LDI  R26,LOW(_menu)
 	LDI  R27,HIGH(_menu)
@@ -12645,7 +12863,7 @@ SUBOPT_0x53:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:87 WORDS
-SUBOPT_0x54:
+SUBOPT_0x55:
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,2
@@ -12661,28 +12879,28 @@ SUBOPT_0x54:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x55:
+SUBOPT_0x56:
 	CALL _nlcd_Clear
 	LDI  R30,LOW(1)
 	STS  _mode,R30
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x56:
+SUBOPT_0x57:
 	CALL _StopProcess
 	LDI  R30,LOW(0)
 	OUT  0x31,R30
 	LDI  R30,LOW(1)
 	STS  _mode,R30
-	RJMP SUBOPT_0x2D
+	RJMP SUBOPT_0x2C
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x57:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 8 TIMES, CODE SIZE REDUCTION:11 WORDS
+SUBOPT_0x58:
 	__GETD1N 0x42C80000
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x58:
+SUBOPT_0x59:
 	LDS  R30,_last_menu
 	STS  _current_menu,R30
 	LDS  R30,_last_pos
@@ -12691,13 +12909,13 @@ SUBOPT_0x58:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x59:
+SUBOPT_0x5A:
 	CALL __LNEGB1
 	STS  _abortProcess,R30
 	JMP  _nlcd_Clear
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x5A:
+SUBOPT_0x5B:
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,1
@@ -12705,21 +12923,39 @@ SUBOPT_0x5A:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x5B:
+SUBOPT_0x5C:
+	LDS  R30,_distSettingMode
+	RJMP SUBOPT_0x4F
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x5D:
 	STS  _heater_power,R30
 	LDS  R26,_heater_power
 	RET
 
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x5E:
+	RCALL SUBOPT_0x38
+	__GETD1N 0x44FA0000
+	CALL __CMPF12
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
+SUBOPT_0x5F:
+	RCALL SUBOPT_0x28
+	__GETD2N 0x42B40000
+	RET
+
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x5C:
+SUBOPT_0x60:
 	MOVW R30,R28
 	ADIW R30,6
 	ST   -Y,R31
 	ST   -Y,R30
-	RJMP SUBOPT_0x53
+	RJMP SUBOPT_0x54
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:15 WORDS
-SUBOPT_0x5D:
+SUBOPT_0x61:
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,6
@@ -12733,16 +12969,20 @@ SUBOPT_0x5D:
 	CALL __GETW1P
 	MOVW R26,R30
 	CALL _strcpyf
-	RJMP SUBOPT_0x24
+	RJMP SUBOPT_0x32
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x5E:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:9 WORDS
+SUBOPT_0x62:
 	ST   -Y,R31
 	ST   -Y,R30
-	RJMP SUBOPT_0x26
+	MOVW R30,R28
+	ADIW R30,10
+	CLR  R22
+	CLR  R23
+	RJMP SUBOPT_0x45
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:17 WORDS
-SUBOPT_0x5F:
+SUBOPT_0x63:
 	LDI  R26,LOW(_buf)
 	LDI  R27,HIGH(_buf)
 	CALL _strlen
@@ -12751,12 +12991,12 @@ SUBOPT_0x5F:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x60:
+SUBOPT_0x64:
 	CALL _nlcd_GotoXY
 	RJMP SUBOPT_0x9
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x61:
+SUBOPT_0x65:
 	LDI  R27,0
 	LDI  R31,0
 	SBRC R30,7
@@ -12766,7 +13006,24 @@ SUBOPT_0x61:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x62:
+SUBOPT_0x66:
+	LDS  R26,_current_pos
+	CLR  R27
+	MOV  R30,R21
+	LDI  R31,0
+	SBRC R30,7
+	SER  R31
+	SBIW R30,1
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
+SUBOPT_0x67:
+	LDS  R30,_current_pos
+	LDI  R31,0
+	RET
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+SUBOPT_0x68:
 	ADD  R26,R30
 	ADC  R27,R31
 	ADIW R26,2
@@ -12775,7 +13032,7 @@ SUBOPT_0x62:
 	RJMP SUBOPT_0x10
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:10 WORDS
-SUBOPT_0x63:
+SUBOPT_0x69:
 	MOVW R22,R26
 	LDI  R26,LOW(7)
 	LDI  R27,HIGH(7)
@@ -12786,10 +13043,10 @@ SUBOPT_0x63:
 	CALL __GETW1P
 	MOVW R26,R30
 	CALL _strcpyf
-	RJMP SUBOPT_0x24
+	RJMP SUBOPT_0x32
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 22 TIMES, CODE SIZE REDUCTION:60 WORDS
-SUBOPT_0x64:
+SUBOPT_0x6A:
 	LDS  R30,_param_id
 	LDI  R26,LOW(9)
 	MUL  R30,R26
@@ -12797,14 +13054,14 @@ SUBOPT_0x64:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x65:
+SUBOPT_0x6B:
 	CALL __GETW1P
 	CP   R30,R22
 	CPC  R31,R23
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x66:
+SUBOPT_0x6C:
 	MOVW R26,R30
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
@@ -12812,7 +13069,7 @@ SUBOPT_0x66:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x67:
+SUBOPT_0x6D:
 	__ADDW2MN _params,2
 	CALL __GETW1P
 	MOVW R26,R22
@@ -12821,7 +13078,7 @@ SUBOPT_0x67:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x68:
+SUBOPT_0x6E:
 	MOVW R26,R30
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
@@ -12830,7 +13087,7 @@ SUBOPT_0x68:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x69:
+SUBOPT_0x6F:
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
 	MOVW R26,R30
@@ -12839,7 +13096,7 @@ SUBOPT_0x69:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x6A:
+SUBOPT_0x70:
 	__ADDW2MN _params,4
 	CALL __GETW1P
 	MOVW R26,R22
@@ -12848,66 +13105,87 @@ SUBOPT_0x6A:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x6B:
+SUBOPT_0x71:
 	STS  _mode,R30
 	JMP  _nlcd_Clear
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x6C:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
+SUBOPT_0x72:
+	MOVW R30,R28
+	ST   -Y,R31
+	ST   -Y,R30
+	RJMP SUBOPT_0x54
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
+SUBOPT_0x73:
 	LDI  R26,LOW(8)
+	LDI  R27,HIGH(8)
 	SUB  R26,R30
+	SBC  R27,R31
 	ST   -Y,R26
-	LDI  R26,LOW(1)
-	RJMP SUBOPT_0x60
+	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x6D:
+SUBOPT_0x74:
 	ADD  R26,R30
 	ADC  R27,R31
 	CALL __GETW1P
 	MOVW R26,R30
 	CALL _strcpyf
-	RJMP SUBOPT_0x24
+	RJMP SUBOPT_0x32
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:11 WORDS
-SUBOPT_0x6E:
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:9 WORDS
+SUBOPT_0x75:
+	MOVW R30,R28
+	ST   -Y,R31
+	ST   -Y,R30
+	RJMP SUBOPT_0x6A
+
+;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:27 WORDS
+SUBOPT_0x76:
 	__ADDW1MN _params,6
 	MOVW R26,R30
 	CALL __GETW1P
 	LDI  R26,LOW(_labels*2)
 	LDI  R27,HIGH(_labels*2)
-	RJMP SUBOPT_0x35
+	LSL  R30
+	ROL  R31
+	ADD  R30,R26
+	ADC  R31,R27
+	CALL __GETW2PF
+	CALL _strcpyf
+	RJMP SUBOPT_0x32
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x6F:
+SUBOPT_0x77:
 	ST   -Y,R31
 	ST   -Y,R30
-	RJMP SUBOPT_0x64
+	RJMP SUBOPT_0x6A
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
-SUBOPT_0x70:
+SUBOPT_0x78:
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
 	MOVW R26,R30
 	CALL __GETW1P
-	RCALL SUBOPT_0x40
+	RCALL SUBOPT_0x3F
 	MOVW R26,R30
 	MOVW R24,R22
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x71:
+SUBOPT_0x79:
 	__GETD1N 0x461C4000
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x72:
+SUBOPT_0x7A:
 	CALL __DIVF21
 	CALL __PUTPARD1
-	RJMP SUBOPT_0x23
+	RJMP SUBOPT_0x27
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x73:
+SUBOPT_0x7B:
 	SUBI R30,LOW(-_params)
 	SBCI R31,HIGH(-_params)
 	MOVW R26,R30
@@ -12915,49 +13193,25 @@ SUBOPT_0x73:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x74:
-	RCALL SUBOPT_0x40
+SUBOPT_0x7C:
+	RCALL SUBOPT_0x3F
 	MOVW R26,R30
 	MOVW R24,R22
-	RCALL SUBOPT_0x57
+	RCALL SUBOPT_0x58
 	CALL __DIVF21
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:7 WORDS
-SUBOPT_0x75:
+SUBOPT_0x7D:
 	__GETW1MN _params,126
-	RCALL SUBOPT_0x40
+	RCALL SUBOPT_0x3F
 	MOVW R26,R30
 	MOVW R24,R22
-	RCALL SUBOPT_0x71
-	RJMP SUBOPT_0x42
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:7 WORDS
-SUBOPT_0x76:
-	LDS  R30,_current_pos
-	LDI  R31,0
-	CALL __LSLW3
-	RET
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x77:
-	LD   R30,Z
-	CLR  R31
-	CLR  R22
-	CLR  R23
-	CALL __PUTPARD1
-	RET
-
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x78:
-	LDI  R26,LOW(0)
-	CALL _read_adc
-	STS  _p_offset,R30
-	STS  _p_offset+1,R31
-	RET
+	RCALL SUBOPT_0x79
+	RJMP SUBOPT_0x41
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x79:
+SUBOPT_0x7E:
 	LDD  R26,Y+8
 	LDD  R27,Y+8+1
 	MOV  R0,R26
@@ -12969,7 +13223,7 @@ SUBOPT_0x79:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x7A:
+SUBOPT_0x7F:
 	LDD  R30,Y+8
 	LDD  R31,Y+8+1
 	ADIW R30,1
@@ -12978,19 +13232,19 @@ SUBOPT_0x7A:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x7B:
+SUBOPT_0x80:
 	LDD  R26,Y+13
 	LDD  R27,Y+13+1
 	CALL __LSLW3
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x7C:
+SUBOPT_0x81:
 	__PUTD1S 13
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x7D:
+SUBOPT_0x82:
 	LDD  R26,Y+13
 	CALL _OWI_DetectPresence
 	LDD  R30,Y+14
@@ -13001,13 +13255,13 @@ SUBOPT_0x7D:
 	JMP  _OWI_MatchRom
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x7E:
+SUBOPT_0x83:
 	ST   -Y,R30
 	LDD  R26,Y+14
 	JMP  _OWI_SendByte
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0x7F:
+SUBOPT_0x84:
 	COM  R30
 	AND  R30,R26
 	OUT  0x11,R30
@@ -13016,7 +13270,7 @@ SUBOPT_0x7F:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x80:
+SUBOPT_0x85:
 	COM  R30
 	AND  R30,R26
 	OUT  0x12,R30
@@ -13024,7 +13278,7 @@ SUBOPT_0x80:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x81:
+SUBOPT_0x86:
 	IN   R30,0x11
 	LDD  R26,Y+1
 	OR   R30,R26
@@ -13038,7 +13292,7 @@ SUBOPT_0x81:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x82:
+SUBOPT_0x87:
 	IN   R30,0x11
 	LDD  R26,Y+2
 	OR   R30,R26
@@ -13049,7 +13303,7 @@ SUBOPT_0x82:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x83:
+SUBOPT_0x88:
 	ST   -Y,R27
 	ST   -Y,R26
 	SBIW R28,4
@@ -13059,7 +13313,7 @@ SUBOPT_0x83:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:33 WORDS
-SUBOPT_0x84:
+SUBOPT_0x89:
 	__GETD2S 4
 	__GETD1N 0x41200000
 	CALL __MULF12
@@ -13067,19 +13321,19 @@ SUBOPT_0x84:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x85:
+SUBOPT_0x8A:
 	__GETD1S 4
 	__GETD2S 12
 	CALL __CMPF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x86:
+SUBOPT_0x8B:
 	__GETD2S 12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x87:
+SUBOPT_0x8C:
 	__GETD1N 0x3DCCCCCD
 	CALL __MULF12
 	__PUTD1S 12
@@ -13087,30 +13341,30 @@ SUBOPT_0x87:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x88:
+SUBOPT_0x8D:
 	__GETD1N 0x41200000
 	CALL __MULF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x89:
+SUBOPT_0x8E:
 	__PUTD1S 12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x8A:
+SUBOPT_0x8F:
 	__GETD2N 0x3F000000
 	CALL __ADDF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x8B:
+SUBOPT_0x90:
 	__GETD1N 0x3DCCCCCD
 	CALL __MULF12
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x8C:
+SUBOPT_0x91:
 	LDD  R26,Y+8
 	LDD  R27,Y+8+1
 	ADIW R26,1
@@ -13120,7 +13374,7 @@ SUBOPT_0x8C:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x8D:
+SUBOPT_0x92:
 	MOV  R30,R16
 	SUBI R30,-LOW(48)
 	ST   X,R30
@@ -13128,7 +13382,7 @@ SUBOPT_0x8D:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
-SUBOPT_0x8E:
+SUBOPT_0x93:
 	ST   -Y,R18
 	LDD  R26,Y+7
 	LDD  R27,Y+7+1
@@ -13138,18 +13392,18 @@ SUBOPT_0x8E:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 8 TIMES, CODE SIZE REDUCTION:25 WORDS
-SUBOPT_0x8F:
+SUBOPT_0x94:
 	__GETW1SX 90
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:21 WORDS
-SUBOPT_0x90:
+SUBOPT_0x95:
 	SBIW R30,4
 	__PUTW1SX 90
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x91:
+SUBOPT_0x96:
 	LDD  R26,Y+7
 	LDD  R27,Y+7+1
 	LDD  R30,Y+9
@@ -13158,27 +13412,27 @@ SUBOPT_0x91:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:17 WORDS
-SUBOPT_0x92:
+SUBOPT_0x97:
 	__GETW2SX 90
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x93:
+SUBOPT_0x98:
 	__PUTD1S 10
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:7 WORDS
-SUBOPT_0x94:
-	RCALL SUBOPT_0x8F
-	RJMP SUBOPT_0x90
+SUBOPT_0x99:
+	RCALL SUBOPT_0x94
+	RJMP SUBOPT_0x95
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x95:
+SUBOPT_0x9A:
 	__GETD1S 10
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
-SUBOPT_0x96:
+SUBOPT_0x9B:
 	STD  Y+14,R30
 	STD  Y+14+1,R31
 	LDD  R26,Y+14
@@ -13188,19 +13442,19 @@ SUBOPT_0x96:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:6 WORDS
-SUBOPT_0x97:
-	RCALL SUBOPT_0x92
+SUBOPT_0x9C:
+	RCALL SUBOPT_0x97
 	ADIW R26,4
 	CALL __GETW1P
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x98:
+SUBOPT_0x9D:
 	__PUTD1S 16
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:12 WORDS
-SUBOPT_0x99:
+SUBOPT_0x9E:
 	ANDI R16,LOW(251)
 	LDD  R30,Y+21
 	ST   -Y,R30
@@ -13211,13 +13465,13 @@ SUBOPT_0x99:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x9A:
+SUBOPT_0x9F:
 	__GETD1S 16
 	__GETD2S 10
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x9B:
+SUBOPT_0xA0:
 	MOVW R26,R28
 	ADIW R26,12
 	CALL __ADDW2R15
@@ -13225,7 +13479,7 @@ SUBOPT_0x9B:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0x9C:
+SUBOPT_0xA1:
 	LDD  R30,Y+6
 	LDD  R31,Y+6+1
 	ST   -Y,R31
@@ -13233,12 +13487,12 @@ SUBOPT_0x9C:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
-SUBOPT_0x9D:
+SUBOPT_0xA2:
 	__PUTD1S 9
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:13 WORDS
-SUBOPT_0x9E:
+SUBOPT_0xA3:
 	LDD  R26,Y+6
 	LDD  R27,Y+6+1
 	ADIW R26,1
@@ -13248,23 +13502,23 @@ SUBOPT_0x9E:
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0x9F:
+SUBOPT_0xA4:
 	__GETD2S 2
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
-SUBOPT_0xA0:
+SUBOPT_0xA5:
 	__PUTD1S 2
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:9 WORDS
-SUBOPT_0xA1:
+SUBOPT_0xA6:
 	__GETD1S 2
 	__GETD2S 9
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:1 WORDS
-SUBOPT_0xA2:
+SUBOPT_0xA7:
 	__GETD2S 9
 	RET
 
@@ -13807,6 +14061,12 @@ __ADDW2R15:
 	ADC  R27,R0
 	RET
 
+__ANEGW1:
+	NEG  R31
+	NEG  R30
+	SBCI R31,0
+	RET
+
 __ANEGD1:
 	COM  R31
 	COM  R22
@@ -13953,6 +14213,30 @@ __DIVB21:
 __DIVB211:
 	RET
 
+__DIVW21U:
+	CLR  R0
+	CLR  R1
+	LDI  R25,16
+__DIVW21U1:
+	LSL  R26
+	ROL  R27
+	ROL  R0
+	ROL  R1
+	SUB  R0,R30
+	SBC  R1,R31
+	BRCC __DIVW21U2
+	ADD  R0,R30
+	ADC  R1,R31
+	RJMP __DIVW21U3
+__DIVW21U2:
+	SBR  R26,1
+__DIVW21U3:
+	DEC  R25
+	BRNE __DIVW21U1
+	MOVW R30,R26
+	MOVW R26,R0
+	RET
+
 __DIVD21U:
 	PUSH R19
 	PUSH R20
@@ -14009,6 +14293,24 @@ __MODB211:
 	BRTC __MODB212
 	NEG  R30
 __MODB212:
+	RET
+
+__MODW21:
+	CLT
+	SBRS R27,7
+	RJMP __MODW211
+	COM  R26
+	COM  R27
+	ADIW R26,1
+	SET
+__MODW211:
+	SBRC R31,7
+	RCALL __ANEGW1
+	RCALL __DIVW21U
+	MOVW R30,R26
+	BRTC __MODW212
+	RCALL __ANEGW1
+__MODW212:
 	RET
 
 __MODD21U:

@@ -147,72 +147,72 @@
 ;PCODE: $0000004E VOL: 0
 ; 0001 0038     #ifndef HW1_P
 ; 0001 0039         nlcd_SendByte(CMD_LCD_MODE,0xC8); // mirror Y axis (about X axis) // заремить для экрана в контроллере Олега
-; 0001 003A     #endif
-; 0001 003B     //nlcd_SendByte(CMD_LCD_MODE,0xA1); // Инвертировать экран по горизонтали
-; 0001 003C 
-; 0001 003D     nlcd_SendByte(CMD_LCD_MODE,0xAC); // set initial row (R0) of the display
 ;PCODE: $0000004F VOL: 0
 ;PCODE: $00000050 VOL: 0
 ;PCODE: $00000051 VOL: 0
 ;PCODE: $00000052 VOL: 0
-; 0001 003E     nlcd_SendByte(CMD_LCD_MODE,0x07);
+; 0001 003A     #endif
+; 0001 003B     //nlcd_SendByte(CMD_LCD_MODE,0xA1); // Инвертировать экран по горизонтали
+; 0001 003C 
+; 0001 003D     nlcd_SendByte(CMD_LCD_MODE,0xAC); // set initial row (R0) of the display
 ;PCODE: $00000053 VOL: 0
 ;PCODE: $00000054 VOL: 0
 ;PCODE: $00000055 VOL: 0
 ;PCODE: $00000056 VOL: 0
-; 0001 003F     //nlcd_SendByte(CMD_LCD_MODE,0xF9); //
-; 0001 0040     nlcd_SendByte(CMD_LCD_MODE,0xAF); // экран вкл/выкл
+; 0001 003E     nlcd_SendByte(CMD_LCD_MODE,0x07);
 ;PCODE: $00000057 VOL: 0
 ;PCODE: $00000058 VOL: 0
 ;PCODE: $00000059 VOL: 0
 ;PCODE: $0000005A VOL: 0
-; 0001 0041     nlcd_Clear(); // clear LCD
+; 0001 003F     //nlcd_SendByte(CMD_LCD_MODE,0xF9); //
+; 0001 0040     nlcd_SendByte(CMD_LCD_MODE,0xAF); // экран вкл/выкл
 ;PCODE: $0000005B VOL: 0
-; 0001 0042 }
 ;PCODE: $0000005C VOL: 0
 ;PCODE: $0000005D VOL: 0
+;PCODE: $0000005E VOL: 0
+; 0001 0041     nlcd_Clear(); // clear LCD
+;PCODE: $0000005F VOL: 0
+; 0001 0042 }
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
 ;
 ;//******************************************************************************
 ;// Очистка экрана
 ;void nlcd_Clear(void)
 ; 0001 0047 {
-;PCODE: $0000005E VOL: 0
-;PCODE: $0000005F VOL: 0
-; 0001 0048     unsigned int i;
-; 0001 0049     nlcd_SendByte(CMD_LCD_MODE,0x40); // Y = 0
-;PCODE: $00000060 VOL: 0
-;PCODE: $00000061 VOL: 0
-;	i -> R16,R17
 ;PCODE: $00000062 VOL: 0
 ;PCODE: $00000063 VOL: 0
+; 0001 0048     unsigned int i;
+; 0001 0049     nlcd_SendByte(CMD_LCD_MODE,0x40); // Y = 0
 ;PCODE: $00000064 VOL: 0
 ;PCODE: $00000065 VOL: 0
-; 0001 004A     nlcd_SendByte(CMD_LCD_MODE,0xB0);
+;	i -> R16,R17
 ;PCODE: $00000066 VOL: 0
 ;PCODE: $00000067 VOL: 0
 ;PCODE: $00000068 VOL: 0
 ;PCODE: $00000069 VOL: 0
-; 0001 004B     nlcd_SendByte(CMD_LCD_MODE,0x10); // X = 0
+; 0001 004A     nlcd_SendByte(CMD_LCD_MODE,0xB0);
 ;PCODE: $0000006A VOL: 0
 ;PCODE: $0000006B VOL: 0
 ;PCODE: $0000006C VOL: 0
 ;PCODE: $0000006D VOL: 0
-; 0001 004C     nlcd_SendByte(CMD_LCD_MODE,0x00);
+; 0001 004B     nlcd_SendByte(CMD_LCD_MODE,0x10); // X = 0
 ;PCODE: $0000006E VOL: 0
 ;PCODE: $0000006F VOL: 0
 ;PCODE: $00000070 VOL: 0
 ;PCODE: $00000071 VOL: 0
-; 0001 004D     nlcd_xcurr=0; nlcd_ycurr=0;          // Устанавливаем в 0 текущие координаты в видеобуфере
+; 0001 004C     nlcd_SendByte(CMD_LCD_MODE,0x00);
 ;PCODE: $00000072 VOL: 0
 ;PCODE: $00000073 VOL: 0
 ;PCODE: $00000074 VOL: 0
 ;PCODE: $00000075 VOL: 0
-; 0001 004E     //nlcd_SendByte(CMD_LCD_MODE,0xAE); // disable display;
-; 0001 004F     for(i=0;i<NLCD_X_RES*NLCD_Y_RES ;i++) nlcd_SendByte(DATA_LCD_MODE,0x00);
+; 0001 004D     nlcd_xcurr=0; nlcd_ycurr=0;          // Устанавливаем в 0 текущие координаты в видеобуфере
 ;PCODE: $00000076 VOL: 0
 ;PCODE: $00000077 VOL: 0
 ;PCODE: $00000078 VOL: 0
 ;PCODE: $00000079 VOL: 0
+; 0001 004E     //nlcd_SendByte(CMD_LCD_MODE,0xAE); // disable display;
+; 0001 004F     for(i=0;i<NLCD_X_RES*NLCD_Y_RES ;i++) nlcd_SendByte(DATA_LCD_MODE,0x00);
 ;PCODE: $0000007A VOL: 0
 ;PCODE: $0000007B VOL: 0
 ;PCODE: $0000007C VOL: 0
@@ -227,10 +227,14 @@
 ;PCODE: $00000085 VOL: 0
 ;PCODE: $00000086 VOL: 0
 ;PCODE: $00000087 VOL: 0
-; 0001 0053 }
 ;PCODE: $00000088 VOL: 0
 ;PCODE: $00000089 VOL: 0
 ;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+; 0001 0053 }
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -240,172 +244,168 @@
 ;//  c: значение передаваемого байта
 ;void nlcd_SendByte(char mode,unsigned char c)
 ; 0001 005C {
-;PCODE: $0000008B VOL: 0
-;PCODE: $0000008C VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
 ; 0001 005D     unsigned char i;
 ; 0001 005E     CS_LCD_RESET;
-;PCODE: $0000008D VOL: 0
-;PCODE: $0000008E VOL: 0
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
 ;	mode -> Y+2
 ;	c -> Y+1
 ;	i -> R17
-;PCODE: $0000008F VOL: 0
-;PCODE: $00000090 VOL: 0
-; 0001 005F     SCLK_LCD_RESET;
-;PCODE: $00000091 VOL: 0
-;PCODE: $00000092 VOL: 0
-; 0001 0060 
-; 0001 0061     if (mode)                 // DATA_LCD_MODE
 ;PCODE: $00000093 VOL: 0
 ;PCODE: $00000094 VOL: 0
+; 0001 005F     SCLK_LCD_RESET;
 ;PCODE: $00000095 VOL: 0
-; 0001 0062     {
-; 0001 0063 
-; 0001 0064         nlcd_memory[nlcd_xcurr][nlcd_ycurr] = c;    // Записываем банные в видеобуфер
 ;PCODE: $00000096 VOL: 0
+; 0001 0060 
+; 0001 0061     if (mode)                 // DATA_LCD_MODE
 ;PCODE: $00000097 VOL: 0
 ;PCODE: $00000098 VOL: 0
 ;PCODE: $00000099 VOL: 0
+; 0001 0062     {
+; 0001 0063 
+; 0001 0064         nlcd_memory[nlcd_xcurr][nlcd_ycurr] = c;    // Записываем банные в видеобуфер
 ;PCODE: $0000009A VOL: 0
 ;PCODE: $0000009B VOL: 0
 ;PCODE: $0000009C VOL: 0
 ;PCODE: $0000009D VOL: 0
 ;PCODE: $0000009E VOL: 0
 ;PCODE: $0000009F VOL: 0
-; 0001 0065         nlcd_xcurr++;                                // Обновляем координаты в видеобуфере
 ;PCODE: $000000A0 VOL: 0
 ;PCODE: $000000A1 VOL: 0
 ;PCODE: $000000A2 VOL: 0
-; 0001 0066         if (nlcd_xcurr>95)
 ;PCODE: $000000A3 VOL: 0
+; 0001 0065         nlcd_xcurr++;                                // Обновляем координаты в видеобуфере
 ;PCODE: $000000A4 VOL: 0
 ;PCODE: $000000A5 VOL: 0
-; 0001 0067         {
-; 0001 0068             nlcd_xcurr = 0;
 ;PCODE: $000000A6 VOL: 0
+; 0001 0066         if (nlcd_xcurr>95)
 ;PCODE: $000000A7 VOL: 0
-; 0001 0069             nlcd_ycurr++;
 ;PCODE: $000000A8 VOL: 0
 ;PCODE: $000000A9 VOL: 0
+; 0001 0067         {
+; 0001 0068             nlcd_xcurr = 0;
 ;PCODE: $000000AA VOL: 0
-; 0001 006A         }
-; 0001 006B         if (nlcd_ycurr>8) nlcd_ycurr = 0;
 ;PCODE: $000000AB VOL: 0
+; 0001 0069             nlcd_ycurr++;
 ;PCODE: $000000AC VOL: 0
 ;PCODE: $000000AD VOL: 0
 ;PCODE: $000000AE VOL: 0
+; 0001 006A         }
+; 0001 006B         if (nlcd_ycurr>8) nlcd_ycurr = 0;
 ;PCODE: $000000AF VOL: 0
 ;PCODE: $000000B0 VOL: 0
-; 0001 006C 
-; 0001 006D         SDA_LCD_SET;                                // Передача байта в LCD-контроллер
 ;PCODE: $000000B1 VOL: 0
 ;PCODE: $000000B2 VOL: 0
 ;PCODE: $000000B3 VOL: 0
-; 0001 006E     }
-; 0001 006F      else SDA_LCD_RESET;    // CMD_LCD_MODE
 ;PCODE: $000000B4 VOL: 0
+; 0001 006C 
+; 0001 006D         SDA_LCD_SET;                                // Передача байта в LCD-контроллер
 ;PCODE: $000000B5 VOL: 0
 ;PCODE: $000000B6 VOL: 0
 ;PCODE: $000000B7 VOL: 0
-; 0001 0070 
-; 0001 0071     SCLK_LCD_SET;
+; 0001 006E     }
+; 0001 006F      else SDA_LCD_RESET;    // CMD_LCD_MODE
 ;PCODE: $000000B8 VOL: 0
 ;PCODE: $000000B9 VOL: 0
 ;PCODE: $000000BA VOL: 0
-; 0001 0072 
-; 0001 0073     for(i=0; i<8; i++)
 ;PCODE: $000000BB VOL: 0
+; 0001 0070 
+; 0001 0071     SCLK_LCD_SET;
 ;PCODE: $000000BC VOL: 0
 ;PCODE: $000000BD VOL: 0
 ;PCODE: $000000BE VOL: 0
+; 0001 0072 
+; 0001 0073     for(i=0; i<8; i++)
 ;PCODE: $000000BF VOL: 0
 ;PCODE: $000000C0 VOL: 0
 ;PCODE: $000000C1 VOL: 0
 ;PCODE: $000000C2 VOL: 0
 ;PCODE: $000000C3 VOL: 0
-; 0001 0074     {
-; 0001 0075         SCLK_LCD_RESET;
 ;PCODE: $000000C4 VOL: 0
 ;PCODE: $000000C5 VOL: 0
-; 0001 0076         if(c & 0x80)
 ;PCODE: $000000C6 VOL: 0
 ;PCODE: $000000C7 VOL: 0
+; 0001 0074     {
+; 0001 0075         SCLK_LCD_RESET;
 ;PCODE: $000000C8 VOL: 0
-; 0001 0077         {
-; 0001 0078             SDA_LCD_SET;
 ;PCODE: $000000C9 VOL: 0
+; 0001 0076         if(c & 0x80)
 ;PCODE: $000000CA VOL: 0
-; 0001 0079         } else {
 ;PCODE: $000000CB VOL: 0
 ;PCODE: $000000CC VOL: 0
-; 0001 007A             SDA_LCD_RESET;
+; 0001 0077         {
+; 0001 0078             SDA_LCD_SET;
 ;PCODE: $000000CD VOL: 0
 ;PCODE: $000000CE VOL: 0
-; 0001 007B         }
+; 0001 0079         } else {
 ;PCODE: $000000CF VOL: 0
-; 0001 007C         SCLK_LCD_SET;
 ;PCODE: $000000D0 VOL: 0
+; 0001 007A             SDA_LCD_RESET;
 ;PCODE: $000000D1 VOL: 0
-; 0001 007D         c <<= 1;
 ;PCODE: $000000D2 VOL: 0
+; 0001 007B         }
 ;PCODE: $000000D3 VOL: 0
+; 0001 007C         SCLK_LCD_SET;
 ;PCODE: $000000D4 VOL: 0
-; 0001 007E         #ifdef LCD_DELAY_ON
-; 0001 007F             delay_us(NLCD_MIN_DELAY);    // *****!!!!! 34 - Минимальная задержка, при которой работает мой LCD-контроллер
 ;PCODE: $000000D5 VOL: 0
-; 0001 0080         #endif
-; 0001 0081     }
+; 0001 007D         c <<= 1;
 ;PCODE: $000000D6 VOL: 0
 ;PCODE: $000000D7 VOL: 0
 ;PCODE: $000000D8 VOL: 0
+; 0001 007E         #ifdef LCD_DELAY_ON
+; 0001 007F             delay_us(NLCD_MIN_DELAY);    // *****!!!!! 34 - Минимальная задержка, при которой работает мой LCD-контроллер
 ;PCODE: $000000D9 VOL: 0
+; 0001 0080         #endif
+; 0001 0081     }
 ;PCODE: $000000DA VOL: 0
-; 0001 0082     CS_LCD_SET;
 ;PCODE: $000000DB VOL: 0
 ;PCODE: $000000DC VOL: 0
-; 0001 0083 }
 ;PCODE: $000000DD VOL: 0
 ;PCODE: $000000DE VOL: 0
+; 0001 0082     CS_LCD_SET;
 ;PCODE: $000000DF VOL: 0
 ;PCODE: $000000E0 VOL: 0
+; 0001 0083 }
 ;PCODE: $000000E1 VOL: 0
+;PCODE: $000000E2 VOL: 0
+;PCODE: $000000E3 VOL: 0
+;PCODE: $000000E4 VOL: 0
+;PCODE: $000000E5 VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод символа на LCD-экран NOKIA 1100 в текущее место
 ;//  c: код символа
 ;void nlcd_Putc(unsigned char c)
 ; 0001 0089 {
-;PCODE: $000000E2 VOL: 0
-;PCODE: $000000E3 VOL: 0
-; 0001 008A     unsigned char i;
-; 0001 008B     if (c>127) c=c-64;     // Переносим символы кирилицы в кодировке CP1251 в начало второй
-;PCODE: $000000E4 VOL: 0
-;PCODE: $000000E5 VOL: 0
-;	c -> Y+1
-;	i -> R17
 ;PCODE: $000000E6 VOL: 0
 ;PCODE: $000000E7 VOL: 0
+; 0001 008A     unsigned char i;
+; 0001 008B     if (c>127) c=c-64;     // Переносим символы кирилицы в кодировке CP1251 в начало второй
 ;PCODE: $000000E8 VOL: 0
 ;PCODE: $000000E9 VOL: 0
+;	c -> Y+1
+;	i -> R17
 ;PCODE: $000000EA VOL: 0
 ;PCODE: $000000EB VOL: 0
-; 0001 008C                         // половины таблицы ASCII (начиная с кода 0x80)
-; 0001 008D     for (i = 0; i < 5; i++ ) {
 ;PCODE: $000000EC VOL: 0
 ;PCODE: $000000ED VOL: 0
 ;PCODE: $000000EE VOL: 0
 ;PCODE: $000000EF VOL: 0
+; 0001 008C                         // половины таблицы ASCII (начиная с кода 0x80)
+; 0001 008D     for (i = 0; i < 5; i++ ) {
 ;PCODE: $000000F0 VOL: 0
 ;PCODE: $000000F1 VOL: 0
 ;PCODE: $000000F2 VOL: 0
 ;PCODE: $000000F3 VOL: 0
 ;PCODE: $000000F4 VOL: 0
 ;PCODE: $000000F5 VOL: 0
-; 0001 008E          nlcd_SendByte(DATA_LCD_MODE, nlcd_Font[c-30][i]);  //32
 ;PCODE: $000000F6 VOL: 0
 ;PCODE: $000000F7 VOL: 0
 ;PCODE: $000000F8 VOL: 0
 ;PCODE: $000000F9 VOL: 0
+; 0001 008E          nlcd_SendByte(DATA_LCD_MODE, nlcd_Font[c-30][i]);  //32
 ;PCODE: $000000FA VOL: 0
 ;PCODE: $000000FB VOL: 0
 ;PCODE: $000000FC VOL: 0
@@ -416,64 +416,64 @@
 ;PCODE: $00000101 VOL: 0
 ;PCODE: $00000102 VOL: 0
 ;PCODE: $00000103 VOL: 0
-; 0001 008F     }
 ;PCODE: $00000104 VOL: 0
 ;PCODE: $00000105 VOL: 0
 ;PCODE: $00000106 VOL: 0
 ;PCODE: $00000107 VOL: 0
+; 0001 008F     }
 ;PCODE: $00000108 VOL: 0
-; 0001 0090     nlcd_SendByte(DATA_LCD_MODE,0x00); // Зазор между символами по горизонтали в 1 пиксель
 ;PCODE: $00000109 VOL: 0
 ;PCODE: $0000010A VOL: 0
 ;PCODE: $0000010B VOL: 0
 ;PCODE: $0000010C VOL: 0
-; 0001 0091 }
+; 0001 0090     nlcd_SendByte(DATA_LCD_MODE,0x00); // Зазор между символами по горизонтали в 1 пиксель
 ;PCODE: $0000010D VOL: 0
 ;PCODE: $0000010E VOL: 0
 ;PCODE: $0000010F VOL: 0
 ;PCODE: $00000110 VOL: 0
+; 0001 0091 }
 ;PCODE: $00000111 VOL: 0
+;PCODE: $00000112 VOL: 0
+;PCODE: $00000113 VOL: 0
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод широкого символа на LCD-экран NOKIA 1100 в текущее место
 ;//  c: код символа
 ;void nlcd_PutcWide(unsigned char c)
 ; 0001 0097 {
-;PCODE: $00000112 VOL: 0
-;PCODE: $00000113 VOL: 0
-; 0001 0098     unsigned char i;
-; 0001 0099     if (c>127) c=c-64;     // Переносим символы кирилицы в кодировке CP1251 в начало второй
-;PCODE: $00000114 VOL: 0
-;PCODE: $00000115 VOL: 0
-;	c -> Y+1
-;	i -> R17
 ;PCODE: $00000116 VOL: 0
 ;PCODE: $00000117 VOL: 0
+; 0001 0098     unsigned char i;
+; 0001 0099     if (c>127) c=c-64;     // Переносим символы кирилицы в кодировке CP1251 в начало второй
 ;PCODE: $00000118 VOL: 0
 ;PCODE: $00000119 VOL: 0
+;	c -> Y+1
+;	i -> R17
 ;PCODE: $0000011A VOL: 0
 ;PCODE: $0000011B VOL: 0
-; 0001 009A     for ( i = 0; i < 5; i++ )  // половины таблицы ASCII (начиная с кода 0x80)
 ;PCODE: $0000011C VOL: 0
 ;PCODE: $0000011D VOL: 0
 ;PCODE: $0000011E VOL: 0
 ;PCODE: $0000011F VOL: 0
+; 0001 009A     for ( i = 0; i < 5; i++ )  // половины таблицы ASCII (начиная с кода 0x80)
 ;PCODE: $00000120 VOL: 0
 ;PCODE: $00000121 VOL: 0
 ;PCODE: $00000122 VOL: 0
 ;PCODE: $00000123 VOL: 0
 ;PCODE: $00000124 VOL: 0
 ;PCODE: $00000125 VOL: 0
-; 0001 009B     {
-; 0001 009C         unsigned char glyph = nlcd_Font[c-30][i]; //32
-; 0001 009D         nlcd_SendByte(DATA_LCD_MODE,glyph);
 ;PCODE: $00000126 VOL: 0
-;	c -> Y+2
-;	glyph -> Y+0
 ;PCODE: $00000127 VOL: 0
 ;PCODE: $00000128 VOL: 0
 ;PCODE: $00000129 VOL: 0
+; 0001 009B     {
+; 0001 009C         unsigned char glyph = nlcd_Font[c-30][i]; //32
+; 0001 009D         nlcd_SendByte(DATA_LCD_MODE,glyph);
 ;PCODE: $0000012A VOL: 0
+;	c -> Y+2
+;	glyph -> Y+0
 ;PCODE: $0000012B VOL: 0
 ;PCODE: $0000012C VOL: 0
 ;PCODE: $0000012D VOL: 0
@@ -486,30 +486,34 @@
 ;PCODE: $00000134 VOL: 0
 ;PCODE: $00000135 VOL: 0
 ;PCODE: $00000136 VOL: 0
-; 0001 009E         nlcd_SendByte(DATA_LCD_MODE,glyph);
 ;PCODE: $00000137 VOL: 0
 ;PCODE: $00000138 VOL: 0
 ;PCODE: $00000139 VOL: 0
 ;PCODE: $0000013A VOL: 0
-; 0001 009F     }
+; 0001 009E         nlcd_SendByte(DATA_LCD_MODE,glyph);
 ;PCODE: $0000013B VOL: 0
 ;PCODE: $0000013C VOL: 0
 ;PCODE: $0000013D VOL: 0
 ;PCODE: $0000013E VOL: 0
+; 0001 009F     }
 ;PCODE: $0000013F VOL: 0
 ;PCODE: $00000140 VOL: 0
-; 0001 00A0     nlcd_SendByte(DATA_LCD_MODE,0x00); // Зазор между символами по горизонтали в 1 пиксель
 ;PCODE: $00000141 VOL: 0
 ;PCODE: $00000142 VOL: 0
 ;PCODE: $00000143 VOL: 0
 ;PCODE: $00000144 VOL: 0
-; 0001 00A1 //    nlcd_SendByte(DATA_LCD_MODE,0x00); // Можно сделать две линии
-; 0001 00A2 }
+; 0001 00A0     nlcd_SendByte(DATA_LCD_MODE,0x00); // Зазор между символами по горизонтали в 1 пиксель
 ;PCODE: $00000145 VOL: 0
 ;PCODE: $00000146 VOL: 0
 ;PCODE: $00000147 VOL: 0
 ;PCODE: $00000148 VOL: 0
+; 0001 00A1 //    nlcd_SendByte(DATA_LCD_MODE,0x00); // Можно сделать две линии
+; 0001 00A2 }
 ;PCODE: $00000149 VOL: 0
+;PCODE: $0000014A VOL: 0
+;PCODE: $0000014B VOL: 0
+;PCODE: $0000014C VOL: 0
+;PCODE: $0000014D VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод строки символов на LCD-экран NOKIA 1100 в текущее место. Если строка выходит
@@ -517,15 +521,11 @@
 ;//  message: указатель на строку символов. 0x00 - признак конца строки.
 ;void nlcd_Print(char * message)
 ; 0001 00A9 {
-;PCODE: $0000014A VOL: 0
-;PCODE: $0000014B VOL: 0
-; 0001 00AA     while (*message) nlcd_Putc(*message++); // Конец строки обозначен нулем
-;PCODE: $0000014C VOL: 0
-;	*message -> Y+0
-;PCODE: $0000014D VOL: 0
 ;PCODE: $0000014E VOL: 0
 ;PCODE: $0000014F VOL: 0
+; 0001 00AA     while (*message) nlcd_Putc(*message++); // Конец строки обозначен нулем
 ;PCODE: $00000150 VOL: 0
+;	*message -> Y+0
 ;PCODE: $00000151 VOL: 0
 ;PCODE: $00000152 VOL: 0
 ;PCODE: $00000153 VOL: 0
@@ -534,10 +534,14 @@
 ;PCODE: $00000156 VOL: 0
 ;PCODE: $00000157 VOL: 0
 ;PCODE: $00000158 VOL: 0
-; 0001 00AB }
 ;PCODE: $00000159 VOL: 0
 ;PCODE: $0000015A VOL: 0
 ;PCODE: $0000015B VOL: 0
+;PCODE: $0000015C VOL: 0
+; 0001 00AB }
+;PCODE: $0000015D VOL: 0
+;PCODE: $0000015E VOL: 0
+;PCODE: $0000015F VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод строки символов на LCD-экран NOKIA 1100 в текущее место из программной памяти.
@@ -545,37 +549,37 @@
 ;//  message: указатель на строку символов в программной памяти. 0x00 - признак конца строки.
 ;void nlcd_PrintF(unsigned char * message)
 ; 0001 00B2 {
-;PCODE: $0000015C VOL: 0
-;PCODE: $0000015D VOL: 0
-; 0001 00B3     unsigned char data;
-; 0001 00B4     while (data = *message, data)
-;PCODE: $0000015E VOL: 0
-;PCODE: $0000015F VOL: 0
-;	*message -> Y+1
-;	data -> R17
 ;PCODE: $00000160 VOL: 0
 ;PCODE: $00000161 VOL: 0
+; 0001 00B3     unsigned char data;
+; 0001 00B4     while (data = *message, data)
 ;PCODE: $00000162 VOL: 0
 ;PCODE: $00000163 VOL: 0
+;	*message -> Y+1
+;	data -> R17
 ;PCODE: $00000164 VOL: 0
 ;PCODE: $00000165 VOL: 0
-; 0001 00B5     {
-; 0001 00B6         nlcd_Putc(data);
 ;PCODE: $00000166 VOL: 0
 ;PCODE: $00000167 VOL: 0
-; 0001 00B7         message++;
 ;PCODE: $00000168 VOL: 0
 ;PCODE: $00000169 VOL: 0
+; 0001 00B5     {
+; 0001 00B6         nlcd_Putc(data);
 ;PCODE: $0000016A VOL: 0
-; 0001 00B8     }
 ;PCODE: $0000016B VOL: 0
+; 0001 00B7         message++;
 ;PCODE: $0000016C VOL: 0
-; 0001 00B9 }
 ;PCODE: $0000016D VOL: 0
 ;PCODE: $0000016E VOL: 0
+; 0001 00B8     }
 ;PCODE: $0000016F VOL: 0
 ;PCODE: $00000170 VOL: 0
+; 0001 00B9 }
 ;PCODE: $00000171 VOL: 0
+;PCODE: $00000172 VOL: 0
+;PCODE: $00000173 VOL: 0
+;PCODE: $00000174 VOL: 0
+;PCODE: $00000175 VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -584,37 +588,37 @@
 ;//  message: указатель на строку символов в программной памяти. 0x00 - признак конца строки.
 ;void nlcd_PrintWideF(unsigned char * message)
 ; 0001 00C1 {
-;PCODE: $00000172 VOL: 0
-;PCODE: $00000173 VOL: 0
-; 0001 00C2     unsigned char data;
-; 0001 00C3     while (data = *message, data)
-;PCODE: $00000174 VOL: 0
-;PCODE: $00000175 VOL: 0
-;	*message -> Y+1
-;	data -> R17
 ;PCODE: $00000176 VOL: 0
 ;PCODE: $00000177 VOL: 0
+; 0001 00C2     unsigned char data;
+; 0001 00C3     while (data = *message, data)
 ;PCODE: $00000178 VOL: 0
 ;PCODE: $00000179 VOL: 0
+;	*message -> Y+1
+;	data -> R17
 ;PCODE: $0000017A VOL: 0
 ;PCODE: $0000017B VOL: 0
-; 0001 00C4     {
-; 0001 00C5         nlcd_PutcWide(data);
 ;PCODE: $0000017C VOL: 0
 ;PCODE: $0000017D VOL: 0
-; 0001 00C6         message++;
 ;PCODE: $0000017E VOL: 0
 ;PCODE: $0000017F VOL: 0
+; 0001 00C4     {
+; 0001 00C5         nlcd_PutcWide(data);
 ;PCODE: $00000180 VOL: 0
-; 0001 00C7     }
 ;PCODE: $00000181 VOL: 0
+; 0001 00C6         message++;
 ;PCODE: $00000182 VOL: 0
-; 0001 00C8 }
 ;PCODE: $00000183 VOL: 0
 ;PCODE: $00000184 VOL: 0
+; 0001 00C7     }
 ;PCODE: $00000185 VOL: 0
 ;PCODE: $00000186 VOL: 0
+; 0001 00C8 }
 ;PCODE: $00000187 VOL: 0
+;PCODE: $00000188 VOL: 0
+;PCODE: $00000189 VOL: 0
+;PCODE: $0000018A VOL: 0
+;PCODE: $0000018B VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод строки символов двойной ширины на LCD-экран NOKIA 1100 в текущее место
@@ -623,15 +627,11 @@
 ;//  message: указатель на строку символов в программной памяти. 0x00 - признак конца строки.
 ;void nlcd_PrintWide(unsigned char * message)
 ; 0001 00D0 {
-;PCODE: $00000188 VOL: 0
-;PCODE: $00000189 VOL: 0
-; 0001 00D1     while (*message) nlcd_PutcWide(*message++);  // Конец строки обозначен нулем
-;PCODE: $0000018A VOL: 0
-;	*message -> Y+0
-;PCODE: $0000018B VOL: 0
 ;PCODE: $0000018C VOL: 0
 ;PCODE: $0000018D VOL: 0
+; 0001 00D1     while (*message) nlcd_PutcWide(*message++);  // Конец строки обозначен нулем
 ;PCODE: $0000018E VOL: 0
+;	*message -> Y+0
 ;PCODE: $0000018F VOL: 0
 ;PCODE: $00000190 VOL: 0
 ;PCODE: $00000191 VOL: 0
@@ -640,10 +640,14 @@
 ;PCODE: $00000194 VOL: 0
 ;PCODE: $00000195 VOL: 0
 ;PCODE: $00000196 VOL: 0
-; 0001 00D2 }
 ;PCODE: $00000197 VOL: 0
 ;PCODE: $00000198 VOL: 0
 ;PCODE: $00000199 VOL: 0
+;PCODE: $0000019A VOL: 0
+; 0001 00D2 }
+;PCODE: $0000019B VOL: 0
+;PCODE: $0000019C VOL: 0
+;PCODE: $0000019D VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -653,84 +657,84 @@
 ;//  y: 0..7
 ;void nlcd_GotoXY(char x,char y)
 ; 0001 00DB {
-;PCODE: $0000019A VOL: 0
-;PCODE: $0000019B VOL: 0
-; 0001 00DC     x=x*6;    // Переходим от координаты в знакоместах к координатам в пикселях
-;PCODE: $0000019C VOL: 0
-;	x -> Y+1
-;	y -> Y+0
-;PCODE: $0000019D VOL: 0
 ;PCODE: $0000019E VOL: 0
 ;PCODE: $0000019F VOL: 0
+; 0001 00DC     x=x*6;    // Переходим от координаты в знакоместах к координатам в пикселях
 ;PCODE: $000001A0 VOL: 0
-; 0001 00DD     nlcd_xcurr=x;
+;	x -> Y+1
+;	y -> Y+0
 ;PCODE: $000001A1 VOL: 0
 ;PCODE: $000001A2 VOL: 0
-; 0001 00DE     nlcd_ycurr=y;
 ;PCODE: $000001A3 VOL: 0
 ;PCODE: $000001A4 VOL: 0
-; 0001 00DF     nlcd_SendByte(CMD_LCD_MODE,(0xB0|(y&0x0F)));      // установка адреса по Y: 0100 yyyy
+; 0001 00DD     nlcd_xcurr=x;
 ;PCODE: $000001A5 VOL: 0
 ;PCODE: $000001A6 VOL: 0
+; 0001 00DE     nlcd_ycurr=y;
 ;PCODE: $000001A7 VOL: 0
 ;PCODE: $000001A8 VOL: 0
+; 0001 00DF     nlcd_SendByte(CMD_LCD_MODE,(0xB0|(y&0x0F)));      // установка адреса по Y: 0100 yyyy
 ;PCODE: $000001A9 VOL: 0
 ;PCODE: $000001AA VOL: 0
 ;PCODE: $000001AB VOL: 0
-; 0001 00E0     nlcd_SendByte(CMD_LCD_MODE,(0x00|(x&0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $000001AC VOL: 0
 ;PCODE: $000001AD VOL: 0
 ;PCODE: $000001AE VOL: 0
 ;PCODE: $000001AF VOL: 0
+; 0001 00E0     nlcd_SendByte(CMD_LCD_MODE,(0x00|(x&0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $000001B0 VOL: 0
 ;PCODE: $000001B1 VOL: 0
 ;PCODE: $000001B2 VOL: 0
-; 0001 00E1     nlcd_SendByte(CMD_LCD_MODE,(0x10|((x>>4)&0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $000001B3 VOL: 0
 ;PCODE: $000001B4 VOL: 0
 ;PCODE: $000001B5 VOL: 0
 ;PCODE: $000001B6 VOL: 0
+; 0001 00E1     nlcd_SendByte(CMD_LCD_MODE,(0x10|((x>>4)&0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $000001B7 VOL: 0
 ;PCODE: $000001B8 VOL: 0
 ;PCODE: $000001B9 VOL: 0
 ;PCODE: $000001BA VOL: 0
-; 0001 00E2 }
 ;PCODE: $000001BB VOL: 0
 ;PCODE: $000001BC VOL: 0
 ;PCODE: $000001BD VOL: 0
+;PCODE: $000001BE VOL: 0
+; 0001 00E2 }
+;PCODE: $000001BF VOL: 0
+;PCODE: $000001C0 VOL: 0
+;PCODE: $000001C1 VOL: 0
 ;
 ;//******************************************************************************
 ;// Устанавливаер режим инверсии всего экрана. Данные на экране не изменяются, только инвертируются
 ;//  mode: INV_MODE_ON или INV_MODE_OFF
 ;void nlcd_Inverse(unsigned char mode)
 ; 0001 00E8 {
-;PCODE: $000001BE VOL: 0
-;PCODE: $000001BF VOL: 0
-; 0001 00E9     if (mode){
-;PCODE: $000001C0 VOL: 0
-;	mode -> Y+0
-;PCODE: $000001C1 VOL: 0
 ;PCODE: $000001C2 VOL: 0
 ;PCODE: $000001C3 VOL: 0
-; 0001 00EA         nlcd_SendByte(CMD_LCD_MODE,0xA6);
+; 0001 00E9     if (mode){
 ;PCODE: $000001C4 VOL: 0
+;	mode -> Y+0
 ;PCODE: $000001C5 VOL: 0
 ;PCODE: $000001C6 VOL: 0
 ;PCODE: $000001C7 VOL: 0
-; 0001 00EB     } else {
+; 0001 00EA         nlcd_SendByte(CMD_LCD_MODE,0xA6);
 ;PCODE: $000001C8 VOL: 0
 ;PCODE: $000001C9 VOL: 0
-; 0001 00EC         nlcd_SendByte(CMD_LCD_MODE,0xA7);
 ;PCODE: $000001CA VOL: 0
 ;PCODE: $000001CB VOL: 0
+; 0001 00EB     } else {
 ;PCODE: $000001CC VOL: 0
 ;PCODE: $000001CD VOL: 0
-; 0001 00ED     }
+; 0001 00EC         nlcd_SendByte(CMD_LCD_MODE,0xA7);
 ;PCODE: $000001CE VOL: 0
-; 0001 00EE }
 ;PCODE: $000001CF VOL: 0
 ;PCODE: $000001D0 VOL: 0
 ;PCODE: $000001D1 VOL: 0
+; 0001 00ED     }
+;PCODE: $000001D2 VOL: 0
+; 0001 00EE }
+;PCODE: $000001D3 VOL: 0
+;PCODE: $000001D4 VOL: 0
+;PCODE: $000001D5 VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -740,51 +744,51 @@
 ;//  y: 0..64
 ;void nlcd_GotoXY_pix(char x,char y)
 ; 0001 00F7 {
-;PCODE: $000001D2 VOL: 0
-;PCODE: $000001D3 VOL: 0
+;PCODE: $000001D6 VOL: 0
+;PCODE: $000001D7 VOL: 0
 ; 0001 00F8     nlcd_xcurr=x;
-;PCODE: $000001D4 VOL: 0
+;PCODE: $000001D8 VOL: 0
 ;	x -> Y+1
 ;	y -> Y+0
-;PCODE: $000001D5 VOL: 0
-;PCODE: $000001D6 VOL: 0
-; 0001 00F9     nlcd_ycurr=y/8;
-;PCODE: $000001D7 VOL: 0
-;PCODE: $000001D8 VOL: 0
 ;PCODE: $000001D9 VOL: 0
 ;PCODE: $000001DA VOL: 0
+; 0001 00F9     nlcd_ycurr=y/8;
 ;PCODE: $000001DB VOL: 0
-; 0001 00FA 
-; 0001 00FB     //nlcd_SendByte(CMD_LCD_MODE,(0xB0 | ((y / 8) & 0x0F)));      // установка адреса по Y: 0100 yyyy
-; 0001 00FC     nlcd_SendByte(CMD_LCD_MODE,(0xB0|(nlcd_ycurr&0x0F)));      // установка адреса по Y: 0100 yyyy
 ;PCODE: $000001DC VOL: 0
 ;PCODE: $000001DD VOL: 0
 ;PCODE: $000001DE VOL: 0
 ;PCODE: $000001DF VOL: 0
+; 0001 00FA 
+; 0001 00FB     //nlcd_SendByte(CMD_LCD_MODE,(0xB0 | ((y / 8) & 0x0F)));      // установка адреса по Y: 0100 yyyy
+; 0001 00FC     nlcd_SendByte(CMD_LCD_MODE,(0xB0|(nlcd_ycurr&0x0F)));      // установка адреса по Y: 0100 yyyy
 ;PCODE: $000001E0 VOL: 0
 ;PCODE: $000001E1 VOL: 0
 ;PCODE: $000001E2 VOL: 0
-; 0001 00FD     nlcd_SendByte(CMD_LCD_MODE,(0x00 | (x & 0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $000001E3 VOL: 0
 ;PCODE: $000001E4 VOL: 0
 ;PCODE: $000001E5 VOL: 0
 ;PCODE: $000001E6 VOL: 0
+; 0001 00FD     nlcd_SendByte(CMD_LCD_MODE,(0x00 | (x & 0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $000001E7 VOL: 0
 ;PCODE: $000001E8 VOL: 0
 ;PCODE: $000001E9 VOL: 0
-; 0001 00FE     nlcd_SendByte(CMD_LCD_MODE,(0x10 | ((x>>4) & 0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $000001EA VOL: 0
 ;PCODE: $000001EB VOL: 0
 ;PCODE: $000001EC VOL: 0
 ;PCODE: $000001ED VOL: 0
+; 0001 00FE     nlcd_SendByte(CMD_LCD_MODE,(0x10 | ((x>>4) & 0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $000001EE VOL: 0
 ;PCODE: $000001EF VOL: 0
 ;PCODE: $000001F0 VOL: 0
 ;PCODE: $000001F1 VOL: 0
-; 0001 00FF }
 ;PCODE: $000001F2 VOL: 0
 ;PCODE: $000001F3 VOL: 0
 ;PCODE: $000001F4 VOL: 0
+;PCODE: $000001F5 VOL: 0
+; 0001 00FF }
+;PCODE: $000001F6 VOL: 0
+;PCODE: $000001F7 VOL: 0
+;PCODE: $000001F8 VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -796,97 +800,97 @@
 ;//                PIXEL_INV - для инверсии пиксела
 ;void nlcd_Pixel(unsigned char x,unsigned char y, unsigned char pixel_mode)
 ; 0001 010A {
-;PCODE: $000001F5 VOL: 0
-;PCODE: $000001F6 VOL: 0
+;PCODE: $000001F9 VOL: 0
+;PCODE: $000001FA VOL: 0
 ; 0001 010B     unsigned char temp;
 ; 0001 010C     nlcd_GotoXY_pix(x,y);
-;PCODE: $000001F7 VOL: 0
-;PCODE: $000001F8 VOL: 0
+;PCODE: $000001FB VOL: 0
+;PCODE: $000001FC VOL: 0
 ;	x -> Y+3
 ;	y -> Y+2
 ;	pixel_mode -> Y+1
 ;	temp -> R17
-;PCODE: $000001F9 VOL: 0
-;PCODE: $000001FA VOL: 0
-;PCODE: $000001FB VOL: 0
-;PCODE: $000001FC VOL: 0
-; 0001 010D     temp=nlcd_memory[nlcd_xcurr][nlcd_ycurr];
 ;PCODE: $000001FD VOL: 0
 ;PCODE: $000001FE VOL: 0
 ;PCODE: $000001FF VOL: 0
 ;PCODE: $00000200 VOL: 0
+; 0001 010D     temp=nlcd_memory[nlcd_xcurr][nlcd_ycurr];
 ;PCODE: $00000201 VOL: 0
 ;PCODE: $00000202 VOL: 0
 ;PCODE: $00000203 VOL: 0
 ;PCODE: $00000204 VOL: 0
 ;PCODE: $00000205 VOL: 0
-; 0001 010E     switch(pixel_mode)
 ;PCODE: $00000206 VOL: 0
 ;PCODE: $00000207 VOL: 0
-; 0001 010F     {
-; 0001 0110         case PIXEL_ON:
 ;PCODE: $00000208 VOL: 0
 ;PCODE: $00000209 VOL: 0
-; 0001 0111             SetBit(temp, y%8);            // Включаем пиксел
+; 0001 010E     switch(pixel_mode)
 ;PCODE: $0000020A VOL: 0
 ;PCODE: $0000020B VOL: 0
+; 0001 010F     {
+; 0001 0110         case PIXEL_ON:
 ;PCODE: $0000020C VOL: 0
 ;PCODE: $0000020D VOL: 0
+; 0001 0111             SetBit(temp, y%8);            // Включаем пиксел
 ;PCODE: $0000020E VOL: 0
 ;PCODE: $0000020F VOL: 0
-; 0001 0112             break;
 ;PCODE: $00000210 VOL: 0
-; 0001 0113         case PIXEL_OFF:
 ;PCODE: $00000211 VOL: 0
 ;PCODE: $00000212 VOL: 0
 ;PCODE: $00000213 VOL: 0
-; 0001 0114              ClearBit(temp, y%8);        // Выключаем пиксел
+; 0001 0112             break;
 ;PCODE: $00000214 VOL: 0
+; 0001 0113         case PIXEL_OFF:
 ;PCODE: $00000215 VOL: 0
 ;PCODE: $00000216 VOL: 0
 ;PCODE: $00000217 VOL: 0
+; 0001 0114              ClearBit(temp, y%8);        // Выключаем пиксел
 ;PCODE: $00000218 VOL: 0
 ;PCODE: $00000219 VOL: 0
 ;PCODE: $0000021A VOL: 0
-; 0001 0115             break;
 ;PCODE: $0000021B VOL: 0
-; 0001 0116         case PIXEL_INV:
 ;PCODE: $0000021C VOL: 0
 ;PCODE: $0000021D VOL: 0
 ;PCODE: $0000021E VOL: 0
-; 0001 0117              InvBit(temp, y%8);          // Инвертируем пиксел
+; 0001 0115             break;
 ;PCODE: $0000021F VOL: 0
+; 0001 0116         case PIXEL_INV:
 ;PCODE: $00000220 VOL: 0
 ;PCODE: $00000221 VOL: 0
 ;PCODE: $00000222 VOL: 0
+; 0001 0117              InvBit(temp, y%8);          // Инвертируем пиксел
 ;PCODE: $00000223 VOL: 0
 ;PCODE: $00000224 VOL: 0
-; 0001 0118             break;
 ;PCODE: $00000225 VOL: 0
-; 0001 0119     }
 ;PCODE: $00000226 VOL: 0
-; 0001 011A 
-; 0001 011B     nlcd_memory[nlcd_xcurr][nlcd_ycurr] = temp; // Передаем байт в видеобуфер
 ;PCODE: $00000227 VOL: 0
 ;PCODE: $00000228 VOL: 0
+; 0001 0118             break;
 ;PCODE: $00000229 VOL: 0
+; 0001 0119     }
 ;PCODE: $0000022A VOL: 0
+; 0001 011A 
+; 0001 011B     nlcd_memory[nlcd_xcurr][nlcd_ycurr] = temp; // Передаем байт в видеобуфер
 ;PCODE: $0000022B VOL: 0
 ;PCODE: $0000022C VOL: 0
 ;PCODE: $0000022D VOL: 0
 ;PCODE: $0000022E VOL: 0
 ;PCODE: $0000022F VOL: 0
-; 0001 011C     nlcd_SendByte(DATA_LCD_MODE,temp); // Передаем байт в контроллер
 ;PCODE: $00000230 VOL: 0
 ;PCODE: $00000231 VOL: 0
 ;PCODE: $00000232 VOL: 0
 ;PCODE: $00000233 VOL: 0
-; 0001 011D }
+; 0001 011C     nlcd_SendByte(DATA_LCD_MODE,temp); // Передаем байт в контроллер
 ;PCODE: $00000234 VOL: 0
 ;PCODE: $00000235 VOL: 0
 ;PCODE: $00000236 VOL: 0
 ;PCODE: $00000237 VOL: 0
+; 0001 011D }
 ;PCODE: $00000238 VOL: 0
+;PCODE: $00000239 VOL: 0
+;PCODE: $0000023A VOL: 0
+;PCODE: $0000023B VOL: 0
+;PCODE: $0000023C VOL: 0
 ;
 ;//******************************************************************************
 ;// Вывод линии на LCD-экран NOKIA 1100
@@ -897,8 +901,8 @@
 ;//                PIXEL_INV - для инверсии пиксела
 ;void nlcd_Line (unsigned char x1,unsigned char y1, unsigned char x2,unsigned char y2, unsigned char pixel_mode)
 ; 0001 0127 {
-;PCODE: $00000239 VOL: 0
-;PCODE: $0000023A VOL: 0
+;PCODE: $0000023D VOL: 0
+;PCODE: $0000023E VOL: 0
 ; 0001 0128     int dy, dx;
 ; 0001 0129     signed char addx = 1, addy = 1;
 ; 0001 012A     signed int     P, diff;
@@ -906,11 +910,11 @@
 ; 0001 012C     unsigned char i = 0;
 ; 0001 012D 
 ; 0001 012E     dx = abs((signed char)(x2 - x1));
-;PCODE: $0000023B VOL: 0
-;PCODE: $0000023C VOL: 0
-;PCODE: $0000023D VOL: 0
-;PCODE: $0000023E VOL: 0
 ;PCODE: $0000023F VOL: 0
+;PCODE: $00000240 VOL: 0
+;PCODE: $00000241 VOL: 0
+;PCODE: $00000242 VOL: 0
+;PCODE: $00000243 VOL: 0
 ;	x1 -> Y+15
 ;	y1 -> Y+14
 ;	x2 -> Y+13
@@ -923,10 +927,6 @@
 ;	P -> Y+9
 ;	diff -> Y+7
 ;	i -> Y+6
-;PCODE: $00000240 VOL: 0
-;PCODE: $00000241 VOL: 0
-;PCODE: $00000242 VOL: 0
-;PCODE: $00000243 VOL: 0
 ;PCODE: $00000244 VOL: 0
 ;PCODE: $00000245 VOL: 0
 ;PCODE: $00000246 VOL: 0
@@ -938,11 +938,11 @@
 ;PCODE: $0000024C VOL: 0
 ;PCODE: $0000024D VOL: 0
 ;PCODE: $0000024E VOL: 0
-; 0001 012F     dy = abs((signed char)(y2 - y1));
 ;PCODE: $0000024F VOL: 0
 ;PCODE: $00000250 VOL: 0
 ;PCODE: $00000251 VOL: 0
 ;PCODE: $00000252 VOL: 0
+; 0001 012F     dy = abs((signed char)(y2 - y1));
 ;PCODE: $00000253 VOL: 0
 ;PCODE: $00000254 VOL: 0
 ;PCODE: $00000255 VOL: 0
@@ -950,192 +950,196 @@
 ;PCODE: $00000257 VOL: 0
 ;PCODE: $00000258 VOL: 0
 ;PCODE: $00000259 VOL: 0
-; 0001 0130 
-; 0001 0131     if(x1 > x2)    addx = -1;
 ;PCODE: $0000025A VOL: 0
 ;PCODE: $0000025B VOL: 0
 ;PCODE: $0000025C VOL: 0
 ;PCODE: $0000025D VOL: 0
+; 0001 0130 
+; 0001 0131     if(x1 > x2)    addx = -1;
 ;PCODE: $0000025E VOL: 0
 ;PCODE: $0000025F VOL: 0
-; 0001 0132     if(y1 > y2)    addy = -1;
 ;PCODE: $00000260 VOL: 0
 ;PCODE: $00000261 VOL: 0
 ;PCODE: $00000262 VOL: 0
 ;PCODE: $00000263 VOL: 0
+; 0001 0132     if(y1 > y2)    addy = -1;
 ;PCODE: $00000264 VOL: 0
 ;PCODE: $00000265 VOL: 0
 ;PCODE: $00000266 VOL: 0
-; 0001 0133 
-; 0001 0134     if(dx >= dy)
 ;PCODE: $00000267 VOL: 0
 ;PCODE: $00000268 VOL: 0
 ;PCODE: $00000269 VOL: 0
 ;PCODE: $0000026A VOL: 0
-; 0001 0135     {
-; 0001 0136         dy *= 2;
+; 0001 0133 
+; 0001 0134     if(dx >= dy)
 ;PCODE: $0000026B VOL: 0
-; 0001 0137         P = dy - dx;
 ;PCODE: $0000026C VOL: 0
 ;PCODE: $0000026D VOL: 0
 ;PCODE: $0000026E VOL: 0
-; 0001 0138 
-; 0001 0139         diff = P - dx;
+; 0001 0135     {
+; 0001 0136         dy *= 2;
 ;PCODE: $0000026F VOL: 0
+; 0001 0137         P = dy - dx;
 ;PCODE: $00000270 VOL: 0
 ;PCODE: $00000271 VOL: 0
-; 0001 013A 
-; 0001 013B         for(; i<=dx; ++i)
 ;PCODE: $00000272 VOL: 0
+; 0001 0138 
+; 0001 0139         diff = P - dx;
 ;PCODE: $00000273 VOL: 0
 ;PCODE: $00000274 VOL: 0
 ;PCODE: $00000275 VOL: 0
+; 0001 013A 
+; 0001 013B         for(; i<=dx; ++i)
 ;PCODE: $00000276 VOL: 0
 ;PCODE: $00000277 VOL: 0
 ;PCODE: $00000278 VOL: 0
 ;PCODE: $00000279 VOL: 0
 ;PCODE: $0000027A VOL: 0
 ;PCODE: $0000027B VOL: 0
-; 0001 013C         {
-; 0001 013D             nlcd_Pixel(x1, y1, pixel_mode);
 ;PCODE: $0000027C VOL: 0
 ;PCODE: $0000027D VOL: 0
 ;PCODE: $0000027E VOL: 0
 ;PCODE: $0000027F VOL: 0
+; 0001 013C         {
+; 0001 013D             nlcd_Pixel(x1, y1, pixel_mode);
 ;PCODE: $00000280 VOL: 0
 ;PCODE: $00000281 VOL: 0
-; 0001 013E 
-; 0001 013F             if(P < 0)
 ;PCODE: $00000282 VOL: 0
 ;PCODE: $00000283 VOL: 0
 ;PCODE: $00000284 VOL: 0
-; 0001 0140             {
-; 0001 0141                 P  += dy;
 ;PCODE: $00000285 VOL: 0
+; 0001 013E 
+; 0001 013F             if(P < 0)
 ;PCODE: $00000286 VOL: 0
 ;PCODE: $00000287 VOL: 0
 ;PCODE: $00000288 VOL: 0
-; 0001 0142                 x1 += addx;
+; 0001 0140             {
+; 0001 0141                 P  += dy;
 ;PCODE: $00000289 VOL: 0
 ;PCODE: $0000028A VOL: 0
 ;PCODE: $0000028B VOL: 0
 ;PCODE: $0000028C VOL: 0
-; 0001 0143             }
-; 0001 0144             else
+; 0001 0142                 x1 += addx;
 ;PCODE: $0000028D VOL: 0
 ;PCODE: $0000028E VOL: 0
-; 0001 0145             {
-; 0001 0146                 P  += diff;
 ;PCODE: $0000028F VOL: 0
 ;PCODE: $00000290 VOL: 0
+; 0001 0143             }
+; 0001 0144             else
 ;PCODE: $00000291 VOL: 0
 ;PCODE: $00000292 VOL: 0
-; 0001 0147                 x1 += addx;
+; 0001 0145             {
+; 0001 0146                 P  += diff;
 ;PCODE: $00000293 VOL: 0
 ;PCODE: $00000294 VOL: 0
 ;PCODE: $00000295 VOL: 0
 ;PCODE: $00000296 VOL: 0
-; 0001 0148                 y1 += addy;
+; 0001 0147                 x1 += addx;
 ;PCODE: $00000297 VOL: 0
 ;PCODE: $00000298 VOL: 0
 ;PCODE: $00000299 VOL: 0
 ;PCODE: $0000029A VOL: 0
-; 0001 0149             }
+; 0001 0148                 y1 += addy;
 ;PCODE: $0000029B VOL: 0
-; 0001 014A         }
 ;PCODE: $0000029C VOL: 0
 ;PCODE: $0000029D VOL: 0
 ;PCODE: $0000029E VOL: 0
+; 0001 0149             }
 ;PCODE: $0000029F VOL: 0
+; 0001 014A         }
 ;PCODE: $000002A0 VOL: 0
 ;PCODE: $000002A1 VOL: 0
-; 0001 014B     }
-; 0001 014C     else
 ;PCODE: $000002A2 VOL: 0
 ;PCODE: $000002A3 VOL: 0
-; 0001 014D     {
-; 0001 014E         dx *= 2;
 ;PCODE: $000002A4 VOL: 0
-; 0001 014F         P = dx - dy;
 ;PCODE: $000002A5 VOL: 0
+; 0001 014B     }
+; 0001 014C     else
 ;PCODE: $000002A6 VOL: 0
 ;PCODE: $000002A7 VOL: 0
-; 0001 0150         diff = P - dy;
+; 0001 014D     {
+; 0001 014E         dx *= 2;
 ;PCODE: $000002A8 VOL: 0
+; 0001 014F         P = dx - dy;
 ;PCODE: $000002A9 VOL: 0
 ;PCODE: $000002AA VOL: 0
-; 0001 0151 
-; 0001 0152         for(; i<=dy; ++i)
 ;PCODE: $000002AB VOL: 0
+; 0001 0150         diff = P - dy;
 ;PCODE: $000002AC VOL: 0
 ;PCODE: $000002AD VOL: 0
 ;PCODE: $000002AE VOL: 0
+; 0001 0151 
+; 0001 0152         for(; i<=dy; ++i)
 ;PCODE: $000002AF VOL: 0
 ;PCODE: $000002B0 VOL: 0
 ;PCODE: $000002B1 VOL: 0
 ;PCODE: $000002B2 VOL: 0
 ;PCODE: $000002B3 VOL: 0
 ;PCODE: $000002B4 VOL: 0
-; 0001 0153         {
-; 0001 0154             nlcd_Pixel(x1, y1, pixel_mode);
 ;PCODE: $000002B5 VOL: 0
 ;PCODE: $000002B6 VOL: 0
 ;PCODE: $000002B7 VOL: 0
 ;PCODE: $000002B8 VOL: 0
+; 0001 0153         {
+; 0001 0154             nlcd_Pixel(x1, y1, pixel_mode);
 ;PCODE: $000002B9 VOL: 0
 ;PCODE: $000002BA VOL: 0
-; 0001 0155 
-; 0001 0156             if(P < 0)
 ;PCODE: $000002BB VOL: 0
 ;PCODE: $000002BC VOL: 0
 ;PCODE: $000002BD VOL: 0
-; 0001 0157             {
-; 0001 0158                 P  += dx;
 ;PCODE: $000002BE VOL: 0
+; 0001 0155 
+; 0001 0156             if(P < 0)
 ;PCODE: $000002BF VOL: 0
 ;PCODE: $000002C0 VOL: 0
 ;PCODE: $000002C1 VOL: 0
-; 0001 0159                 y1 += addy;
+; 0001 0157             {
+; 0001 0158                 P  += dx;
 ;PCODE: $000002C2 VOL: 0
 ;PCODE: $000002C3 VOL: 0
 ;PCODE: $000002C4 VOL: 0
 ;PCODE: $000002C5 VOL: 0
-; 0001 015A             }
-; 0001 015B             else
+; 0001 0159                 y1 += addy;
 ;PCODE: $000002C6 VOL: 0
 ;PCODE: $000002C7 VOL: 0
-; 0001 015C             {
-; 0001 015D                 P  += diff;
 ;PCODE: $000002C8 VOL: 0
 ;PCODE: $000002C9 VOL: 0
+; 0001 015A             }
+; 0001 015B             else
 ;PCODE: $000002CA VOL: 0
 ;PCODE: $000002CB VOL: 0
-; 0001 015E                 x1 += addx;
+; 0001 015C             {
+; 0001 015D                 P  += diff;
 ;PCODE: $000002CC VOL: 0
 ;PCODE: $000002CD VOL: 0
 ;PCODE: $000002CE VOL: 0
 ;PCODE: $000002CF VOL: 0
-; 0001 015F                 y1 += addy;
+; 0001 015E                 x1 += addx;
 ;PCODE: $000002D0 VOL: 0
 ;PCODE: $000002D1 VOL: 0
 ;PCODE: $000002D2 VOL: 0
 ;PCODE: $000002D3 VOL: 0
-; 0001 0160             }
+; 0001 015F                 y1 += addy;
 ;PCODE: $000002D4 VOL: 0
-; 0001 0161         }
 ;PCODE: $000002D5 VOL: 0
 ;PCODE: $000002D6 VOL: 0
 ;PCODE: $000002D7 VOL: 0
+; 0001 0160             }
 ;PCODE: $000002D8 VOL: 0
+; 0001 0161         }
 ;PCODE: $000002D9 VOL: 0
 ;PCODE: $000002DA VOL: 0
-; 0001 0162     }
 ;PCODE: $000002DB VOL: 0
-; 0001 0163 }
 ;PCODE: $000002DC VOL: 0
 ;PCODE: $000002DD VOL: 0
 ;PCODE: $000002DE VOL: 0
+; 0001 0162     }
 ;PCODE: $000002DF VOL: 0
+; 0001 0163 }
+;PCODE: $000002E0 VOL: 0
+;PCODE: $000002E1 VOL: 0
+;PCODE: $000002E2 VOL: 0
+;PCODE: $000002E3 VOL: 0
 ;
 ;
 ;
@@ -1152,13 +1156,13 @@
 ;
 ;void nlcd_Circle(unsigned char x, unsigned char y, unsigned char radius, unsigned char fill, unsigned char pixel_mode)
 ; 0001 0173 {
-;PCODE: $000002E0 VOL: 0
-;PCODE: $000002E1 VOL: 0
+;PCODE: $000002E4 VOL: 0
+;PCODE: $000002E5 VOL: 0
 ; 0001 0174     signed char  a, b, P;
 ; 0001 0175 
 ; 0001 0176     a = 0;
-;PCODE: $000002E2 VOL: 0
-;PCODE: $000002E3 VOL: 0
+;PCODE: $000002E6 VOL: 0
+;PCODE: $000002E7 VOL: 0
 ;	x -> Y+8
 ;	y -> Y+7
 ;	radius -> Y+6
@@ -1167,30 +1171,26 @@
 ;	a -> R17
 ;	b -> R16
 ;	P -> R19
-;PCODE: $000002E4 VOL: 0
-;PCODE: $000002E5 VOL: 0
-; 0001 0177     b = radius;
-;PCODE: $000002E6 VOL: 0
-;PCODE: $000002E7 VOL: 0
-; 0001 0178     P = 1 - radius;
 ;PCODE: $000002E8 VOL: 0
 ;PCODE: $000002E9 VOL: 0
+; 0001 0177     b = radius;
 ;PCODE: $000002EA VOL: 0
 ;PCODE: $000002EB VOL: 0
-; 0001 0179 
-; 0001 017A     do
+; 0001 0178     P = 1 - radius;
 ;PCODE: $000002EC VOL: 0
-; 0001 017B     {
-; 0001 017C         if(fill)
 ;PCODE: $000002ED VOL: 0
 ;PCODE: $000002EE VOL: 0
 ;PCODE: $000002EF VOL: 0
-; 0001 017D         {
-; 0001 017E             nlcd_Line(x-a, y+b, x+a, y+b, pixel_mode);
+; 0001 0179 
+; 0001 017A     do
 ;PCODE: $000002F0 VOL: 0
+; 0001 017B     {
+; 0001 017C         if(fill)
 ;PCODE: $000002F1 VOL: 0
 ;PCODE: $000002F2 VOL: 0
 ;PCODE: $000002F3 VOL: 0
+; 0001 017D         {
+; 0001 017E             nlcd_Line(x-a, y+b, x+a, y+b, pixel_mode);
 ;PCODE: $000002F4 VOL: 0
 ;PCODE: $000002F5 VOL: 0
 ;PCODE: $000002F6 VOL: 0
@@ -1204,11 +1204,11 @@
 ;PCODE: $000002FE VOL: 0
 ;PCODE: $000002FF VOL: 0
 ;PCODE: $00000300 VOL: 0
-; 0001 017F             nlcd_Line(x-a, y-b, x+a, y-b, pixel_mode);
 ;PCODE: $00000301 VOL: 0
 ;PCODE: $00000302 VOL: 0
 ;PCODE: $00000303 VOL: 0
 ;PCODE: $00000304 VOL: 0
+; 0001 017F             nlcd_Line(x-a, y-b, x+a, y-b, pixel_mode);
 ;PCODE: $00000305 VOL: 0
 ;PCODE: $00000306 VOL: 0
 ;PCODE: $00000307 VOL: 0
@@ -1220,11 +1220,11 @@
 ;PCODE: $0000030D VOL: 0
 ;PCODE: $0000030E VOL: 0
 ;PCODE: $0000030F VOL: 0
-; 0001 0180             nlcd_Line(x-b, y+a, x+b, y+a, pixel_mode);
 ;PCODE: $00000310 VOL: 0
 ;PCODE: $00000311 VOL: 0
 ;PCODE: $00000312 VOL: 0
 ;PCODE: $00000313 VOL: 0
+; 0001 0180             nlcd_Line(x-b, y+a, x+b, y+a, pixel_mode);
 ;PCODE: $00000314 VOL: 0
 ;PCODE: $00000315 VOL: 0
 ;PCODE: $00000316 VOL: 0
@@ -1238,11 +1238,11 @@
 ;PCODE: $0000031E VOL: 0
 ;PCODE: $0000031F VOL: 0
 ;PCODE: $00000320 VOL: 0
-; 0001 0181             nlcd_Line(x-b, y-a, x+b, y-a, pixel_mode);
 ;PCODE: $00000321 VOL: 0
 ;PCODE: $00000322 VOL: 0
 ;PCODE: $00000323 VOL: 0
 ;PCODE: $00000324 VOL: 0
+; 0001 0181             nlcd_Line(x-b, y-a, x+b, y-a, pixel_mode);
 ;PCODE: $00000325 VOL: 0
 ;PCODE: $00000326 VOL: 0
 ;PCODE: $00000327 VOL: 0
@@ -1254,101 +1254,101 @@
 ;PCODE: $0000032D VOL: 0
 ;PCODE: $0000032E VOL: 0
 ;PCODE: $0000032F VOL: 0
-; 0001 0182         }
-; 0001 0183         else
 ;PCODE: $00000330 VOL: 0
 ;PCODE: $00000331 VOL: 0
-; 0001 0184         {
-; 0001 0185             nlcd_Pixel(a+x, b+y, pixel_mode);
 ;PCODE: $00000332 VOL: 0
 ;PCODE: $00000333 VOL: 0
+; 0001 0182         }
+; 0001 0183         else
 ;PCODE: $00000334 VOL: 0
 ;PCODE: $00000335 VOL: 0
+; 0001 0184         {
+; 0001 0185             nlcd_Pixel(a+x, b+y, pixel_mode);
 ;PCODE: $00000336 VOL: 0
 ;PCODE: $00000337 VOL: 0
 ;PCODE: $00000338 VOL: 0
 ;PCODE: $00000339 VOL: 0
-; 0001 0186             nlcd_Pixel(b+x, a+y, pixel_mode);
 ;PCODE: $0000033A VOL: 0
 ;PCODE: $0000033B VOL: 0
 ;PCODE: $0000033C VOL: 0
 ;PCODE: $0000033D VOL: 0
+; 0001 0186             nlcd_Pixel(b+x, a+y, pixel_mode);
 ;PCODE: $0000033E VOL: 0
 ;PCODE: $0000033F VOL: 0
 ;PCODE: $00000340 VOL: 0
 ;PCODE: $00000341 VOL: 0
-; 0001 0187             nlcd_Pixel(x-a, b+y, pixel_mode);
 ;PCODE: $00000342 VOL: 0
 ;PCODE: $00000343 VOL: 0
 ;PCODE: $00000344 VOL: 0
 ;PCODE: $00000345 VOL: 0
+; 0001 0187             nlcd_Pixel(x-a, b+y, pixel_mode);
 ;PCODE: $00000346 VOL: 0
 ;PCODE: $00000347 VOL: 0
 ;PCODE: $00000348 VOL: 0
 ;PCODE: $00000349 VOL: 0
-; 0001 0188             nlcd_Pixel(x-b, a+y, pixel_mode);
 ;PCODE: $0000034A VOL: 0
 ;PCODE: $0000034B VOL: 0
 ;PCODE: $0000034C VOL: 0
 ;PCODE: $0000034D VOL: 0
+; 0001 0188             nlcd_Pixel(x-b, a+y, pixel_mode);
 ;PCODE: $0000034E VOL: 0
 ;PCODE: $0000034F VOL: 0
 ;PCODE: $00000350 VOL: 0
 ;PCODE: $00000351 VOL: 0
-; 0001 0189             nlcd_Pixel(b+x, y-a, pixel_mode);
 ;PCODE: $00000352 VOL: 0
 ;PCODE: $00000353 VOL: 0
 ;PCODE: $00000354 VOL: 0
 ;PCODE: $00000355 VOL: 0
+; 0001 0189             nlcd_Pixel(b+x, y-a, pixel_mode);
 ;PCODE: $00000356 VOL: 0
 ;PCODE: $00000357 VOL: 0
 ;PCODE: $00000358 VOL: 0
 ;PCODE: $00000359 VOL: 0
-; 0001 018A             nlcd_Pixel(a+x, y-b, pixel_mode);
 ;PCODE: $0000035A VOL: 0
 ;PCODE: $0000035B VOL: 0
 ;PCODE: $0000035C VOL: 0
 ;PCODE: $0000035D VOL: 0
+; 0001 018A             nlcd_Pixel(a+x, y-b, pixel_mode);
 ;PCODE: $0000035E VOL: 0
 ;PCODE: $0000035F VOL: 0
 ;PCODE: $00000360 VOL: 0
 ;PCODE: $00000361 VOL: 0
-; 0001 018B             nlcd_Pixel(x-a, y-b, pixel_mode);
 ;PCODE: $00000362 VOL: 0
 ;PCODE: $00000363 VOL: 0
 ;PCODE: $00000364 VOL: 0
 ;PCODE: $00000365 VOL: 0
+; 0001 018B             nlcd_Pixel(x-a, y-b, pixel_mode);
 ;PCODE: $00000366 VOL: 0
 ;PCODE: $00000367 VOL: 0
 ;PCODE: $00000368 VOL: 0
 ;PCODE: $00000369 VOL: 0
-; 0001 018C             nlcd_Pixel(x-b, y-a, pixel_mode);
 ;PCODE: $0000036A VOL: 0
 ;PCODE: $0000036B VOL: 0
 ;PCODE: $0000036C VOL: 0
 ;PCODE: $0000036D VOL: 0
+; 0001 018C             nlcd_Pixel(x-b, y-a, pixel_mode);
 ;PCODE: $0000036E VOL: 0
 ;PCODE: $0000036F VOL: 0
 ;PCODE: $00000370 VOL: 0
 ;PCODE: $00000371 VOL: 0
-; 0001 018D         }
 ;PCODE: $00000372 VOL: 0
-; 0001 018E 
-; 0001 018F         if(P < 0) P += 3 + 2 * a++;
 ;PCODE: $00000373 VOL: 0
 ;PCODE: $00000374 VOL: 0
 ;PCODE: $00000375 VOL: 0
+; 0001 018D         }
 ;PCODE: $00000376 VOL: 0
+; 0001 018E 
+; 0001 018F         if(P < 0) P += 3 + 2 * a++;
 ;PCODE: $00000377 VOL: 0
 ;PCODE: $00000378 VOL: 0
 ;PCODE: $00000379 VOL: 0
 ;PCODE: $0000037A VOL: 0
 ;PCODE: $0000037B VOL: 0
-; 0001 0190             else P += 5 + 2 * (a++ - b--);
 ;PCODE: $0000037C VOL: 0
 ;PCODE: $0000037D VOL: 0
 ;PCODE: $0000037E VOL: 0
 ;PCODE: $0000037F VOL: 0
+; 0001 0190             else P += 5 + 2 * (a++ - b--);
 ;PCODE: $00000380 VOL: 0
 ;PCODE: $00000381 VOL: 0
 ;PCODE: $00000382 VOL: 0
@@ -1360,19 +1360,23 @@
 ;PCODE: $00000388 VOL: 0
 ;PCODE: $00000389 VOL: 0
 ;PCODE: $0000038A VOL: 0
-; 0001 0191     } while(a <= b);
 ;PCODE: $0000038B VOL: 0
 ;PCODE: $0000038C VOL: 0
 ;PCODE: $0000038D VOL: 0
 ;PCODE: $0000038E VOL: 0
+; 0001 0191     } while(a <= b);
 ;PCODE: $0000038F VOL: 0
 ;PCODE: $00000390 VOL: 0
 ;PCODE: $00000391 VOL: 0
-; 0001 0192 }
 ;PCODE: $00000392 VOL: 0
 ;PCODE: $00000393 VOL: 0
 ;PCODE: $00000394 VOL: 0
 ;PCODE: $00000395 VOL: 0
+; 0001 0192 }
+;PCODE: $00000396 VOL: 0
+;PCODE: $00000397 VOL: 0
+;PCODE: $00000398 VOL: 0
+;PCODE: $00000399 VOL: 0
 ;
 ;
 ;
@@ -1385,24 +1389,24 @@
 ;//                PIXEL_INV - для инверсии пиксела
 ;void nlcd_Rect (unsigned char x1, unsigned char y1, unsigned char x2, unsigned char y2, unsigned char fill, unsigned char pixel_mode)
 ; 0001 019E {
-;PCODE: $00000396 VOL: 0
-;PCODE: $00000397 VOL: 0
+;PCODE: $0000039A VOL: 0
+;PCODE: $0000039B VOL: 0
 ; 0001 019F     if(fill)
-;PCODE: $00000398 VOL: 0
+;PCODE: $0000039C VOL: 0
 ;	x1 -> Y+5
 ;	y1 -> Y+4
 ;	x2 -> Y+3
 ;	y2 -> Y+2
 ;	fill -> Y+1
 ;	pixel_mode -> Y+0
-;PCODE: $00000399 VOL: 0
-;PCODE: $0000039A VOL: 0
-;PCODE: $0000039B VOL: 0
+;PCODE: $0000039D VOL: 0
+;PCODE: $0000039E VOL: 0
+;PCODE: $0000039F VOL: 0
 ; 0001 01A0     {            // С заливкой
 ; 0001 01A1         unsigned char  i, xmin, xmax, ymin, ymax;
 ; 0001 01A2 
 ; 0001 01A3         if(x1 < x2) { xmin = x1; xmax = x2; }    // Определяем минимальную и максимальную координату по X
-;PCODE: $0000039C VOL: 0
+;PCODE: $000003A0 VOL: 0
 ;	x1 -> Y+10
 ;	y1 -> Y+9
 ;	x2 -> Y+8
@@ -1414,57 +1418,53 @@
 ;	xmax -> Y+2
 ;	ymin -> Y+1
 ;	ymax -> Y+0
-;PCODE: $0000039D VOL: 0
-;PCODE: $0000039E VOL: 0
-;PCODE: $0000039F VOL: 0
-;PCODE: $000003A0 VOL: 0
 ;PCODE: $000003A1 VOL: 0
 ;PCODE: $000003A2 VOL: 0
 ;PCODE: $000003A3 VOL: 0
 ;PCODE: $000003A4 VOL: 0
-; 0001 01A4          else { xmin = x2; xmax = x1; }
 ;PCODE: $000003A5 VOL: 0
 ;PCODE: $000003A6 VOL: 0
 ;PCODE: $000003A7 VOL: 0
 ;PCODE: $000003A8 VOL: 0
+; 0001 01A4          else { xmin = x2; xmax = x1; }
 ;PCODE: $000003A9 VOL: 0
 ;PCODE: $000003AA VOL: 0
 ;PCODE: $000003AB VOL: 0
-; 0001 01A5 
-; 0001 01A6         if(y1 < y2) { ymin = y1; ymax = y2; }    // Определяем минимальную и максимальную координату по Y
 ;PCODE: $000003AC VOL: 0
 ;PCODE: $000003AD VOL: 0
 ;PCODE: $000003AE VOL: 0
 ;PCODE: $000003AF VOL: 0
+; 0001 01A5 
+; 0001 01A6         if(y1 < y2) { ymin = y1; ymax = y2; }    // Определяем минимальную и максимальную координату по Y
 ;PCODE: $000003B0 VOL: 0
 ;PCODE: $000003B1 VOL: 0
 ;PCODE: $000003B2 VOL: 0
 ;PCODE: $000003B3 VOL: 0
-; 0001 01A7          else { ymin = y2; ymax = y1; }
 ;PCODE: $000003B4 VOL: 0
 ;PCODE: $000003B5 VOL: 0
 ;PCODE: $000003B6 VOL: 0
 ;PCODE: $000003B7 VOL: 0
+; 0001 01A7          else { ymin = y2; ymax = y1; }
 ;PCODE: $000003B8 VOL: 0
 ;PCODE: $000003B9 VOL: 0
 ;PCODE: $000003BA VOL: 0
-; 0001 01A8 
-; 0001 01A9         for(; xmin <= xmax; ++xmin)
 ;PCODE: $000003BB VOL: 0
 ;PCODE: $000003BC VOL: 0
 ;PCODE: $000003BD VOL: 0
 ;PCODE: $000003BE VOL: 0
+; 0001 01A8 
+; 0001 01A9         for(; xmin <= xmax; ++xmin)
 ;PCODE: $000003BF VOL: 0
 ;PCODE: $000003C0 VOL: 0
 ;PCODE: $000003C1 VOL: 0
 ;PCODE: $000003C2 VOL: 0
 ;PCODE: $000003C3 VOL: 0
-; 0001 01AA         {
-; 0001 01AB             for(i=ymin; i<=ymax; ++i) nlcd_Pixel(xmin, i, pixel_mode);
 ;PCODE: $000003C4 VOL: 0
 ;PCODE: $000003C5 VOL: 0
 ;PCODE: $000003C6 VOL: 0
 ;PCODE: $000003C7 VOL: 0
+; 0001 01AA         {
+; 0001 01AB             for(i=ymin; i<=ymax; ++i) nlcd_Pixel(xmin, i, pixel_mode);
 ;PCODE: $000003C8 VOL: 0
 ;PCODE: $000003C9 VOL: 0
 ;PCODE: $000003CA VOL: 0
@@ -1484,46 +1484,46 @@
 ;PCODE: $000003D8 VOL: 0
 ;PCODE: $000003D9 VOL: 0
 ;PCODE: $000003DA VOL: 0
-; 0001 01AC }
 ;PCODE: $000003DB VOL: 0
 ;PCODE: $000003DC VOL: 0
 ;PCODE: $000003DD VOL: 0
 ;PCODE: $000003DE VOL: 0
+; 0001 01AC }
 ;PCODE: $000003DF VOL: 0
 ;PCODE: $000003E0 VOL: 0
-; 0001 01AD     }
 ;PCODE: $000003E1 VOL: 0
-; 0001 01AE     else        // Без заливки
 ;PCODE: $000003E2 VOL: 0
 ;PCODE: $000003E3 VOL: 0
-; 0001 01AF     {
-; 0001 01B0         nlcd_Line(x1, y1, x2, y1, pixel_mode);        // Рисуем стороны прямоуголиника
 ;PCODE: $000003E4 VOL: 0
+; 0001 01AD     }
 ;PCODE: $000003E5 VOL: 0
+; 0001 01AE     else        // Без заливки
 ;PCODE: $000003E6 VOL: 0
 ;PCODE: $000003E7 VOL: 0
+; 0001 01AF     {
+; 0001 01B0         nlcd_Line(x1, y1, x2, y1, pixel_mode);        // Рисуем стороны прямоуголиника
 ;PCODE: $000003E8 VOL: 0
 ;PCODE: $000003E9 VOL: 0
 ;PCODE: $000003EA VOL: 0
 ;PCODE: $000003EB VOL: 0
 ;PCODE: $000003EC VOL: 0
 ;PCODE: $000003ED VOL: 0
-; 0001 01B1         nlcd_Line(x1, y2, x2, y2, pixel_mode);
 ;PCODE: $000003EE VOL: 0
 ;PCODE: $000003EF VOL: 0
 ;PCODE: $000003F0 VOL: 0
 ;PCODE: $000003F1 VOL: 0
+; 0001 01B1         nlcd_Line(x1, y2, x2, y2, pixel_mode);
 ;PCODE: $000003F2 VOL: 0
 ;PCODE: $000003F3 VOL: 0
 ;PCODE: $000003F4 VOL: 0
 ;PCODE: $000003F5 VOL: 0
 ;PCODE: $000003F6 VOL: 0
 ;PCODE: $000003F7 VOL: 0
-; 0001 01B2         nlcd_Line(x1, y1+1, x1, y2-1, pixel_mode);
 ;PCODE: $000003F8 VOL: 0
 ;PCODE: $000003F9 VOL: 0
 ;PCODE: $000003FA VOL: 0
 ;PCODE: $000003FB VOL: 0
+; 0001 01B2         nlcd_Line(x1, y1+1, x1, y2-1, pixel_mode);
 ;PCODE: $000003FC VOL: 0
 ;PCODE: $000003FD VOL: 0
 ;PCODE: $000003FE VOL: 0
@@ -1532,11 +1532,11 @@
 ;PCODE: $00000401 VOL: 0
 ;PCODE: $00000402 VOL: 0
 ;PCODE: $00000403 VOL: 0
-; 0001 01B3         nlcd_Line(x2, y1+1, x2, y2-1, pixel_mode);
 ;PCODE: $00000404 VOL: 0
 ;PCODE: $00000405 VOL: 0
 ;PCODE: $00000406 VOL: 0
 ;PCODE: $00000407 VOL: 0
+; 0001 01B3         nlcd_Line(x2, y1+1, x2, y2-1, pixel_mode);
 ;PCODE: $00000408 VOL: 0
 ;PCODE: $00000409 VOL: 0
 ;PCODE: $0000040A VOL: 0
@@ -1545,12 +1545,16 @@
 ;PCODE: $0000040D VOL: 0
 ;PCODE: $0000040E VOL: 0
 ;PCODE: $0000040F VOL: 0
-; 0001 01B4     }
 ;PCODE: $00000410 VOL: 0
-; 0001 01B5 }
 ;PCODE: $00000411 VOL: 0
 ;PCODE: $00000412 VOL: 0
 ;PCODE: $00000413 VOL: 0
+; 0001 01B4     }
+;PCODE: $00000414 VOL: 0
+; 0001 01B5 }
+;PCODE: $00000415 VOL: 0
+;PCODE: $00000416 VOL: 0
+;PCODE: $00000417 VOL: 0
 ;
 ;
 ;//******************************************************************************
@@ -1561,8 +1565,8 @@
 ;//             размер картинки по горизонтали и вертикали
 ;void nlcd_Pict  (unsigned char x, unsigned char y, unsigned char * picture)
 ; 0001 01BF {
-;PCODE: $00000414 VOL: 0
-;PCODE: $00000415 VOL: 0
+;PCODE: $00000418 VOL: 0
+;PCODE: $00000419 VOL: 0
 ; 0001 01C0     unsigned char pict_width = picture[0];  // ширина спрайта в пикселах
 ; 0001 01C1     unsigned char pict_height = picture[1]; // высота спрайта в пикселах
 ; 0001 01C2     unsigned char pict_height_bank=pict_height / 8+((pict_height%8)>0?1:0); // высота спрайта в банках
@@ -1573,13 +1577,13 @@
 ; 0001 01C7     int adr = 2; // индекс текущего байта в массиве с картинкой
 ; 0001 01C8 
 ; 0001 01C9     for (i=0; i< pict_height_bank; i++)
-;PCODE: $00000416 VOL: 0
-;PCODE: $00000417 VOL: 0
-;PCODE: $00000418 VOL: 0
-;PCODE: $00000419 VOL: 0
 ;PCODE: $0000041A VOL: 0
 ;PCODE: $0000041B VOL: 0
 ;PCODE: $0000041C VOL: 0
+;PCODE: $0000041D VOL: 0
+;PCODE: $0000041E VOL: 0
+;PCODE: $0000041F VOL: 0
+;PCODE: $00000420 VOL: 0
 ;	x -> Y+11
 ;	y -> Y+10
 ;	*picture -> Y+8
@@ -1590,10 +1594,6 @@
 ;	j -> R21
 ;	i -> R20
 ;	adr -> Y+6
-;PCODE: $0000041D VOL: 0
-;PCODE: $0000041E VOL: 0
-;PCODE: $0000041F VOL: 0
-;PCODE: $00000420 VOL: 0
 ;PCODE: $00000421 VOL: 0
 ;PCODE: $00000422 VOL: 0
 ;PCODE: $00000423 VOL: 0
@@ -1645,66 +1645,66 @@
 ;PCODE: $00000451 VOL: 0
 ;PCODE: $00000452 VOL: 0
 ;PCODE: $00000453 VOL: 0
-; 0001 01CA     { // проход построчно (по банкам)
-; 0001 01CB 
-; 0001 01CC         if (i<((NLCD_Y_RES/8)+1)) // не выводить картинку за пределами экрана
 ;PCODE: $00000454 VOL: 0
 ;PCODE: $00000455 VOL: 0
 ;PCODE: $00000456 VOL: 0
+;PCODE: $00000457 VOL: 0
+; 0001 01CA     { // проход построчно (по банкам)
+; 0001 01CB 
+; 0001 01CC         if (i<((NLCD_Y_RES/8)+1)) // не выводить картинку за пределами экрана
+;PCODE: $00000458 VOL: 0
+;PCODE: $00000459 VOL: 0
+;PCODE: $0000045A VOL: 0
 ; 0001 01CD         {
 ; 0001 01CE             //позиционирование на новую строку
 ; 0001 01CF             nlcd_xcurr=x;
-;PCODE: $00000457 VOL: 0
-;PCODE: $00000458 VOL: 0
-; 0001 01D0             nlcd_ycurr=y_pos_in_bank + i;
-;PCODE: $00000459 VOL: 0
-;PCODE: $0000045A VOL: 0
 ;PCODE: $0000045B VOL: 0
-; 0001 01D1 
-; 0001 01D2             nlcd_SendByte(CMD_LCD_MODE,(0xB0|((y_pos_in_bank+i)&0x0F))); // установка адреса по Y: 0100 yyyy
 ;PCODE: $0000045C VOL: 0
+; 0001 01D0             nlcd_ycurr=y_pos_in_bank + i;
 ;PCODE: $0000045D VOL: 0
 ;PCODE: $0000045E VOL: 0
 ;PCODE: $0000045F VOL: 0
+; 0001 01D1 
+; 0001 01D2             nlcd_SendByte(CMD_LCD_MODE,(0xB0|((y_pos_in_bank+i)&0x0F))); // установка адреса по Y: 0100 yyyy
 ;PCODE: $00000460 VOL: 0
 ;PCODE: $00000461 VOL: 0
 ;PCODE: $00000462 VOL: 0
 ;PCODE: $00000463 VOL: 0
-; 0001 01D3             nlcd_SendByte(CMD_LCD_MODE,(0x00|(x&0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $00000464 VOL: 0
 ;PCODE: $00000465 VOL: 0
 ;PCODE: $00000466 VOL: 0
 ;PCODE: $00000467 VOL: 0
+; 0001 01D3             nlcd_SendByte(CMD_LCD_MODE,(0x00|(x&0x0F)));      // установка адреса по X: 0000 xxxx - биты (x3 x2 x1 x0)
 ;PCODE: $00000468 VOL: 0
 ;PCODE: $00000469 VOL: 0
 ;PCODE: $0000046A VOL: 0
-; 0001 01D4             nlcd_SendByte(CMD_LCD_MODE,(0x10|((x>>4)&0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $0000046B VOL: 0
 ;PCODE: $0000046C VOL: 0
 ;PCODE: $0000046D VOL: 0
 ;PCODE: $0000046E VOL: 0
+; 0001 01D4             nlcd_SendByte(CMD_LCD_MODE,(0x10|((x>>4)&0x07))); // установка адреса по X: 0010 0xxx - биты (x6 x5 x4)
 ;PCODE: $0000046F VOL: 0
 ;PCODE: $00000470 VOL: 0
 ;PCODE: $00000471 VOL: 0
 ;PCODE: $00000472 VOL: 0
-; 0001 01D5 
-; 0001 01D6             //вывод строки
-; 0001 01D7             for (j = 0; j < pict_width; j++ )
 ;PCODE: $00000473 VOL: 0
 ;PCODE: $00000474 VOL: 0
 ;PCODE: $00000475 VOL: 0
 ;PCODE: $00000476 VOL: 0
+; 0001 01D5 
+; 0001 01D6             //вывод строки
+; 0001 01D7             for (j = 0; j < pict_width; j++ )
 ;PCODE: $00000477 VOL: 0
 ;PCODE: $00000478 VOL: 0
 ;PCODE: $00000479 VOL: 0
 ;PCODE: $0000047A VOL: 0
 ;PCODE: $0000047B VOL: 0
-; 0001 01D8             {
-; 0001 01D9                 if ((x+j) < NLCD_X_RES) nlcd_SendByte(DATA_LCD_MODE,picture[adr]); // не выводить картинку за пределами экрана
 ;PCODE: $0000047C VOL: 0
 ;PCODE: $0000047D VOL: 0
 ;PCODE: $0000047E VOL: 0
 ;PCODE: $0000047F VOL: 0
+; 0001 01D8             {
+; 0001 01D9                 if ((x+j) < NLCD_X_RES) nlcd_SendByte(DATA_LCD_MODE,picture[adr]); // не выводить картинку за пределами экрана
 ;PCODE: $00000480 VOL: 0
 ;PCODE: $00000481 VOL: 0
 ;PCODE: $00000482 VOL: 0
@@ -1713,28 +1713,32 @@
 ;PCODE: $00000485 VOL: 0
 ;PCODE: $00000486 VOL: 0
 ;PCODE: $00000487 VOL: 0
-; 0001 01DA                 adr++;
 ;PCODE: $00000488 VOL: 0
 ;PCODE: $00000489 VOL: 0
 ;PCODE: $0000048A VOL: 0
 ;PCODE: $0000048B VOL: 0
-; 0001 01DB             }
+; 0001 01DA                 adr++;
 ;PCODE: $0000048C VOL: 0
 ;PCODE: $0000048D VOL: 0
 ;PCODE: $0000048E VOL: 0
 ;PCODE: $0000048F VOL: 0
+; 0001 01DB             }
 ;PCODE: $00000490 VOL: 0
-; 0001 01DC         }
-; 0001 01DD     }
 ;PCODE: $00000491 VOL: 0
 ;PCODE: $00000492 VOL: 0
 ;PCODE: $00000493 VOL: 0
 ;PCODE: $00000494 VOL: 0
+; 0001 01DC         }
+; 0001 01DD     }
 ;PCODE: $00000495 VOL: 0
 ;PCODE: $00000496 VOL: 0
-; 0001 01DE }
 ;PCODE: $00000497 VOL: 0
 ;PCODE: $00000498 VOL: 0
 ;PCODE: $00000499 VOL: 0
 ;PCODE: $0000049A VOL: 0
+; 0001 01DE }
+;PCODE: $0000049B VOL: 0
+;PCODE: $0000049C VOL: 0
+;PCODE: $0000049D VOL: 0
+;PCODE: $0000049E VOL: 0
 ;

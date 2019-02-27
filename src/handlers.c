@@ -39,6 +39,15 @@ unsigned char mode = MENU;
 float Votb;
 unsigned int ssCounter = 0;
 unsigned char ssTrig = 0;
+unsigned char distSettingMode = DIST_SET_MODE_PWR;
+unsigned char distValveMode = DIST_VLV_MODE_CLS;
+
+flash unsigned char valve_cls_lbs[] = {"З"};
+flash unsigned char valve_reg_lbs[] = {"Р"};
+flash unsigned char valve_opn_lbs[] = {"О"};
+flash unsigned char * flash valve_lbs[3] = {valve_cls_lbs, valve_reg_lbs, valve_opn_lbs};
+
+void CalculateDistBodySpeed();
 
 //*****************************************************************************
 // основные подпрограммы  Дистиляции
@@ -116,6 +125,8 @@ void RunDistilation(){
         sec = 0;
         minutes = 0;
         hours = 0;
+        Votb = 1200.0; //  мл/ч
+        CalculateDistBodySpeed();
         heater_power = dis_p_ten;
         VALVE_CLS; 
         mode = RUN_DIST; 
@@ -133,7 +144,7 @@ void RunDistilation(){
 void ViewDistilation(){
 unsigned char tkuba_c[2] = {" "};
 unsigned char tkol_up_c[2] = {" "};
-
+unsigned char tmp[3];
    if (abortProcess) {
       //nlcd_Clear();
       nlcd_GotoXY(0,1);
@@ -165,27 +176,32 @@ unsigned char tkol_up_c[2] = {" "};
         p_kolona = ((signed int)(read_adc(0)) - p_offset) * 4.88 / 7.511 / 13.5954348;
       #endif
       
-      nlcd_GotoXY(5,0);
-      nlcd_PrintF("Процесс");
-      nlcd_GotoXY(3,1);
-      nlcd_PrintF("Дистилляции");
-      nlcd_GotoXY(1,3);
+      nlcd_GotoXY(3,0);
+      nlcd_PrintF("Дистилляция");
+      nlcd_GotoXY(1,2);
       sprintf(buf, "Время:%2i:%2i:%2i", hours, minutes, sec);
       nlcd_Print(buf);
-      nlcd_GotoXY(1,4); 
+      nlcd_GotoXY(1,3); 
       sprintf(buf,"tкол в %-3.2f %s", t_kolona_up, tkol_up_c);
       nlcd_Print(buf);
-      nlcd_GotoXY(1,5); 
+      nlcd_GotoXY(1,4); 
       sprintf(buf,"tкуба  %-3.2f %s", t_kuba, tkuba_c);
       nlcd_Print(buf);
       #ifdef P_SENS_ON
-          nlcd_GotoXY(1,6);
+          nlcd_GotoXY(1,5);
           sprintf(buf, "P%+3.1f", p_kolona);
           nlcd_Print(buf);
       #endif
-      nlcd_GotoXY(1,7); 
-      sprintf(buf,"ТЭН %3i%%", heater_power);
+      //------ Состояние клапана
+      nlcd_GotoXY(0,6);
+      strcpyf(tmp, valve_lbs[distValveMode]); 
+      sprintf(buf, "%cКл-%s %c%4.0f мл/ч",(distSettingMode == DIST_SET_MODE_VALV)?'>':' ',tmp,(distSettingMode == DIST_SET_MODE_FLOW)?'>':' ', Votb);
       nlcd_Print(buf);
+      // ТЭН
+      nlcd_GotoXY(0,7); 
+      sprintf(buf,"%cТЭН %3i%%", (distSettingMode == DIST_SET_MODE_PWR)?'>':' ', heater_power);
+      nlcd_Print(buf);
+     
     }
 }
 //*****************************************************************************
@@ -412,6 +428,12 @@ void CalculateBodySpeed() {
     */
 }
 
+void CalculateDistBodySpeed() {
+  float Votb_fact;  
+  Votb_fact = -0.000163 * Votb * Votb + 1.156 * Votb + 1.198;
+  pwmPeriod =  ((float)valvePulse * onePulseDose) / (Votb_fact / 3600.0) * 100.0;   // считаем период, исходя из скорости отбора
+}
+
 //*****************************************************************************
 // Подпрограмма остановки процесса
 //*****************************************************************************
@@ -563,28 +585,34 @@ void HandlerEventTimer_1s(void)
         
     switch(mode) {
         case RUN_DIST:                                                 
-                        /*t_kuba_old = t_kuba;
-                        t_kolona_up_old = t_kolona_up;     
-                        t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-                        t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);
-                        */
-                        //StartAllConvert_T(BUS);
+                        
                         if ((t_kuba >= dis_t_kuba) || timer_off >= 20*60) {  // 20 минут
                         // end process
                             StopProcess();
                         }
+                        // управление клапаном
+                        switch(distValveMode){
+                            case DIST_VLV_MODE_CLS: {
+                               pwmOn = 0; 
+                               VALVE_CLS;
+                            break;
+                            }
+                            
+                            case DIST_VLV_MODE_REG: {
+                               pwmOn = 1;
+                            break;
+                            }
+                            
+                            case DIST_VLV_MODE_OPN: {
+                                pwmOn = 0;
+                                VALVE_OPN;
+                            break;
+                            }
+                        }
+                        
                         break;
         case RUN_RECT:  
-                        /*t_kuba_old = t_kuba;
-                        t_kolona_down_old = t_kolona_down;
-                        t_kolona_up_old = t_kolona_up;         
-                        t_kuba = GetTemperatureMatchRom(t_rom_codes[0].id, BUS);
-                        t_kolona_down = GetTemperatureMatchRom(t_rom_codes[1].id, BUS);
-                        t_kolona_up = GetTemperatureMatchRom(t_rom_codes[2].id, BUS);                       
-                        
-                        t_kuba_sum += t_kuba;
-                        t_kuba_count ++;
-                         */                            
+                                    
                         if (t_kuba > 60.0) {
                             heater_power = rect_p_ten_min;
                             #ifdef P_SENS_ON
@@ -628,7 +656,7 @@ void HandlerEventTimer_1s(void)
                                 if (ssTrig == 0) {
                                     ssTrig = 1;
                                     ssCounter ++;
-                                    //уменьшаем скорость отбора на 5% при каждой остановке колоны (Защита от Буратин!!!)
+                                    //уменьшаем скорость отбора на 3% при каждой остановке колоны (Защита от Буратин!!!)
                                     rect_body_speed =(int)((float)rect_body_speed * 0.97); 
                                 }
                             } else {
@@ -787,6 +815,9 @@ void HandlerEventButEnter(void) {
                             mode = MENU;
                             nlcd_Clear();
                             print_menu();
+                        } else { // перебираем параметры для изменения
+                            distSettingMode ++;
+                            distSettingMode %= 3;
                         }
                         break; 
         case RUN_RECT:
@@ -946,9 +977,30 @@ void HandlerEventButUp(void) {
                         break;
                         
         case RUN_DIST:
-                        heater_power += 1;   //5
-                        if (heater_power > 100){
-                            heater_power = 100;
+                        switch(distSettingMode) {
+                            case DIST_SET_MODE_PWR:  
+                                {
+                                    heater_power += 1;   //5
+                                    if (heater_power > 100){
+                                        heater_power = 100;
+                                    }
+                                    break;
+                                }
+                            case DIST_SET_MODE_VALV:  
+                                {   
+                                    distValveMode ++;
+                                    distValveMode %= 3;
+                                    break;
+                                }
+                            case DIST_SET_MODE_FLOW:  
+                                {
+                                    if (Votb < 2000.0) {
+                                        Votb += 10;
+                                    }
+                                    CalculateDistBodySpeed();
+                                    break;
+                                }
+                                
                         }
                         break; 
         case RUN_RECT:
@@ -987,10 +1039,34 @@ void HandlerEventButDown(void) {
                         ParamDec();
                         break;
                          
-       case RUN_DIST:
-                        heater_power -= 1; //5
-                        if (heater_power < 1){
-                            heater_power = 1;
+       case RUN_DIST: 
+                        switch(distSettingMode) {
+                            case DIST_SET_MODE_PWR:  
+                                {
+                                    heater_power -= 1; //5
+                                    if (heater_power < 1){
+                                        heater_power = 1;
+                                    }
+                                    break;
+                                }
+                            case DIST_SET_MODE_VALV:  
+                                {
+                                    if (distValveMode > 0) {
+                                        distValveMode --;
+                                    } else {
+                                        distValveMode = 2;
+                                    }
+                                    break;
+                                }
+                            case DIST_SET_MODE_FLOW:  
+                                {
+                                    if (Votb >= 20.0) {
+                                        Votb -= 10;
+                                    }
+                                    CalculateDistBodySpeed();
+                                    break;
+                                }
+                                
                         }
                         break;
        case RUN_RECT:
@@ -1028,10 +1104,26 @@ void HandlerEventButLUp(void){
                             pwmOn = 1;
                         }
                         break;
-        case RUN_DIST:
-                        heater_power += 4; 
-                        if (heater_power > 100){
-                            heater_power = 100;
+        case RUN_DIST:                                                   
+                        switch(distSettingMode) {
+                            case DIST_SET_MODE_PWR:  
+                                {
+                                    heater_power += 4; 
+                                    if (heater_power > 100){
+                                        heater_power = 100;
+                                    }
+                                    break;
+                                }
+                            
+                            case DIST_SET_MODE_FLOW:  
+                                {
+                                    if (Votb < 2000.0) {
+                                        Votb += 90;
+                                    }
+                                    CalculateDistBodySpeed();
+                                    break;
+                                }
+                                
                         }
                         break;
         
@@ -1065,9 +1157,26 @@ void HandlerEventButLDown(void){
                         pwmOn = 0;
                         break;
        case RUN_DIST:
-                        heater_power -= 4; 
-                        if (heater_power < 5){
-                            heater_power = 1;
+                        
+                        switch(distSettingMode) {
+                            case DIST_SET_MODE_PWR:  
+                                {
+                                    heater_power -= 4; 
+                                    if (heater_power < 5){
+                                        heater_power = 1;
+                                    }
+                                    break;
+                                }
+                            
+                            case DIST_SET_MODE_FLOW:  
+                                {
+                                    if (Votb >= 100.0) {
+                                        Votb -= 90;
+                                    }
+                                    CalculateDistBodySpeed();
+                                    break;
+                                }
+                                
                         }
                         break;
        

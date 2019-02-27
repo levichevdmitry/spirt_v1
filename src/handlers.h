@@ -28,6 +28,14 @@
 #define CALIBRATE_MOD     9
 
 
+#define DIST_SET_MODE_PWR       0
+#define DIST_SET_MODE_VALV      1
+#define DIST_SET_MODE_FLOW      2
+
+
+#define DIST_VLV_MODE_CLS       0
+#define DIST_VLV_MODE_REG       1
+#define DIST_VLV_MODE_OPN       2
 
 #define ALARM_TIMEOUT     120
 

@@ -682,17 +682,17 @@
 ;PCODE: $00000151 VOL: 0
 ; 0000 013A #ifdef HW1_P
 ; 0000 013B     nlcd_PrintF(" hw v.1.1d P sen");
+; 0000 013C #else
+; 0000 013D     nlcd_PrintF(" hw v.1.1d      ");
 ;PCODE: $00000152 VOL: 0
 ;PCODE: $00000153 VOL: 0
 ;PCODE: $00000154 VOL: 0
-; 0000 013C #else
-; 0000 013D     nlcd_PrintF(" hw v.1.1d      ");
 ; 0000 013E #endif
 ; 0000 013F 
 ; 0000 0140 #ifdef SLOW_HEAD_SPEED
-; 0000 0141 nlcd_PrintF(" sw v.0.31.s uni");
+; 0000 0141 nlcd_PrintF(" sw v.0.32.s uni");
 ; 0000 0142 #else
-; 0000 0143 nlcd_PrintF(" sw v.0.31.f uni");
+; 0000 0143 nlcd_PrintF(" sw v.0.32.f uni");
 ;PCODE: $00000155 VOL: 0
 ;PCODE: $00000156 VOL: 0
 ;PCODE: $00000157 VOL: 0
@@ -802,31 +802,30 @@
 ; 0000 0167 */
 ; 0000 0168 #ifdef HW1_P
 ; 0000 0169     PresureInit();
-;PCODE: $0000019B VOL: 0
 ; 0000 016A #endif
 ; 0000 016B 
 ; 0000 016C while (1)
-;PCODE: $0000019C VOL: 0
+;PCODE: $0000019B VOL: 0
 ; 0000 016D       {
 ; 0000 016E       // Place your code here
 ; 0000 016F       // #asm("wdr");
 ; 0000 0170         event = ES_GetEvent();
+;PCODE: $0000019C VOL: 0
 ;PCODE: $0000019D VOL: 0
-;PCODE: $0000019E VOL: 0
 ; 0000 0171         if (event)
+;PCODE: $0000019E VOL: 0
 ;PCODE: $0000019F VOL: 0
-;PCODE: $000001A0 VOL: 0
 ; 0000 0172             ES_Dispatch(event);
+;PCODE: $000001A0 VOL: 0
 ;PCODE: $000001A1 VOL: 0
-;PCODE: $000001A2 VOL: 0
 ; 0000 0173       }
+;PCODE: $000001A2 VOL: 0
 ;PCODE: $000001A3 VOL: 0
 ;PCODE: $000001A4 VOL: 0
-;PCODE: $000001A5 VOL: 0
 ; 0000 0174 }
+;PCODE: $000001A5 VOL: 0
 ;PCODE: $000001A6 VOL: 0
 ;PCODE: $000001A7 VOL: 0
-;PCODE: $000001A8 VOL: 0
 
 	.DSEG
 _0x27:

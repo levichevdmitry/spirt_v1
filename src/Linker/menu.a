@@ -325,59 +325,59 @@
 ;PCODE: $000000A6 VOL: 0
 ;PCODE: $000000A7 VOL: 0
 ;PCODE: $000000A8 VOL: 0
-; 0005 0089          f = current_pos + 1;
 ;PCODE: $000000A9 VOL: 0
 ;PCODE: $000000AA VOL: 0
 ;PCODE: $000000AB VOL: 0
-; 0005 008A         } else {
+; 0005 0089          f = current_pos + 1;
 ;PCODE: $000000AC VOL: 0
 ;PCODE: $000000AD VOL: 0
-; 0005 008B          s = 0;
 ;PCODE: $000000AE VOL: 0
 ;PCODE: $000000AF VOL: 0
-; 0005 008C          f = c;
+; 0005 008A         } else {
 ;PCODE: $000000B0 VOL: 0
 ;PCODE: $000000B1 VOL: 0
-; 0005 008D         }
+; 0005 008B          s = 0;
 ;PCODE: $000000B2 VOL: 0
-; 0005 008E     } else {
 ;PCODE: $000000B3 VOL: 0
+; 0005 008C          f = c;
 ;PCODE: $000000B4 VOL: 0
-; 0005 008F        f = menu[current_menu].num_selections;
 ;PCODE: $000000B5 VOL: 0
+; 0005 008D         }
 ;PCODE: $000000B6 VOL: 0
+; 0005 008E     } else {
 ;PCODE: $000000B7 VOL: 0
 ;PCODE: $000000B8 VOL: 0
+; 0005 008F        f = menu[current_menu].num_selections;
 ;PCODE: $000000B9 VOL: 0
 ;PCODE: $000000BA VOL: 0
 ;PCODE: $000000BB VOL: 0
-; 0005 0090        s = 0;
 ;PCODE: $000000BC VOL: 0
 ;PCODE: $000000BD VOL: 0
-; 0005 0091     }
 ;PCODE: $000000BE VOL: 0
-; 0005 0092     for (i = s; i < f; i++) {
 ;PCODE: $000000BF VOL: 0
+; 0005 0090        s = 0;
 ;PCODE: $000000C0 VOL: 0
 ;PCODE: $000000C1 VOL: 0
+; 0005 0091     }
 ;PCODE: $000000C2 VOL: 0
+; 0005 0092     for (i = s; i < f; i++) {
 ;PCODE: $000000C3 VOL: 0
 ;PCODE: $000000C4 VOL: 0
 ;PCODE: $000000C5 VOL: 0
 ;PCODE: $000000C6 VOL: 0
 ;PCODE: $000000C7 VOL: 0
-; 0005 0093         if (i == current_pos) {
 ;PCODE: $000000C8 VOL: 0
 ;PCODE: $000000C9 VOL: 0
 ;PCODE: $000000CA VOL: 0
 ;PCODE: $000000CB VOL: 0
+; 0005 0093         if (i == current_pos) {
 ;PCODE: $000000CC VOL: 0
 ;PCODE: $000000CD VOL: 0
-; 0005 0094             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
 ;PCODE: $000000CE VOL: 0
 ;PCODE: $000000CF VOL: 0
 ;PCODE: $000000D0 VOL: 0
 ;PCODE: $000000D1 VOL: 0
+; 0005 0094             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
 ;PCODE: $000000D2 VOL: 0
 ;PCODE: $000000D3 VOL: 0
 ;PCODE: $000000D4 VOL: 0
@@ -394,11 +394,11 @@
 ;PCODE: $000000DF VOL: 0
 ;PCODE: $000000E0 VOL: 0
 ;PCODE: $000000E1 VOL: 0
-; 0005 0095             sprintf(buf,"[%s]", tmp);
 ;PCODE: $000000E2 VOL: 0
 ;PCODE: $000000E3 VOL: 0
 ;PCODE: $000000E4 VOL: 0
 ;PCODE: $000000E5 VOL: 0
+; 0005 0095             sprintf(buf,"[%s]", tmp);
 ;PCODE: $000000E6 VOL: 0
 ;PCODE: $000000E7 VOL: 0
 ;PCODE: $000000E8 VOL: 0
@@ -407,21 +407,21 @@
 ;PCODE: $000000EB VOL: 0
 ;PCODE: $000000EC VOL: 0
 ;PCODE: $000000ED VOL: 0
-; 0005 0096             nlcd_GotoXY(0, t++);
 ;PCODE: $000000EE VOL: 0
 ;PCODE: $000000EF VOL: 0
 ;PCODE: $000000F0 VOL: 0
 ;PCODE: $000000F1 VOL: 0
+; 0005 0096             nlcd_GotoXY(0, t++);
 ;PCODE: $000000F2 VOL: 0
 ;PCODE: $000000F3 VOL: 0
-; 0005 0097         } else {
 ;PCODE: $000000F4 VOL: 0
 ;PCODE: $000000F5 VOL: 0
-; 0005 0098             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
 ;PCODE: $000000F6 VOL: 0
 ;PCODE: $000000F7 VOL: 0
+; 0005 0097         } else {
 ;PCODE: $000000F8 VOL: 0
 ;PCODE: $000000F9 VOL: 0
+; 0005 0098             strcpyf(tmp, menu[current_menu].items_submenu[i].name_item);
 ;PCODE: $000000FA VOL: 0
 ;PCODE: $000000FB VOL: 0
 ;PCODE: $000000FC VOL: 0
@@ -438,11 +438,11 @@
 ;PCODE: $00000107 VOL: 0
 ;PCODE: $00000108 VOL: 0
 ;PCODE: $00000109 VOL: 0
-; 0005 0099             sprintf(buf,"%s", tmp);
 ;PCODE: $0000010A VOL: 0
 ;PCODE: $0000010B VOL: 0
 ;PCODE: $0000010C VOL: 0
 ;PCODE: $0000010D VOL: 0
+; 0005 0099             sprintf(buf,"%s", tmp);
 ;PCODE: $0000010E VOL: 0
 ;PCODE: $0000010F VOL: 0
 ;PCODE: $00000110 VOL: 0
@@ -451,29 +451,33 @@
 ;PCODE: $00000113 VOL: 0
 ;PCODE: $00000114 VOL: 0
 ;PCODE: $00000115 VOL: 0
-; 0005 009A             nlcd_GotoXY(1, t++);
 ;PCODE: $00000116 VOL: 0
 ;PCODE: $00000117 VOL: 0
 ;PCODE: $00000118 VOL: 0
 ;PCODE: $00000119 VOL: 0
+; 0005 009A             nlcd_GotoXY(1, t++);
 ;PCODE: $0000011A VOL: 0
 ;PCODE: $0000011B VOL: 0
-; 0005 009B         }
 ;PCODE: $0000011C VOL: 0
-; 0005 009C         nlcd_Print(buf);
 ;PCODE: $0000011D VOL: 0
 ;PCODE: $0000011E VOL: 0
-; 0005 009D     }
 ;PCODE: $0000011F VOL: 0
+; 0005 009B         }
 ;PCODE: $00000120 VOL: 0
+; 0005 009C         nlcd_Print(buf);
 ;PCODE: $00000121 VOL: 0
 ;PCODE: $00000122 VOL: 0
+; 0005 009D     }
 ;PCODE: $00000123 VOL: 0
-; 0005 009E     cod='k';
 ;PCODE: $00000124 VOL: 0
 ;PCODE: $00000125 VOL: 0
-; 0005 009F }
 ;PCODE: $00000126 VOL: 0
 ;PCODE: $00000127 VOL: 0
+; 0005 009E     cod='k';
 ;PCODE: $00000128 VOL: 0
 ;PCODE: $00000129 VOL: 0
+; 0005 009F }
+;PCODE: $0000012A VOL: 0
+;PCODE: $0000012B VOL: 0
+;PCODE: $0000012C VOL: 0
+;PCODE: $0000012D VOL: 0

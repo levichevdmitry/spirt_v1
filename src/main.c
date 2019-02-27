@@ -318,9 +318,9 @@ nlcd_PrintF("   контроллер   ");
 #endif
 
 #ifdef SLOW_HEAD_SPEED
-nlcd_PrintF(" sw v.0.31.s uni");
+nlcd_PrintF(" sw v.0.32.s uni");
 #else
-nlcd_PrintF(" sw v.0.31.f uni");
+nlcd_PrintF(" sw v.0.32.f uni");
 #endif
 BEEP_OFF;
 delay_ms(2000); 
