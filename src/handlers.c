@@ -474,6 +474,7 @@ void CalibrateRun() {
     minutes = 0;
     hours = 0;
     abortProcess = 0;
+    heater_power = rect_p_ten_min;
     mode = CALIBRATE_RUN;
     impulseCounterCalibrate = (unsigned int)(CALIBRATE_Q / ((float)valvePulse * onePulseDose));
     pwmOn = 1;
@@ -481,6 +482,7 @@ void CalibrateRun() {
 
 void CalibrateStop(){
 // расчет нового коэффициента и его сохранение
+    heater_power = 0;
     onePulseDose =  (float)factCalibrateQ / (float)((long)valvePulse * (long)impulseCounter);
     SaveParam();
     abortProcess = 0;
@@ -499,7 +501,8 @@ void CalibrateView() {
     } else {
         if (impulseCounter >= impulseCounterCalibrate) {     // если закончили калибровку просим ввести реальное значение 
             pwmOn = 0;
-            VALVE_CLS; 
+            VALVE_CLS;
+            heater_power = 0; 
             factCalibrateQ =  CALIBRATE_Q;
             param_id = 13;  
             params[param_id].value = factCalibrateQ;
@@ -525,6 +528,9 @@ void CalibrateView() {
             nlcd_Print(buf);
             nlcd_GotoXY(3,6);
             sprintf(buf, "i %i имп.", impulseCounter);
+            nlcd_Print(buf);
+            nlcd_GotoXY(3,7);
+            sprintf(buf, "ТЭН%3i%%", heater_power);
             nlcd_Print(buf);
         } 
     }
@@ -871,6 +877,7 @@ void HandlerEventButEnter(void) {
                         if (abortProcess) {    // прерываем процесс
                             VALVE_CLS;
                             pwmOn = 0;
+                            heater_power = 0;
                             abortProcess = 0;
                             mode = MENU;
                             nlcd_Clear();
